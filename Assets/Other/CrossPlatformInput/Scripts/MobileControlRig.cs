@@ -21,7 +21,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 	{
 		CheckEnableControlRig();
 	}
-	#endif
+#endif
 
         private void Start()
         {
@@ -37,7 +37,6 @@ namespace UnityStandardAssets.CrossPlatformInput
 
                     o.AddComponent<UnityEngine.EventSystems.EventSystem>();
                     o.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
-                    o.AddComponent<UnityEngine.EventSystems.TouchInputModule>();
                 }
             }
         }
@@ -69,7 +68,7 @@ namespace UnityStandardAssets.CrossPlatformInput
         {
 #if MOBILE_INPUT
 		EnableControlRig(true);
-		#else
+#else
             EnableControlRig(false);
 #endif
         }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -67,7 +67,7 @@ public class AIEnemy : MonoBehaviour
             locomotion.Rotate(fixDirection);
             locomotion.target = null;
         }
-        else if(target.GetComponent<Locomotion>().curHealth > 0)
+        else if (target.GetComponent<Health>().currentHealth > 0)
         {
             locomotion.target = target.GetComponent<Locomotion>();
             locomotion.AttackControl();
@@ -78,9 +78,9 @@ public class AIEnemy : MonoBehaviour
 
     private void ViewControl()
     {
-        foreach(Transform tar in viewTrigger.listObject)
+        foreach (Transform tar in viewTrigger.listObject)
         {
-            if(tar)
+            if (tar)
             {
                 target = tar;
                 locomotion.target = target.GetComponent<Locomotion>();

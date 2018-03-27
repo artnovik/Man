@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TDC;
@@ -7,6 +7,8 @@ using TDC.InputSystem;
 public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 {
     #region Data
+    [Tooltip("Health reference")]
+    private Health health;
 
     [Header("Data")]
     public CameraControl cameraControl;
@@ -23,6 +25,8 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     public List<GameObject> listWeapons = new List<GameObject>();
 
     private Transform localTransform;
+
+    public bool isPaused;
 
     #endregion
 
@@ -48,6 +52,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     {
         cameraControl.Initialization();
         locomotion.Initialization();
+        health = locomotion.health;
 
         locomotion.animControl.transform.SetParent(null);
         localTransform = transform;
@@ -119,7 +124,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         {
             foreach (Transform box in playerView.listObject)
             {
-                if (box && box.GetComponent<Locomotion>().curHealth > 0)
+                if (box && health.currentHealth > 0)
                 {
                     target = box;
                     locomotion.typeSpeed = global::Locomotion.TSpeed.Walk;
@@ -136,7 +141,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 
             foreach (Transform box in playerView.listObject)
             {
-                if (box.GetComponent<Locomotion>().curHealth > 0)
+                if (health.currentHealth > 0)
                 {
                     target = box;
                     return;
@@ -169,9 +174,9 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 
     public void SwitchWeapon(int index)
     {
-        for(int i=0; i<listWeapons.Count; i++)
+        for (int i = 0; i < listWeapons.Count; i++)
         {
-            if(i == index)
+            if (i == index)
             {
                 listWeapons[i].SetActive(true);
             }

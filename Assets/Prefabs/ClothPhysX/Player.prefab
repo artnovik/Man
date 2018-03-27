@@ -1259,6 +1259,7 @@ GameObject:
   - component: {fileID: 95346201888160510}
   - component: {fileID: 136940142448556320}
   - component: {fileID: 114507723874496848}
+  - component: {fileID: 114165659354080774}
   - component: {fileID: 54047526821628166}
   m_Layer: 0
   m_Name: Player_Jack
@@ -3266,6 +3267,7 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -3557,6 +3559,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114165659354080774
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1792862599540310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9152f771a5bcc1f4fb77e3a3b989973c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locomotion: {fileID: 0}
+  maxHealth: 100
+  currentHealth: 100
 --- !u!114 &114507723874496848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3568,11 +3584,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d305e5d4c35015d44aa8aac3ff271170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: {fileID: 0}
   typeLocomotion: 0
   typeSpeed: 0
   animControl: {fileID: 95346201888160510}
-  curHealth: 100
-  maxHealth: 100
   target: {fileID: 0}
 --- !u!114 &114587143568569328
 MonoBehaviour:
@@ -3611,6 +3626,7 @@ MonoBehaviour:
   - {fileID: 1982010047296934}
   - {fileID: 1601528930609020}
   - {fileID: 1235602614466690}
+  isPaused: 0
 --- !u!114 &114834372176763480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4340,7 +4356,6 @@ Cloth:
   m_Friction: 0.5
   m_CollisionMassScale: 0
   m_UseContinuousCollision: 1
-  m_UseVirtualParticles: 1
   m_SolverFrequency: 120
   m_SleepThreshold: 0.1
   m_Coefficients:
@@ -6974,3 +6989,14 @@ Cloth:
   m_SphereColliders:
   - first: {fileID: 0}
     second: {fileID: 0}
+  m_SelfCollisionDistance: 0
+  m_SelfCollisionStiffness: 1
+  m_SelfAndInterCollisionIndices: 
+  m_VirtualParticleWeights:
+  - {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+  - {x: 0.6666667, y: 0.16666667, z: 0.16666667}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+  - {x: 0.6666667, y: 0.16666667, z: 0.16666667}
+  - {x: 0.5, y: 0.5, z: 0}
+  m_VirtualParticleIndices: 

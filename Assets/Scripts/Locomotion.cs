@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,8 +11,12 @@ public class CoreAnimator : MonoBehaviour
     public const string ATTACK_VALUE = "Attack_Value";
 }
 
+[RequireComponent(typeof(Health))]
 public class Locomotion : CoreAnimator
 {
+    [Tooltip("Health reference")]
+    public Health health;
+
     public enum TLocomotion
     {
         Idle,
@@ -31,10 +35,6 @@ public class Locomotion : CoreAnimator
     public TSpeed typeSpeed = TSpeed.Walk;
     public Animator animControl;
 
-    [Header("Health System")]
-    public int curHealth = 100;
-    public int maxHealth = 100;
-
     public Locomotion target;
 
     private Transform localTransform;
@@ -49,6 +49,13 @@ public class Locomotion : CoreAnimator
 
     public void Initialization()
     {
+        if (GetComponent<Health>() == null)
+        {
+            gameObject.AddComponent<Health>();
+        }
+
+        health = GetComponent<Health>();
+        health.locomotion = this;
         localTransform = animControl.transform;
     }
 
@@ -65,7 +72,7 @@ public class Locomotion : CoreAnimator
             factor = Mathf.Lerp(factor, 2, 0.1f);
         }
 
-        if(inversDirection.magnitude > 0)
+        if (inversDirection.magnitude > 0)
         {
             animControl.SetFloat(MOVEMENT_X, Mathf.Lerp(animControl.GetFloat(MOVEMENT_X), inversDirection.x * factor, 0.05f));
             animControl.SetFloat(MOVEMENT_Y, Mathf.Lerp(animControl.GetFloat(MOVEMENT_Y), inversDirection.z * factor, 0.05f));
@@ -107,7 +114,8 @@ public class Locomotion : CoreAnimator
         else if (animControl.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
             typeLocomotion = TLocomotion.Attack;
-        } else if (animControl.GetCurrentAnimatorStateInfo(0).IsTag("Dead"))
+        }
+        else if (animControl.GetCurrentAnimatorStateInfo(0).IsTag("Dead"))
         {
             typeLocomotion = TLocomotion.Dead;
         }
@@ -115,39 +123,12 @@ public class Locomotion : CoreAnimator
 
     public void AnimAttack()
     {
-        if (!target || curHealth <= 0) { return; }
+        if (!target || health.currentHealth <= 0) { return; }
 
         if (Vector3.Distance(target.localTransform.position, localTransform.position) <= 2f)
         {
-            target.AddDamage(Random.Range(15, 35));
+            target.health.Damage((uint)Random.Range(15, 35));
         }
-    }
-
-    #endregion
-
-    #region Health System
-
-    private void HealthSystem()
-    {
-
-    }
-
-    public void AddDamage(int damage)
-    {
-        if (curHealth == 0) { return; }
-
-        curHealth -= damage;
-
-        if(curHealth <= 0)
-        {
-            curHealth = 0;
-            Death();
-        }
-    }
-
-    private void Death()
-    {
-        animControl.SetTrigger("Death");
     }
 
     #endregion
