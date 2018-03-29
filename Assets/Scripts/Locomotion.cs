@@ -127,7 +127,13 @@ public class Locomotion : CoreAnimator
 
         if (Vector3.Distance(target.localTransform.position, localTransform.position) <= 2f)
         {
-            target.health.Damage((uint)Random.Range(15, 35));
+            if (target.health.isDead)
+            {
+                return;
+            }
+
+            target.health.Damage(Random.Range(15, 35));
+            // ToDo DMG numbers popup
         }
     }
 

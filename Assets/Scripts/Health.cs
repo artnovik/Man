@@ -9,12 +9,15 @@ public class Health : MonoBehaviour
     public Locomotion locomotion;
 
     [Header("Health Manager")]
-    public uint maxHealth = 100;
-    public uint currentHealth = 100;
+    public int maxHealth = 100;
+    public int currentHealth = 100;
+    public int minHealth = 0;
+
+    public bool isDead;
 
     #region HealthManager
 
-    public void Heal(uint healValue)
+    public void Heal(int healValue)
     {
         currentHealth += healValue;
         if (currentHealth > maxHealth)
@@ -23,16 +26,16 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void Damage(uint damage)
+    public void Damage(int damageValue)
     {
         if (currentHealth == 0)
         {
             return;
         }
 
-        currentHealth -= damage;
+        currentHealth -= damageValue;
 
-        if (damage >= currentHealth)
+        if (currentHealth <= minHealth)
         {
             currentHealth = 0;
             Death();
@@ -48,6 +51,7 @@ public class Health : MonoBehaviour
     private void Death()
     {
         locomotion.animControl.SetTrigger("Death");
+        isDead = true;
     }
 
     #endregion
