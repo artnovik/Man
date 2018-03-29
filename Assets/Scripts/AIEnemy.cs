@@ -11,11 +11,14 @@ public class AIEnemy : MonoBehaviour
     public Locomotion locomotion;
     public CoreTrigger viewTrigger;
 
+    public EnemyUI enemyUI;
+
     #region Unity
 
     private void Start()
     {
         Initialization();
+        enemyUI = GetComponent<EnemyUI>();
     }
 
     private void Update()
@@ -40,11 +43,13 @@ public class AIEnemy : MonoBehaviour
 
         if (target)
         {
+            enemyUI.SetHealthBarStatus(true);
             agent.SetDestination(target.position);
             agent.isStopped = false;
         }
         else
         {
+            enemyUI.SetHealthBarStatus(false);
             agent.isStopped = true;
         }
 

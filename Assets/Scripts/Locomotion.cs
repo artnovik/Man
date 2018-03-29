@@ -123,7 +123,7 @@ public class Locomotion : CoreAnimator
 
     public void AnimAttack()
     {
-        if (!target || health.currentHealth <= 0) { return; }
+        if (!target || health.isDead) { return; }
 
         if (Vector3.Distance(target.localTransform.position, localTransform.position) <= 2f)
         {
@@ -133,6 +133,10 @@ public class Locomotion : CoreAnimator
             }
 
             target.health.Damage(Random.Range(15, 35));
+            if (target.health.isDead)
+            {
+                target = null;
+            }
             // ToDo DMG numbers popup
         }
     }

@@ -19,6 +19,22 @@ public class UIGamePlay : MonoBehaviour
     public GameObject[] controlGroup;
     public GameObject pauseMenu;
 
+    [SerializeField]
+    public Image playerHealthBarCurrent;
+    [SerializeField]
+    public Image playerHealthBarEmpty;
+
+    [SerializeField]
+    public Image playerStaminaBarCurrent;
+    [SerializeField]
+    public Image playerStaminaBarEmpty;
+
+    private Color32 colorEngaged = new Color32(255, 255, 255, 255);
+    private Color32 colorCalm = new Color32(255, 255, 255, 100);
+
+    [SerializeField]
+    public Image[] playerBars;
+
     private void Start()
     {
         numberWeapon.text = (PlayerControl.Instance.curIndexWeapon + 1).ToString();
@@ -45,6 +61,18 @@ public class UIGamePlay : MonoBehaviour
 
         PlayerControl.Instance.cameraControl.rotateDirection += localCameraDir.normalized;
     }
+
+    #region PlayerBars visibility
+
+    public void SetPlayerBarsStatus(bool brightVisibility)
+    {
+        foreach (var playerBarImage in playerBars)
+        {
+            playerBarImage.color = brightVisibility ? colorEngaged : colorCalm;
+        }
+    }
+
+    #endregion
 
     public void Attack()
     {
@@ -125,7 +153,7 @@ public class UIGamePlay : MonoBehaviour
         }
     }
 
-    // TimeScale won't affect Coroutine
+    // "TimeScale won't affect" Coroutine
     public static IEnumerator WaitForRealSeconds(float time)
     {
         float start = Time.realtimeSinceStartup;

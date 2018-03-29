@@ -13,6 +13,8 @@ public class Health : MonoBehaviour
     public int currentHealth = 100;
     public int minHealth = 0;
 
+    private const float destroyDuration = 5f;
+
     public bool isDead;
 
     #region HealthManager
@@ -28,7 +30,7 @@ public class Health : MonoBehaviour
 
     public void Damage(int damageValue)
     {
-        if (currentHealth == 0)
+        if (isDead)
         {
             return;
         }
@@ -37,7 +39,6 @@ public class Health : MonoBehaviour
 
         if (currentHealth <= minHealth)
         {
-            currentHealth = 0;
             Death();
         }
 
@@ -51,7 +52,29 @@ public class Health : MonoBehaviour
     private void Death()
     {
         locomotion.animControl.SetTrigger("Death");
+        locomotion.target = null;
+
+        currentHealth = 0;
         isDead = true;
+
+        // Temp
+        if (gameObject.CompareTag("Enemy"))
+        {
+            GetComponent<EnemyUI>().DestroyEnemyUI(destroyDuration);
+            DestroyBody(destroyDuration);
+        }
+    }
+
+    private void DestroyBody(float delay)
+    {
+        StartCoroutine(Destroy(delay));
+    }
+
+    private IEnumerator Destroy(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        // ToDo nice corpse disappearing animation, with blood puddle for X seconds
+        Destroy(gameObject);
     }
 
     #endregion

@@ -10,6 +10,10 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     [Tooltip("Health reference")]
     private Health health;
 
+    [Tooltip("User Interface reference")]
+    [SerializeField]
+    private UIGamePlay playerUI;
+
     [Header("Data")]
     public CameraControl cameraControl;
     public Locomotion locomotion;
@@ -62,23 +66,27 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     {
         cameraControl.CoreUpdate();
 
-        if (stateLockTarget)
+        if (stateLockTarget && target != null)
         {
             cameraControl.target = target;
+            locomotion.target = target.GetComponent<Locomotion>();
+            playerUI.SetPlayerBarsStatus(true);
         }
         else
         {
             cameraControl.target = null;
+            locomotion.target = null;
+            playerUI.SetPlayerBarsStatus(false);
         }
 
-        if (target)
+        /*if (target)
         {
             locomotion.target = target.GetComponent<Locomotion>();
         }
         else
         {
             locomotion.target = null;
-        }
+        }*/
 
         locomotion.CoreUpdate();
 
