@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class Health : MonoBehaviour
 
     [Header("Health Manager")]
     public int maxHealth = 100;
-    public int currentHealth = 100;
+    public int currentHealth;
     public int minHealth = 0;
 
     private const float destroyDuration = 5f;
@@ -18,6 +19,12 @@ public class Health : MonoBehaviour
     public bool isDead;
 
     #region HealthManager
+
+    private void Start()
+    {
+        currentHealth = maxHealth;
+        locomotion = GetComponent<Locomotion>();
+    }
 
     public void Heal(int healValue)
     {
@@ -61,13 +68,42 @@ public class Health : MonoBehaviour
         if (gameObject.CompareTag("Enemy"))
         {
             GetComponent<EnemyUI>().DestroyEnemyUI(destroyDuration);
+            GetComponent<AIEnemy>().SetRagdoll(true);
+            DisableCollidersBetweenEnemyAndPlayer(1f);
+            DestroyComponents();
             DestroyBody(destroyDuration);
         }
+    }
+
+    private void DestroyComponents()
+    {
+        Destroy(GetComponent<Locomotion>());
+        Destroy(GetComponent<AIEnemy>());
+        Destroy(GetComponent<CapsuleCollider>());
     }
 
     private void DestroyBody(float delay)
     {
         StartCoroutine(Destroy(delay));
+    }
+
+    [SerializeField]
+    private Collider playerCollider;
+
+    private void DisableCollidersBetweenEnemyAndPlayer(float delay)
+    {
+        StartCoroutine(DisableColliderRoutine(delay));
+    }
+
+    private IEnumerator DisableColliderRoutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            Physics.IgnoreCollision(collider, playerCollider);
+        }
     }
 
     private IEnumerator Destroy(float delay)

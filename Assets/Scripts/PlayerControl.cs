@@ -31,6 +31,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     private Transform localTransform;
 
     public bool isPaused;
+    public bool godMode;
 
     #endregion
 
@@ -66,7 +67,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     {
         cameraControl.CoreUpdate();
 
-        if (stateLockTarget && target != null)
+        if (stateLockTarget && target != null && !target.GetComponent<Health>().isDead)
         {
             cameraControl.target = target;
             locomotion.target = target.GetComponent<Locomotion>();
@@ -130,11 +131,11 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     {
         if (stateLockTarget)
         {
-            foreach (Transform box in playerView.listObject)
+            foreach (Transform item in playerView.listObject)
             {
-                if (box && health.currentHealth > 0)
+                if (item && !item.GetComponent<Health>().isDead)
                 {
-                    target = box;
+                    target = item;
                     locomotion.typeSpeed = global::Locomotion.TSpeed.Walk;
                     return;
                 }
@@ -146,18 +147,18 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         else
         {
             locomotion.typeSpeed = global::Locomotion.TSpeed.Run;
-
-            foreach (Transform box in playerView.listObject)
+            // ToDo little fix
+            foreach (Transform item in playerView.listObject)
             {
-                if (health.currentHealth > 0)
+                if (item != null && !item.GetComponent<Health>().isDead)
                 {
-                    target = box;
+                    target = item;
                     return;
                 }
                 else
                 {
                     target = null;
-                    playerView.listObject.Remove(box);
+                    playerView.listObject.Remove(item);
                     return;
                 }
             }

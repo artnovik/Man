@@ -46,7 +46,9 @@ public class EnemyUI : MonoBehaviourSingleton<EnemyUI>
 
     public void DestroyEnemyUI(float duration)
     {
-        StartCoroutine(DestroyEnemyUIRoutine(duration));
+        //StartCoroutine(DestroyEnemyUIRoutine(duration));
+        Destroy(enemyHealthBarCurrent.gameObject);
+        Destroy(enemyHealthBarEmpty.gameObject);
     }
 
     private IEnumerator DestroyEnemyUIRoutine(float duration)

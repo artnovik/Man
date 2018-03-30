@@ -15,9 +15,9 @@ public class CameraControl : MonoBehaviour
     public Vector3 pivotPosition;
 
     [Header("Data Rotation")]
-    [Range(0.01f, 5f)] public float rotateSensativity = 1.1f;
-    [Range(0.01f, 1f)] public float turnSensativity = 0.2f;
-    [Range(0.01f, 1f)] public float smoothRotation = 0.05f;
+    [Range(0.01f, 5f)] public float rotateSensitivity = 2.2f; // 1.1f
+    [Range(0.01f, 1f)] public float turnSensitivity = 0.4f; // 0.2f
+    [Range(0.01f, 1f)] public float smoothRotation = 0.1f; // 0.05f
 
     public Vector3 rotateDirection;
 
@@ -29,10 +29,6 @@ public class CameraControl : MonoBehaviour
     public Transform target;
 
     private Transform localTransform;
-
-    #endregion
-
-    #region Unity
 
     #endregion
 

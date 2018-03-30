@@ -18,7 +18,6 @@ public class AIEnemy : MonoBehaviour
     private void Start()
     {
         Initialization();
-        enemyUI = GetComponent<EnemyUI>();
     }
 
     private void Update()
@@ -34,6 +33,8 @@ public class AIEnemy : MonoBehaviour
     {
         locomotion.Initialization();
         locomotion.animControl.SetBool("Enemy", true);
+        SetRagdoll(false);
+        enemyUI = GetComponent<EnemyUI>();
     }
 
     private void CoreUpdate()
@@ -95,6 +96,21 @@ public class AIEnemy : MonoBehaviour
 
         locomotion.target = null;
         target = null;
+    }
+
+    private void SetKinematic(bool newValue)
+    {
+        Rigidbody[] bodies = GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in bodies)
+        {
+            rb.isKinematic = newValue;
+        }
+    }
+
+    public void SetRagdoll(bool value)
+    {
+        SetKinematic(!value);
+        GetComponent<Animator>().enabled = !value;
     }
 
     #endregion
