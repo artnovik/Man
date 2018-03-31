@@ -9,6 +9,8 @@ public class Health : MonoBehaviour
     [HideInInspector]
     public Locomotion locomotion;
 
+    private Collider playerCollider;
+
     [Header("Health Manager")]
     public int maxHealth = 100;
     public int currentHealth;
@@ -24,6 +26,7 @@ public class Health : MonoBehaviour
     {
         currentHealth = maxHealth;
         locomotion = GetComponent<Locomotion>();
+        playerCollider = PlayerControl.Instance.playerCollider;
     }
 
     public void Heal(int healValue)
@@ -69,7 +72,7 @@ public class Health : MonoBehaviour
         {
             GetComponent<EnemyUI>().DestroyEnemyUI(destroyDuration);
             GetComponent<AIEnemy>().SetRagdoll(true);
-            DisableCollidersBetweenEnemyAndPlayer(1f);
+            DisableCollidersBetweenEnemyAndPlayer(2f);
             DestroyComponents();
             DestroyBody(destroyDuration);
         }
@@ -86,9 +89,6 @@ public class Health : MonoBehaviour
     {
         StartCoroutine(Destroy(delay));
     }
-
-    [SerializeField]
-    private Collider playerCollider;
 
     private void DisableCollidersBetweenEnemyAndPlayer(float delay)
     {
@@ -109,6 +109,9 @@ public class Health : MonoBehaviour
     private IEnumerator Destroy(float delay)
     {
         yield return new WaitForSeconds(delay);
+
+        // Nice spawning
+        SpawnManager.Instance.SpawnWithMessageIfNoEnemies(SpawnManager.Instance.enemyZombie, 0.5f);
         // ToDo nice corpse disappearing animation, with blood puddle for X seconds
         Destroy(gameObject);
     }

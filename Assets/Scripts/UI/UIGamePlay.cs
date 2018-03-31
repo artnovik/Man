@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,24 +17,51 @@ public class UIGamePlay : MonoBehaviour
     [Header("Weapons")]
     public Text numberWeapon;
 
-    public GameObject[] controlGroup;
+    [Header("PauseMenu")]
     public GameObject pauseMenu;
 
+    [Header("ControlUI")]
+    [SerializeField]
+    private Image eyeLockTargetImage;
+    [SerializeField]
+    private GameObject[] controlGroup;
+
+    [Header("MessageForPlayer")]
+    [SerializeField]
+    private GameObject messageGO;
+    [SerializeField]
+    private Text messageText;
+
+    [Header("PlayerBars")]
     [SerializeField]
     public Image playerHealthBarCurrent;
     [SerializeField]
     public Image playerHealthBarEmpty;
-
     [SerializeField]
     public Image playerStaminaBarCurrent;
     [SerializeField]
     public Image playerStaminaBarEmpty;
 
-    private Color32 colorEngaged = new Color32(255, 255, 255, 255);
-    private Color32 colorCalm = new Color32(255, 255, 255, 100);
+    private readonly Color32 colorEngaged = new Color32(255, 255, 255, 255);
+    private readonly Color32 colorCalm = new Color32(255, 255, 255, 100);
+
+
+    private readonly Color32 colorEyeLocked = new Color32(170, 50, 50, 255);
+    private readonly Color32 colorEyeFree = new Color32(255, 255, 255, 255);
 
     [SerializeField]
     public Image[] playerBars;
+
+    #region Singleton
+
+    public static UIGamePlay Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    #endregion
 
     private void Start()
     {
@@ -81,12 +109,14 @@ public class UIGamePlay : MonoBehaviour
 
     public void Block()
     {
-
+        //PlayerControl.Instance.locomotion.BlockControl();
+        Debug.Log("Block!");
     }
 
     public void LockTarget()
     {
         PlayerControl.Instance.LockTarget();
+        eyeLockTargetImage.color = PlayerControl.Instance.stateLockTarget ? colorEyeLocked : colorEyeFree;
     }
 
     public void SwitchWeapon()
@@ -94,6 +124,32 @@ public class UIGamePlay : MonoBehaviour
         PlayerControl.Instance.NextWeapon();
         numberWeapon.text = (PlayerControl.Instance.curIndexWeapon + 1).ToString();
     }
+
+    #region Message for player
+
+    private Coroutine blinkMessageCoroutine;
+
+    public void DisplayMessage(string text, Color32 color, float duration, bool blinking)
+    {
+        StartCoroutine(DisplayMessageRoutine(text, color, duration, blinking));
+    }
+
+    private IEnumerator DisplayMessageRoutine(string text, Color32 color, float duration, bool blinking)
+    {
+        messageText.text = text;
+        messageText.color = color;
+        messageGO.SetActive(true);
+        if (blinking)
+            blinkMessageCoroutine = StartCoroutine(Blink(messageText, false));
+
+        yield return new WaitForSeconds(duration);
+        if (blinking)
+            StopCoroutine(blinkMessageCoroutine);
+        messageGO.SetActive(false);
+        messageText.text = string.Empty;
+    }
+
+    #endregion
 
     #region PauseResume
 
@@ -125,29 +181,43 @@ public class UIGamePlay : MonoBehaviour
         }
     }
 
-    #region BlinkingTextOnPause
+    #region BlinkingTextRoutine
 
     [SerializeField]
     private Text pauseText;
 
-    private Coroutine blinkCoroutine;
+    private Coroutine blinkPauseCoroutine;
     private Coroutine waitForRealSecondsCoroutine;
 
-    private IEnumerator Blink()
+    private IEnumerator Blink(Text text, bool ignoreTimeScale)
     {
-        pauseText.color = new Color(pauseText.color.r, pauseText.color.g, pauseText.color.b, 0);
+        text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
 
         while (true)
         {
-            switch (pauseText.color.a.ToString())
+            switch (text.color.a.ToString())
             {
                 case "0":
-                    pauseText.color = new Color(pauseText.color.r, pauseText.color.g, pauseText.color.b, 1);
-                    yield return waitForRealSecondsCoroutine = StartCoroutine(WaitForRealSeconds(0.5f));
+                    text.color = new Color(text.color.r, text.color.g, text.color.b, 1);
+                    if (ignoreTimeScale)
+                    {
+                        yield return waitForRealSecondsCoroutine = StartCoroutine(WaitForRealSeconds(0.5f));
+                    }
+                    else
+                    {
+                        yield return new WaitForSeconds(0.5f);
+                    }
                     break;
                 case "1":
-                    pauseText.color = new Color(pauseText.color.r, pauseText.color.g, pauseText.color.b, 0);
-                    yield return waitForRealSecondsCoroutine = StartCoroutine(WaitForRealSeconds(0.5f));
+                    text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
+                    if (ignoreTimeScale)
+                    {
+                        yield return waitForRealSecondsCoroutine = StartCoroutine(WaitForRealSeconds(0.5f));
+                    }
+                    else
+                    {
+                        yield return new WaitForSeconds(0.5f);
+                    }
                     break;
             }
         }
@@ -165,12 +235,12 @@ public class UIGamePlay : MonoBehaviour
 
     private void StartBlinkingPauseText()
     {
-        blinkCoroutine = StartCoroutine(Blink());
+        blinkPauseCoroutine = StartCoroutine(Blink(pauseText, true));
     }
 
     private void StopBlinkingPauseText()
     {
-        StopCoroutine(blinkCoroutine);
+        StopCoroutine(blinkPauseCoroutine);
         StopCoroutine(waitForRealSecondsCoroutine);
     }
 
