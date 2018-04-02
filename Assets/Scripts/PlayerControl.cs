@@ -124,6 +124,8 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 
     #endregion
 
+    #region LockTarget
+
     public void LockTarget()
     {
         stateLockTarget = !stateLockTarget;
@@ -168,6 +170,30 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
             target = null;
         }
     }
+
+    #endregion
+
+    #region Block
+
+    public bool isBlock;
+
+    public void Block(bool pointerDownValue)
+    {
+        isBlock = pointerDownValue;
+
+        if (isBlock)
+        {
+            UIGamePlay.Instance.DisplayMessage(Messages.messageBlockTrue, Colors.greenMessage, 1f, false);
+
+            // ToDO HP control (don't affect it) and add animation
+        }
+        else
+        {
+            UIGamePlay.Instance.DisplayMessage(Messages.messageBlockFalse, Colors.redMessage, 1f, false);
+        }
+    }
+
+    #endregion
 
     #region Weapon
 

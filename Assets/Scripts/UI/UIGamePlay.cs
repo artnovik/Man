@@ -24,6 +24,14 @@ public class UIGamePlay : MonoBehaviour
     [SerializeField]
     private Image eyeLockTargetImage;
     [SerializeField]
+    private Image blockImage;
+
+    [SerializeField]
+    private Button attackButton;
+    [SerializeField]
+    private Button switchWeaponButton;
+
+    [SerializeField]
     private GameObject[] controlGroup;
 
     [Header("MessageForPlayer")]
@@ -41,13 +49,6 @@ public class UIGamePlay : MonoBehaviour
     public Image playerStaminaBarCurrent;
     [SerializeField]
     public Image playerStaminaBarEmpty;
-
-    private readonly Color32 colorEngaged = new Color32(255, 255, 255, 255);
-    private readonly Color32 colorCalm = new Color32(255, 255, 255, 100);
-
-
-    private readonly Color32 colorEyeLocked = new Color32(170, 50, 50, 255);
-    private readonly Color32 colorEyeFree = new Color32(255, 255, 255, 255);
 
     [SerializeField]
     public Image[] playerBars;
@@ -96,7 +97,7 @@ public class UIGamePlay : MonoBehaviour
     {
         foreach (var playerBarImage in playerBars)
         {
-            playerBarImage.color = brightVisibility ? colorEngaged : colorCalm;
+            playerBarImage.color = brightVisibility ? Colors.playerEngagedUI : Colors.playerCalmUI;
         }
     }
 
@@ -107,16 +108,18 @@ public class UIGamePlay : MonoBehaviour
         PlayerControl.Instance.locomotion.AttackControl();
     }
 
-    public void Block()
+    public void Block(bool pointerDownValue)
     {
-        //PlayerControl.Instance.locomotion.BlockControl();
-        Debug.Log("Block!");
+        PlayerControl.Instance.Block(pointerDownValue);
+        blockImage.color = pointerDownValue ? Colors.playerActiveUI : Colors.playerDefaultUI;
+        attackButton.interactable = !pointerDownValue;
+        switchWeaponButton.interactable = !pointerDownValue;
     }
 
     public void LockTarget()
     {
         PlayerControl.Instance.LockTarget();
-        eyeLockTargetImage.color = PlayerControl.Instance.stateLockTarget ? colorEyeLocked : colorEyeFree;
+        eyeLockTargetImage.color = PlayerControl.Instance.stateLockTarget ? Colors.playerActiveUI : Colors.playerDefaultUI;
     }
 
     public void SwitchWeapon()
@@ -127,11 +130,20 @@ public class UIGamePlay : MonoBehaviour
 
     #region Message for player
 
+    private Coroutine displayMessageCoroutine;
     private Coroutine blinkMessageCoroutine;
 
     public void DisplayMessage(string text, Color32 color, float duration, bool blinking)
     {
-        StartCoroutine(DisplayMessageRoutine(text, color, duration, blinking));
+        if (displayMessageCoroutine != null)
+        {
+            StopCoroutine(displayMessageCoroutine);
+
+            if (blinkMessageCoroutine != null)
+                StopCoroutine(blinkMessageCoroutine);
+        }
+
+        displayMessageCoroutine = StartCoroutine(DisplayMessageRoutine(text, color, duration, blinking));
     }
 
     private IEnumerator DisplayMessageRoutine(string text, Color32 color, float duration, bool blinking)

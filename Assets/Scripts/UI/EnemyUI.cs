@@ -11,9 +11,6 @@ public class EnemyUI : MonoBehaviourSingleton<EnemyUI>
     [SerializeField]
     private Image enemyHealthBarEmpty;
 
-    private Color32 colorEngaged = new Color32(255, 255, 255, 255);
-    private Color32 colorCalm = new Color32(255, 255, 255, 100);
-
     [HideInInspector]
     public Health health;
 
@@ -33,13 +30,13 @@ public class EnemyUI : MonoBehaviourSingleton<EnemyUI>
         {
             if (brightVisibility)
             {
-                enemyHealthBarCurrent.color = colorEngaged;
-                enemyHealthBarEmpty.color = colorEngaged;
+                enemyHealthBarCurrent.color = Colors.enemyEngagedHP;
+                enemyHealthBarEmpty.color = Colors.enemyEngagedHP;
             }
             else
             {
-                enemyHealthBarCurrent.color = colorCalm;
-                enemyHealthBarEmpty.color = colorCalm;
+                enemyHealthBarCurrent.color = Colors.enemyCalmHP;
+                enemyHealthBarEmpty.color = Colors.enemyCalmHP;
             }
         }
     }

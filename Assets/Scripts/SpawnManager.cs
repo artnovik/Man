@@ -50,7 +50,7 @@ public class SpawnManager : MonoBehaviour
 
         if (!CheckForEnemies(enemyPrefab))
         {
-            UIGamePlay.Instance.DisplayMessage(Messages.messageNoEnemies, Color.yellow, 3f, false);
+            UIGamePlay.Instance.DisplayMessage(Messages.messageNoEnemies, Colors.yellowMessage, 3f, false);
             yield return new WaitForSeconds(3f);
             SpawnEnemies(enemyPrefab, 4);
         }
