@@ -21,6 +21,9 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     public Locomotion locomotion;
     public PlayerView playerView;
 
+    [SerializeField]
+    private float movementSpeed = 1.2f;
+
     public bool stateLockTarget = false;
     public Transform target;
 
@@ -97,17 +100,21 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         LockTargetControl();
     }
 
+    #endregion
+
+    #region Locomotion
+
     private void Locomotion()
     {
         Vector3 keyboardDirection = Vector3.zero;
 
-        keyboardDirection.x = Input.GetAxis("Horizontal");
-        keyboardDirection.z = Input.GetAxis("Vertical");
+        keyboardDirection.x = Input.GetAxisRaw("Horizontal");
+        keyboardDirection.z = Input.GetAxisRaw("Vertical");
 
         keyboardDirection += movementDirection;
 
         locomotion.Movement(cameraControl.parentCamera.TransformDirection(keyboardDirection));
-        localTransform.position = Vector3.Lerp(localTransform.position, locomotion.animControl.transform.position, 0.2f);
+        localTransform.position = Vector3.Lerp(localTransform.position, locomotion.animControl.transform.position, movementSpeed);
 
         if (!target)
         {
