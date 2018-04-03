@@ -9,6 +9,8 @@ public class SpawnManager : MonoBehaviour
 
     public GameObject enemyZombie;
 
+    private uint deadBodyDeleteDuration = 5;
+
     #region Singleton
 
     public static SpawnManager Instance;
@@ -27,6 +29,16 @@ public class SpawnManager : MonoBehaviour
             if (spawnPointsTransforms[i] != null)
                 Instantiate(enemyPrefab, spawnPointsTransforms[i].position, spawnPointsTransforms[i].rotation);
         }
+    }
+
+    public void SetDeadBodyDeleteDuration(uint durationInSeconds)
+    {
+        deadBodyDeleteDuration = durationInSeconds;
+    }
+
+    public uint GetDeadBodyDeleteDuration()
+    {
+        return deadBodyDeleteDuration;
     }
 
     public int GetCurrentEnemyQuantityOnMap(GameObject enemyPrefab)

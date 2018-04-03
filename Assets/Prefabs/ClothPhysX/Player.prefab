@@ -1259,7 +1259,7 @@ GameObject:
   - component: {fileID: 95346201888160510}
   - component: {fileID: 136940142448556320}
   - component: {fileID: 114507723874496848}
-  - component: {fileID: 114165659354080774}
+  - component: {fileID: 114876720922075246}
   - component: {fileID: 54047526821628166}
   m_Layer: 0
   m_Name: Player_Jack
@@ -3559,20 +3559,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114165659354080774
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1792862599540310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9152f771a5bcc1f4fb77e3a3b989973c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  locomotion: {fileID: 0}
-  maxHealth: 100
-  currentHealth: 100
 --- !u!114 &114507723874496848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3584,7 +3570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d305e5d4c35015d44aa8aac3ff271170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: {fileID: 0}
+  health: {fileID: 114876720922075246}
   typeLocomotion: 0
   typeSpeed: 0
   animControl: {fileID: 95346201888160510}
@@ -3614,9 +3600,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33608ad7f9b7a8e41908d63362187b85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCollider: {fileID: 136940142448556320}
+  playerUI: {fileID: 0}
   cameraControl: {fileID: 114834372176763480}
   locomotion: {fileID: 114507723874496848}
   playerView: {fileID: 114587143568569328}
+  movementSpeed: 1.2
   stateLockTarget: 0
   target: {fileID: 0}
   movementDirection: {x: 0, y: 0, z: 0}
@@ -3627,6 +3616,8 @@ MonoBehaviour:
   - {fileID: 1601528930609020}
   - {fileID: 1235602614466690}
   isPaused: 0
+  godMode: 0
+  isBlock: 0
 --- !u!114 &114834372176763480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3642,14 +3633,30 @@ MonoBehaviour:
   distance: 3
   smoothPosition: 0.05
   pivotPosition: {x: 0, y: 0, z: 0}
-  rotateSensativity: 1.1
-  turnSensativity: 0.1
+  rotateSensitivity: 2.2
+  turnSensitivity: 0.4
   smoothRotation: 0.1
   rotateDirection: {x: 0, y: 0, z: 0}
   parentCamera: {fileID: 4046183557806302}
   pivotCamera: {fileID: 4428450639617952}
   targetCamera: {fileID: 4172021940795174}
   target: {fileID: 0}
+--- !u!114 &114876720922075246
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1792862599540310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d26cf123c726354d86c587da65d52b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locomotion: {fileID: 0}
+  maxHealth: 100
+  currentHealth: 100
+  minHealth: 0
+  isDead: 0
 --- !u!124 &124598157937027974
 Behaviour:
   m_ObjectHideFlags: 1

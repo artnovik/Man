@@ -3053,7 +3053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d305e5d4c35015d44aa8aac3ff271170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: {fileID: 0}
+  health: {fileID: 114044743799235528}
   typeLocomotion: 0
   typeSpeed: 0
   animControl: {fileID: 95022380503117368}

@@ -220,14 +220,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     {
         for (int i = 0; i < listWeapons.Count; i++)
         {
-            if (i == index)
-            {
-                listWeapons[i].SetActive(true);
-            }
-            else
-            {
-                listWeapons[i].SetActive(false);
-            }
+            listWeapons[i].SetActive(i == index);
         }
     }
 

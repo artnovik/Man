@@ -11,7 +11,6 @@ public class CoreAnimator : MonoBehaviour
     public const string ATTACK_VALUE = "Attack_Value";
 }
 
-[RequireComponent(typeof(Health))]
 public class Locomotion : CoreAnimator
 {
     [Tooltip("Health reference")]
@@ -49,13 +48,8 @@ public class Locomotion : CoreAnimator
 
     public void Initialization()
     {
-        if (GetComponent<Health>() == null)
-        {
-            gameObject.AddComponent<Health>();
-        }
-
         health = GetComponent<Health>();
-        health.locomotion = this;
+        //health.locomotion = this;
         localTransform = animControl.transform;
     }
 
