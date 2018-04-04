@@ -34,7 +34,7 @@ public class HealthEnemy : Health
         DeathI();
 
         GetComponent<EnemyUI>().DestroyEnemyUI(SpawnManager.Instance.GetDeadBodyDeleteDuration());
-        GetComponent<AIEnemy>().SetRagdoll(true);
+        GetComponent<AIBattle>().SetRagdoll(true);
         DisableCollidersBetweenEnemyAndPlayer(2f);
         DestroyComponents();
         DestroyBody(SpawnManager.Instance.GetDeadBodyDeleteDuration());
@@ -43,7 +43,7 @@ public class HealthEnemy : Health
     private void DestroyComponents()
     {
         Destroy(GetComponent<Locomotion>());
-        Destroy(GetComponent<AIEnemy>());
+        Destroy(GetComponent<AIBattle>());
         Destroy(GetComponent<CapsuleCollider>());
     }
 
