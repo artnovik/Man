@@ -75,14 +75,12 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         if (stateLockTarget && target != null && !target.GetComponent<Health>().isDead)
         {
             cameraControl.target = target;
-            locomotion.target = target.GetComponent<Locomotion>();
-            playerUI.SetPlayerBarsStatus(true);
+            locomotion.targetLocomotion = target.GetComponent<Locomotion>();
         }
         else
         {
             cameraControl.target = null;
-            locomotion.target = null;
-            playerUI.SetPlayerBarsStatus(false);
+            locomotion.targetLocomotion = null;
         }
 
         /*if (target)
@@ -125,11 +123,23 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
             }
 
             BattleMusicControl(false);
+            playerUI.SetPlayerBarsStatus(false);
         }
         else
         {
             locomotion.Rotate((target.position - localTransform.position).normalized);
+
+            foreach (Transform item in playerView.listObject)
+            {
+                if (item && !item.GetComponent<Health>().isDead)
+                {
+                    locomotion.targetLocomotion = item.GetComponent<Locomotion>();
+                    locomotion.typeSpeed = global::Locomotion.TSpeed.Walk;
+                }
+            }
+
             BattleMusicControl(true);
+            playerUI.SetPlayerBarsStatus(true);
         }
     }
 

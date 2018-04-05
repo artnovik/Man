@@ -65,6 +65,7 @@ public class AIBattle : MonoBehaviour
     {
         if (!target)
         {
+            // ToDo patrolling fix related to this
             locomotion.Movement(Vector3.zero);
             return;
         }
@@ -75,11 +76,11 @@ public class AIBattle : MonoBehaviour
         {
             fixDirection = (agent.steeringTarget - transform.position).normalized;
             locomotion.Rotate(fixDirection);
-            locomotion.target = null;
+            locomotion.targetLocomotion = null;
         }
         else if (target.GetComponent<Health>().currentHealth > 0)
         {
-            locomotion.target = target.GetComponent<Locomotion>();
+            locomotion.targetLocomotion = target.GetComponent<Locomotion>();
             locomotion.AttackControl();
         }
 
@@ -93,12 +94,12 @@ public class AIBattle : MonoBehaviour
             if (tar)
             {
                 target = tar;
-                locomotion.target = target.GetComponent<Locomotion>();
+                locomotion.targetLocomotion = target.GetComponent<Locomotion>();
                 return;
             }
         }
 
-        locomotion.target = null;
+        locomotion.targetLocomotion = null;
         target = null;
     }
 

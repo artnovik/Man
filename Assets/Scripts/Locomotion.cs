@@ -34,7 +34,7 @@ public class Locomotion : CoreAnimator
     public TSpeed typeSpeed = TSpeed.Walk;
     public Animator animControl;
 
-    public Locomotion target;
+    public Locomotion targetLocomotion;
 
     private Transform localTransform;
     private float factor = 1f;
@@ -57,13 +57,14 @@ public class Locomotion : CoreAnimator
     {
         Vector3 inversDirection = localTransform.InverseTransformDirection(direction);
 
-        if (typeSpeed == TSpeed.Walk)
+        switch (typeSpeed)
         {
-            factor = Mathf.Lerp(factor, 1, 0.1f);
-        }
-        else if (typeSpeed == TSpeed.Run)
-        {
-            factor = Mathf.Lerp(factor, 2, 0.1f);
+            case TSpeed.Walk:
+                factor = Mathf.Lerp(factor, 1, 0.1f);
+                break;
+            case TSpeed.Run:
+                factor = Mathf.Lerp(factor, 2, 0.1f);
+                break;
         }
 
         if (inversDirection.magnitude > 0)
@@ -117,19 +118,14 @@ public class Locomotion : CoreAnimator
 
     public void AnimAttack()
     {
-        if (!target || health.isDead) { return; }
+        if (!targetLocomotion || health.isDead) { return; }
 
-        if (Vector3.Distance(target.localTransform.position, localTransform.position) <= 2f)
+        if (Vector3.Distance(targetLocomotion.localTransform.position, localTransform.position) <= 2f)
         {
-            if (target.health.isDead)
+            targetLocomotion.health.Damage(Random.Range(15, 35));
+            if (targetLocomotion.health.isDead)
             {
-                return;
-            }
-
-            target.health.Damage(Random.Range(15, 35));
-            if (target.health.isDead)
-            {
-                target = null;
+                targetLocomotion = null;
             }
             // ToDo DMG numbers popup
         }

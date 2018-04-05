@@ -69,16 +69,12 @@ public class AudioManager : MonoBehaviour
         if ((Time.timeSinceLevelLoad - timeSinceNewPlaybackStarted) < saveNewClipDuration)
         {
             newSource.Play();
-            Debug.Log("Continue");
         }
         else
         {
             newSource.Stop();
             newSource.Play();
-            Debug.Log("Start");
         }
-
-        Debug.Log("Passed " + (Time.timeSinceLevelLoad - timeSinceNewPlaybackStarted) + " seconds!");
 
         timeSinceNewPlaybackStarted = Time.timeSinceLevelLoad;
 
