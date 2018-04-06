@@ -26,6 +26,9 @@ public abstract class Health : MonoBehaviour
     public abstract void Heal(int healValue);
     public void HealI(int healValue)
     {
+        if (isDead)
+            return;
+
         currentHealth += healValue;
         if (currentHealth > maxHealth)
         {
