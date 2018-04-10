@@ -10,6 +10,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     [Tooltip("Health reference")]
     private Health health;
 
+    [HideInInspector]
     public Collider playerCollider;
 
     [Tooltip("User Interface reference")]

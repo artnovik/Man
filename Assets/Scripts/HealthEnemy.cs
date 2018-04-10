@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class HealthEnemy : Health
 {
@@ -27,6 +28,14 @@ public class HealthEnemy : Health
         DamageI(damageValue);
 
         GetComponent<EnemyUI>().HealthBarDamage(currentHealth);
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("WeaponInPlayerHands"))
+        {
+            Damage(Random.Range(15, 35));
+        }
     }
 
     public override void Death()
@@ -61,8 +70,8 @@ public class HealthEnemy : Health
     {
         yield return new WaitForSeconds(delay);
 
-        Collider[] colliders = GetComponentsInChildren<Collider>();
-        foreach (Collider collider in colliders)
+        Collider[] enemyColliders = GetComponentsInChildren<Collider>();
+        foreach (Collider collider in enemyColliders)
         {
             Physics.IgnoreCollision(collider, playerCollider);
         }
