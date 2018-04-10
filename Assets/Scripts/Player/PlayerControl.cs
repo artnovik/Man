@@ -126,17 +126,6 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         }
         else
         {
-            locomotion.Rotate((target.position - localTransform.position).normalized);
-
-            foreach (Transform item in playerView.listObject)
-            {
-                if (item && !item.GetComponent<Health>().isDead)
-                {
-                    locomotion.targetLocomotion = item.GetComponent<Locomotion>();
-                    locomotion.typeSpeed = global::Locomotion.TSpeed.Walk;
-                }
-            }
-
             BattleMusicControl(true);
             playerUI.SetPlayerBarsStatus(true);
         }
@@ -184,11 +173,15 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     {
         if (stateLockTarget)
         {
+            if (target != null)
+                locomotion.Rotate((target.position - localTransform.position).normalized);
+
             foreach (Transform item in playerView.listObject)
             {
                 if (item && !item.GetComponent<Health>().isDead)
                 {
                     target = item;
+                    locomotion.targetLocomotion = item.GetComponent<Locomotion>();
                     locomotion.typeSpeed = global::Locomotion.TSpeed.Walk;
                     return;
                 }
@@ -199,24 +192,8 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         }
         else
         {
-            locomotion.typeSpeed = global::Locomotion.TSpeed.Run;
-            // ToDo little fix
-            foreach (Transform item in playerView.listObject)
-            {
-                if (item != null && !item.GetComponent<Health>().isDead)
-                {
-                    target = item;
-                    return;
-                }
-                else
-                {
-                    target = null;
-                    playerView.listObject.Remove(item);
-                    return;
-                }
-            }
-
             target = null;
+            locomotion.typeSpeed = global::Locomotion.TSpeed.Run;
         }
     }
 
