@@ -114,7 +114,6 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         locomotion.Movement(cameraControl.parentCamera.TransformDirection(keyboardDirection));
         localTransform.position = Vector3.Lerp(localTransform.position, locomotion.animControl.transform.position, movementSpeed);
 
-        // ToDo Handle this
         if (!target)
         {
             if (keyboardDirection.magnitude > 0)
