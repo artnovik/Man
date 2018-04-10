@@ -323,9 +323,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4410477772275220}
+  - component: {fileID: 65281991902957448}
   m_Layer: 0
   m_Name: Scythe
-  m_TagString: Untagged
+  m_TagString: WeaponInPlayerHands
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -893,9 +894,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4467657420773382}
+  - component: {fileID: 65572932289928900}
   m_Layer: 0
   m_Name: Kasilka
-  m_TagString: Untagged
+  m_TagString: WeaponInPlayerHands
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1121,9 +1123,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4437326184579564}
+  - component: {fileID: 65415963048203916}
   m_Layer: 0
   m_Name: Knife
-  m_TagString: Untagged
+  m_TagString: WeaponInPlayerHands
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1659,9 +1662,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4927781381070796}
+  - component: {fileID: 65798140889022800}
   m_Layer: 0
   m_Name: Saw
-  m_TagString: Untagged
+  m_TagString: WeaponInPlayerHands
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3467,6 +3471,54 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!65 &65281991902957448
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1235602614466690}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1395894, y: 0.4437689, z: 0.04}
+  m_Center: {x: -0.41611645, y: 1.3280122, z: 0.0000050296762}
+--- !u!65 &65415963048203916
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1737280626240596}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2506585, y: 0.52982265, z: 0.04}
+  m_Center: {x: 0.000024003124, y: 0.44198516, z: 0.0000010386952}
+--- !u!65 &65572932289928900
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1601528930609020}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.68601996, y: 0.13030641, z: 0.04}
+  m_Center: {x: -0.31985947, y: 0.5599283, z: 0.0000015602046}
+--- !u!65 &65798140889022800
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1982010047296934}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3175313, y: 0.571377, z: 0.04}
+  m_Center: {x: -0.12617126, y: 0.38982493, z: 0.00000054710046}
 --- !u!81 &81713960270261932
 AudioListener:
   m_ObjectHideFlags: 1
@@ -4027,7 +4079,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: eb28f29bb208cd449a011afb7ae36060, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
