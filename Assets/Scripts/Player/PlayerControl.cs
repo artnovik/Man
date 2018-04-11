@@ -127,11 +127,13 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
                 locomotion.Rotate(cameraControl.parentCamera.TransformDirection(keyboardDirection));
             }
 
+            // ToDo change it, to "when enemy engaged"
             BattleMusicControl(false);
             playerUI.SetPlayerBarsStatus(false);
         }
         else
         {
+            // ToDo change it, to "when enemy engaged"
             BattleMusicControl(true);
             playerUI.SetPlayerBarsStatus(true);
         }
