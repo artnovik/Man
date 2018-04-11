@@ -118,17 +118,15 @@ public class Locomotion : CoreAnimator
 
     public void AnimAttack()
     {
-        if (!targetLocomotion || health.isDead) { return; }
+        // Simply turn on/off weapon collider on certain attack animation points
+        PlayerControl.Instance.listWeapons[PlayerControl.Instance.curIndexWeapon].GetComponent<Collider>().enabled =
+            !PlayerControl.Instance.listWeapons[PlayerControl.Instance.curIndexWeapon].GetComponent<Collider>().enabled;
+    }
 
-        if (Vector3.Distance(targetLocomotion.localTransform.position, localTransform.position) <= 2f)
-        {
-            targetLocomotion.health.Damage(Random.Range(15, 35));
-            if (targetLocomotion.health.isDead)
-            {
-                targetLocomotion = null;
-            }
-            // ToDo DMG numbers popup
-        }
+    private void OnMouseDown()
+    {
+        // ToDo PlayerCharacter swap menu
+        Debug.Log(gameObject.name);
     }
 
     #endregion

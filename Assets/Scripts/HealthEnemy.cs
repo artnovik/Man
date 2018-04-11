@@ -32,7 +32,11 @@ public class HealthEnemy : Health
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.CompareTag("WeaponInPlayerHands"))
+        //foreach (var weapon in PlayerControl.Instance.listWeapons)
+        //{
+
+        //}
+        if (collider.gameObject.CompareTag("WeaponInPlayerHands") && !isDead)
         {
             Damage(Random.Range(15, 35));
         }

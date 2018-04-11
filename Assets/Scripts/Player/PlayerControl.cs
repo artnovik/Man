@@ -67,6 +67,11 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 
         locomotion.animControl.transform.SetParent(null);
         localTransform = transform;
+
+        foreach (var weapon in listWeapons)
+        {
+            weapon.GetComponent<Collider>().enabled = false;
+        }
     }
 
     public void CoreUpdate()
