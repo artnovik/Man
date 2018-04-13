@@ -125,8 +125,8 @@ public class Locomotion : CoreAnimator
 
     private void OnMouseDown()
     {
-        // ToDo PlayerCharacter swap menu
-        Debug.Log(gameObject.name);
+        if (!gameObject.CompareTag("Enemy"))
+            Debug.Log(gameObject.name);
     }
 
     #endregion
