@@ -11,6 +11,7 @@ public class CoreAnimator : MonoBehaviour
     public const string ATTACK_VALUE = "Attack_Value";
 }
 
+// ToDo separate for Player and Enemy
 public class Locomotion : CoreAnimator
 {
     [Tooltip("Health reference")]
@@ -116,6 +117,7 @@ public class Locomotion : CoreAnimator
         }
     }
 
+    // For Player
     public void AnimAttack()
     {
         // Simply turn on/off weapon collider on certain attack animation points
@@ -123,10 +125,22 @@ public class Locomotion : CoreAnimator
             !PlayerControl.Instance.listWeapons[PlayerControl.Instance.curIndexWeapon].GetComponent<Collider>().enabled;
     }
 
+    // For Enemy
+    public void AttackPlayer()
+    {
+        if (targetLocomotion && !targetLocomotion.health.isDead)
+        {
+            targetLocomotion.health.Damage(Random.Range(15, 35));
+            Debug.Log(targetLocomotion.health.currentHealth);
+        }
+    }
+
     private void OnMouseDown()
     {
-        if (!gameObject.CompareTag("Enemy"))
+        if (gameObject.CompareTag("Player"))
+        {
             Debug.Log(gameObject.name);
+        }
     }
 
     #endregion

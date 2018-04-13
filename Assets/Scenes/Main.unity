@@ -1963,6 +1963,11 @@ Prefab:
       propertyPath: m_ConnectedAnchor.z
       value: 0.020561894
       objectReference: {fileID: 0}
+    - target: {fileID: 136571514283690512, guid: 5dfe6abdf627ba0438ad87f0f8edaf3d,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5dfe6abdf627ba0438ad87f0f8edaf3d, type: 2}
   m_IsPrefabParent: 0
@@ -2273,11 +2278,6 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 82378070857212304, guid: ff545b66842816f438784bf069dd906b,
-        type: 2}
-      propertyPath: m_Volume
-      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff545b66842816f438784bf069dd906b, type: 2}

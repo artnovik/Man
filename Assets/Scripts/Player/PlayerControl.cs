@@ -37,6 +37,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     private Transform localTransform;
 
     public bool isPaused;
+    public bool inFightStatus;
     public bool godMode;
 
     #endregion
@@ -126,16 +127,18 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
             {
                 locomotion.Rotate(cameraControl.parentCamera.TransformDirection(keyboardDirection));
             }
+        }
 
-            // ToDo change it, to "when enemy engaged"
-            BattleMusicControl(false);
-            playerUI.SetPlayerBarsStatus(false);
+         // ToDo When at least 1 enemy after player
+        if (inFightStatus)
+        {
+            BattleMusicControl(inFightStatus);
+            playerUI.SetPlayerBarsStatus(inFightStatus);
         }
         else
         {
-            // ToDo change it, to "when enemy engaged"
-            BattleMusicControl(true);
-            playerUI.SetPlayerBarsStatus(true);
+            BattleMusicControl(inFightStatus);
+            playerUI.SetPlayerBarsStatus(inFightStatus);
         }
     }
 

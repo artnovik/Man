@@ -24,7 +24,7 @@ public abstract class Health : MonoBehaviour
     }
 
     public abstract void Heal(int healValue);
-    public void HealI(int healValue)
+    protected void HealI(int healValue)
     {
         if (isDead)
             return;
@@ -37,7 +37,7 @@ public abstract class Health : MonoBehaviour
     }
 
     public abstract void Damage(int damageValue);
-    public void DamageI(int damageValue)
+    protected void DamageI(int damageValue)
     {
         if (isDead)
         {
@@ -53,7 +53,7 @@ public abstract class Health : MonoBehaviour
     }
 
     public abstract void Death();
-    public void DeathI()
+    protected void DeathI()
     {
         locomotion.animControl.SetTrigger("Death");
         locomotion.targetLocomotion = null;

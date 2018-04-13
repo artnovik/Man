@@ -67,6 +67,8 @@ public class UIGamePlay : MonoBehaviour
     private void Start()
     {
         numberWeapon.text = (PlayerControl.Instance.curIndexWeapon + 1).ToString();
+        messageGO.SetActive(false);
+        // TODO playerHealthBarCurrent.fillAmount = (float) PlayerControl.Instance.health.currentHealth;
     }
 
     private void Update()
@@ -91,7 +93,12 @@ public class UIGamePlay : MonoBehaviour
         PlayerControl.Instance.cameraControl.rotateDirection += localCameraDir.normalized;
     }
 
-    #region PlayerBars visibility
+    #region PlayerBars
+
+    public void HealthBarDamage(int currentHealth)
+    {
+        playerHealthBarCurrent.fillAmount = (float)currentHealth / 100;
+    }
 
     public void SetPlayerBarsStatus(bool brightVisibility)
     {
@@ -102,6 +109,8 @@ public class UIGamePlay : MonoBehaviour
     }
 
     #endregion
+
+    #region Active Controls
 
     public void Attack()
     {
@@ -127,6 +136,8 @@ public class UIGamePlay : MonoBehaviour
         PlayerControl.Instance.NextWeapon();
         numberWeapon.text = (PlayerControl.Instance.curIndexWeapon + 1).ToString();
     }
+
+    #endregion
 
     #region Message for player
 

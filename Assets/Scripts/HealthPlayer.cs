@@ -19,6 +19,8 @@ public class HealthPlayer : Health
     public override void Damage(int damageValue)
     {
         DamageI(damageValue);
+
+        UIGamePlay.Instance.HealthBarDamage(currentHealth);
         // Custom implementation
     }
 
