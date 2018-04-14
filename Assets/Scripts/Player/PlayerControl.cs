@@ -8,7 +8,8 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 {
     #region Data
     [Tooltip("Health reference")]
-    private Health health;
+    [HideInInspector]
+    public Health playerHealth;
 
     [HideInInspector]
     public Collider playerCollider;
@@ -38,7 +39,6 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 
     public bool isPaused;
     public bool inFightStatus;
-    public bool godMode;
 
     #endregion
 
@@ -64,7 +64,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     {
         cameraControl.Initialization();
         locomotion.Initialization();
-        health = locomotion.health;
+        playerHealth = locomotion.health;
 
         locomotion.animControl.transform.SetParent(null);
         localTransform = transform;
@@ -220,9 +220,9 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 
         if (isBlock)
         {
-            UIGamePlay.Instance.DisplayMessage(Messages.messageBlockTrue, Colors.greenMessage, 1f, false);
+            UIGamePlay.Instance.DisplayMessage(Messages.messageBlockTrue, Colors.greenMessage, 100f, false);
 
-            // ToDO HP control (don't affect it) and add animation
+            // ToDO Add animation
         }
         else
         {

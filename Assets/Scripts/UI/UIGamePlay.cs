@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIGamePlay : MonoBehaviour
@@ -68,7 +69,11 @@ public class UIGamePlay : MonoBehaviour
     {
         numberWeapon.text = (PlayerControl.Instance.curIndexWeapon + 1).ToString();
         messageGO.SetActive(false);
-        // TODO playerHealthBarCurrent.fillAmount = (float) PlayerControl.Instance.health.currentHealth;
+        playerHealthBarCurrent.fillAmount = (float)PlayerControl.Instance.playerHealth.currentHealth;
+
+        pauseMenu.SetActive(true);
+        InitializeCheatsMenu();
+        pauseMenu.SetActive(false);
     }
 
     private void Update()
@@ -95,7 +100,7 @@ public class UIGamePlay : MonoBehaviour
 
     #region PlayerBars
 
-    public void HealthBarDamage(int currentHealth)
+    public void HealthBarValueChange(int currentHealth)
     {
         playerHealthBarCurrent.fillAmount = (float)currentHealth / 100;
     }
@@ -265,6 +270,43 @@ public class UIGamePlay : MonoBehaviour
     {
         StopCoroutine(blinkPauseCoroutine);
         StopCoroutine(waitForRealSecondsCoroutine);
+    }
+
+    #endregion
+
+    #region CheatsMenu
+
+    [Header("CheatMenu")]
+    [SerializeField] private Toggle GOD_MODE_Toggle;
+    [SerializeField] private Toggle FPS_SHOW_Toggle;
+    [SerializeField] private Toggle LIFESTEAL_Toggle;
+
+    [SerializeField] private GameObject FPS_Text_GO;
+
+    public void InitializeCheatsMenu()
+    {
+        GOD_MODE_Toggle.isOn = Cheats.Instance.GOD_MODE;
+        FPS_SHOW_Toggle.isOn = Cheats.Instance.FPS_SHOW;
+        LIFESTEAL_Toggle.isOn = Cheats.Instance.LIFESTEAL;
+
+        FPS_Text_GO.SetActive(Cheats.Instance.FPS_SHOW);
+    }
+
+    public void SetGOD_MODE(bool value)
+    {
+        Cheats.Instance.SetGOD_MODE(value);
+    }
+
+    public void SetFPS_SHOW(bool value)
+    {
+        Cheats.Instance.SetFPS_SHOW(value);
+
+        FPS_Text_GO.SetActive(Cheats.Instance.FPS_SHOW);
+    }
+
+    public void SetLIFESTEAL(bool value)
+    {
+        Cheats.Instance.SetLIFESTEAL(value);
     }
 
     #endregion

@@ -20,6 +20,8 @@ public class HealthEnemy : Health
     public override void Heal(int healValue)
     {
         HealI(healValue);
+
+        GetComponent<EnemyUI>().HealthBarValueChange(currentHealth);
         // Custom implementation
     }
 
@@ -27,7 +29,12 @@ public class HealthEnemy : Health
     {
         DamageI(damageValue);
 
-        GetComponent<EnemyUI>().HealthBarDamage(currentHealth);
+        GetComponent<EnemyUI>().HealthBarValueChange(currentHealth);
+
+        if (Cheats.Instance.LIFESTEAL)
+        {
+            PlayerControl.Instance.playerHealth.Heal((int)(damageValue * 0.5));
+        }
     }
 
     private void OnTriggerEnter(Collider collider)

@@ -50,7 +50,7 @@ public class Locomotion : CoreAnimator
     public void Initialization()
     {
         health = GetComponent<Health>();
-        //health.locomotion = this;
+        //playerHealth.locomotion = this;
         localTransform = animControl.transform;
     }
 
