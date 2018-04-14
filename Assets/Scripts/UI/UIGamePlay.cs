@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIGamePlay : MonoBehaviour
@@ -17,9 +18,6 @@ public class UIGamePlay : MonoBehaviour
 
     [Header("Weapons")]
     public Text numberWeapon;
-
-    [Header("PauseMenu")]
-    public GameObject pauseMenu;
 
     [Header("ControlUI")]
     [SerializeField]
@@ -65,15 +63,18 @@ public class UIGamePlay : MonoBehaviour
 
     #endregion
 
+    #region UnityCallbacks
+
     private void Start()
     {
         numberWeapon.text = (PlayerControl.Instance.curIndexWeapon + 1).ToString();
         messageGO.SetActive(false);
-        playerHealthBarCurrent.fillAmount = (float)PlayerControl.Instance.playerHealth.currentHealth;
 
         pauseMenu.SetActive(true);
         InitializeCheatsMenu();
         pauseMenu.SetActive(false);
+        deathScreen.SetActive(false);
+        //playerHealthBarCurrent.fillAmount = (float)PlayerControl.Instance.playerHealth.currentHealth;
     }
 
     private void Update()
@@ -81,6 +82,10 @@ public class UIGamePlay : MonoBehaviour
         Locomotion();
         Camera();
     }
+
+    #endregion
+
+    #region MovementAndCamera
 
     public void Locomotion()
     {
@@ -97,6 +102,8 @@ public class UIGamePlay : MonoBehaviour
 
         PlayerControl.Instance.cameraControl.rotateDirection += localCameraDir.normalized;
     }
+
+    #endregion
 
     #region PlayerBars
 
@@ -180,6 +187,9 @@ public class UIGamePlay : MonoBehaviour
     #endregion
 
     #region PauseResume
+
+    [Header("PauseMenu")]
+    public GameObject pauseMenu;
 
     public void PauseResume()
     {
@@ -312,6 +322,34 @@ public class UIGamePlay : MonoBehaviour
     }
 
     #endregion
+
+    #endregion
+
+    #region DeathScreen
+
+    [Header("DeathScreen")]
+    [SerializeField]
+    private GameObject deathScreen;
+
+    [SerializeField]
+    private GameObject[] hideOnDeathObjects;
+
+    public void ShowDeathScreen()
+    {
+        foreach (var element in hideOnDeathObjects)
+        {
+            element.SetActive(false);
+        }
+
+        AudioManager.Instance.OnDeathDisableAllAidoSources();
+
+        deathScreen.SetActive(true);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
     #endregion
 }

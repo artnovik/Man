@@ -43,6 +43,14 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void OnDeathDisableAllAidoSources()
+    {
+        foreach (var audioSource in GetComponentsInChildren<AudioSource>())
+        {
+            audioSource.enabled = false;
+        }
+    }
+
     #region SmoothClipSwitch
 
     private Coroutine smoothClipSwitchCoroutine;

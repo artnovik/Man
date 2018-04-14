@@ -14,6 +14,7 @@ public class AIBattle : MonoBehaviour
     public EnemyUI enemyUI;
 
     public bool isBattle;
+    private bool chasedRecently;
 
     #region Unity
 
@@ -44,8 +45,11 @@ public class AIBattle : MonoBehaviour
         ViewControl();
         locomotion.CoreUpdate();
 
-        if (target)
+        if (target && !target.gameObject.GetComponent<Health>().isDead)
         {
+            PlayerControl.Instance.inFightStatus = true;
+            chasedRecently = true;
+
             enemyUI.SetHealthBarStatus(true);
             agent.SetDestination(target.position);
             agent.isStopped = false;
@@ -53,6 +57,12 @@ public class AIBattle : MonoBehaviour
         }
         else
         {
+            if (chasedRecently)
+            {
+                PlayerControl.Instance.inFightStatus = false;
+                chasedRecently = false;
+            }
+
             enemyUI.SetHealthBarStatus(false);
             agent.isStopped = true;
             isBattle = false;

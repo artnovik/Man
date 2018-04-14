@@ -129,7 +129,6 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
             }
         }
 
-         // ToDo When at least 1 enemy after player
         if (inFightStatus)
         {
             BattleMusicControl(inFightStatus);

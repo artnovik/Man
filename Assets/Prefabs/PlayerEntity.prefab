@@ -1001,6 +1001,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4093609413514278}
   - component: {fileID: 137914790231678510}
+  - component: {fileID: 82905781108021640}
   m_Layer: 0
   m_Name: Shoes
   m_TagString: Untagged
@@ -1264,6 +1265,7 @@ GameObject:
   - component: {fileID: 114507723874496848}
   - component: {fileID: 114876720922075246}
   - component: {fileID: 54047526821628166}
+  - component: {fileID: 114146030649663362}
   m_Layer: 0
   m_Name: Player_Jack
   m_TagString: Player
@@ -1762,7 +1764,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1658050725186712}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.8342066, y: 4.8304403e-17, z: -10.877185}
+  m_LocalPosition: {x: 1.79, y: 4.8304403e-17, z: -10.877185}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4817662477664072}
@@ -3526,6 +3528,86 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1538334849331612}
   m_Enabled: 1
+--- !u!82 &82905781108021640
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1647470085079312}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 10
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95192375859369650
 Animator:
   serializedVersion: 3
@@ -3611,6 +3693,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114146030649663362
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1792862599540310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d9b0e6d4f2e0d042bc5ced64b7283dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepsAudioSource: {fileID: 82905781108021640}
+  footstepsAudioClip: {fileID: 8300000, guid: f19a5e02168225844bd1c4f8e5496766, type: 3}
 --- !u!114 &114507723874496848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3652,6 +3747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33608ad7f9b7a8e41908d63362187b85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHealth: {fileID: 0}
   playerCollider: {fileID: 136940142448556320}
   playerUI: {fileID: 0}
   cameraControl: {fileID: 114834372176763480}
@@ -3668,7 +3764,7 @@ MonoBehaviour:
   - {fileID: 1601528930609020}
   - {fileID: 1235602614466690}
   isPaused: 0
-  godMode: 0
+  inFightStatus: 0
   isBlock: 0
 --- !u!114 &114834372176763480
 MonoBehaviour:
@@ -3884,8 +3980,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 4247045237264414}
   m_AABB:
-    m_Center: {x: -0.00000011920929, y: 0.05555439, z: 1.1933985}
-    m_Extent: {x: 0.5976623, y: 0.22804639, z: 0.5310605}
+    m_Center: {x: -0.00000011920929, y: 0.055553555, z: 1.1933985}
+    m_Extent: {x: 0.5976623, y: 0.22804603, z: 0.5310605}
   m_DirtyAABB: 0
 --- !u!137 &137402627228092050
 SkinnedMeshRenderer:

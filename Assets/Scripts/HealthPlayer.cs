@@ -14,8 +14,8 @@ public class HealthPlayer : Health
     {
         HealI(healValue);
 
-        UIGamePlay.Instance.HealthBarValueChange(currentHealth);
         // Custom implementation
+        UIGamePlay.Instance.HealthBarValueChange(currentHealth);
     }
 
     public override void Damage(int damageValue)
@@ -24,14 +24,16 @@ public class HealthPlayer : Health
         {
             DamageI(damageValue);
 
-            UIGamePlay.Instance.HealthBarValueChange(currentHealth);
             // Custom implementation
+            UIGamePlay.Instance.HealthBarValueChange(currentHealth);
         }
     }
 
     public override void Death()
     {
         DeathI();
+
         // Custom implementation
+        UIGamePlay.Instance.ShowDeathScreen();
     }
 }

@@ -59,6 +59,7 @@ public abstract class Health : MonoBehaviour
         locomotion.targetLocomotion = null;
 
         currentHealth = 0;
+        PlayerControl.Instance.inFightStatus = false;
         isDead = true;
     }
 
