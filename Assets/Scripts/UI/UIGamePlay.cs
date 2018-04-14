@@ -292,21 +292,23 @@ public class UIGamePlay : MonoBehaviour
         FPS_Text_GO.SetActive(Cheats.Instance.FPS_SHOW);
     }
 
-    public void SetGOD_MODE(bool value)
+    public void SetCheatValue(bool value)
     {
-        Cheats.Instance.SetGOD_MODE(value);
-    }
+        var clickedCheatToggle = EventSystem.current.currentSelectedGameObject;
 
-    public void SetFPS_SHOW(bool value)
-    {
-        Cheats.Instance.SetFPS_SHOW(value);
-
-        FPS_Text_GO.SetActive(Cheats.Instance.FPS_SHOW);
-    }
-
-    public void SetLIFESTEAL(bool value)
-    {
-        Cheats.Instance.SetLIFESTEAL(value);
+        if (clickedCheatToggle == GOD_MODE_Toggle.gameObject)
+        {
+            Cheats.Instance.SetGOD_MODE(value);
+        }
+        else if (clickedCheatToggle == FPS_SHOW_Toggle.gameObject)
+        {
+            Cheats.Instance.SetFPS_SHOW(value);
+            FPS_Text_GO.SetActive(Cheats.Instance.FPS_SHOW);
+        }
+        else if (clickedCheatToggle == LIFESTEAL_Toggle.gameObject)
+        {
+            Cheats.Instance.SetLIFESTEAL(value);
+        }
     }
 
     #endregion

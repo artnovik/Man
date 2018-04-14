@@ -2152,6 +2152,21 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114849219637051580, guid: ff545b66842816f438784bf069dd906b,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetCheatValue
+      objectReference: {fileID: 0}
+    - target: {fileID: 114945830868890722, guid: ff545b66842816f438784bf069dd906b,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetCheatValue
+      objectReference: {fileID: 0}
+    - target: {fileID: 114359002573939198, guid: ff545b66842816f438784bf069dd906b,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetCheatValue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff545b66842816f438784bf069dd906b, type: 2}
   m_IsPrefabParent: 0
