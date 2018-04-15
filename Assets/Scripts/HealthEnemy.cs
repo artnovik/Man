@@ -41,9 +41,10 @@ public class HealthEnemy : Health
     {
         foreach (var weapon in PlayerControl.Instance.listWeapons)
         {
-            if (collider.gameObject == weapon /*&& collider is BoxCollider*/ && !isDead)
+            if (collider.gameObject == weapon && !isDead)
             {
                 Damage(Random.Range(15, 35));
+                EffectsManager.Instance.ActivateBloodEffect(collider.transform);
             }
         }
     }

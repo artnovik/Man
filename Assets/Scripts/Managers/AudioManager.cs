@@ -4,16 +4,36 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioSource ambientAudioSource;
-    public AudioSource ambientMusicAudioSource;
-    public AudioSource battleMusicAudioSource;
-
-    public AudioClip windAudioClip;
-    public AudioClip ambientAudioClip;
-    public AudioClip battleAudioClip;
-
-    private float battleMusicSaveTime = 10f;
+    [Header("Exploration")]
+    [SerializeField]
+    private AudioSource ambientAudioSource;
+    [SerializeField]
+    private AudioSource ambientMusicAudioSource;
     private float ambientMusicSaveTime = 50f;
+
+    [SerializeField]
+    private AudioClip windAudioClip;
+    [SerializeField]
+    private AudioClip ambientAudioClip;
+
+    [Header("Battle")]
+    [SerializeField]
+    private AudioSource battleMusicAudioSource;
+    [SerializeField]
+    private AudioClip battleAudioClip;
+    private float battleMusicSaveTime = 10f;
+
+    [Header("Interface")]
+    [SerializeField]
+    private AudioSource interfaceAudioSource;
+    [SerializeField]
+    private AudioClip windowAppearAudioClip;
+    [SerializeField]
+    private AudioClip weaponChangeAudioClip;
+    [SerializeField]
+    private AudioClip diabloDeathLaughAudioClip;
+
+    private AudioSource[] allAudioSources;
 
     #region Singleton
 
@@ -22,14 +42,18 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        allAudioSources = GetComponentsInChildren<AudioSource>();
     }
 
     #endregion
 
-    public void SetClip(AudioSource aSource, AudioClip newClip)
+    private void SetClip(AudioSource aSource, AudioClip newClip)
     {
         aSource.clip = newClip;
     }
+
+    #region Battle
 
     public void BattleSoundChange(bool battleState)
     {
@@ -43,13 +67,46 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void OnDeathDisableAllAidoSources()
+    public bool BattleVolumeIsOff()
     {
-        foreach (var audioSource in GetComponentsInChildren<AudioSource>())
+        return battleMusicAudioSource.volume == 0.0f;
+    }
+
+    public bool AmbientVolumeIsOff()
+    {
+        return ambientMusicAudioSource.volume == 0.0f;
+    }
+
+    #endregion
+
+    #region OnDeath
+
+    public void OnDeathSound()
+    {
+        foreach (var audioSource in allAudioSources)
         {
             audioSource.enabled = false;
         }
+
+        interfaceAudioSource.enabled = true;
+        interfaceAudioSource.PlayOneShot(diabloDeathLaughAudioClip);
     }
+
+    #endregion
+
+    #region Interface
+
+    public void WeaponChangeSound()
+    {
+        interfaceAudioSource.PlayOneShot(weaponChangeAudioClip);
+    }
+
+    public void WindowAppearSound()
+    {
+        interfaceAudioSource.PlayOneShot(windowAppearAudioClip, 1f);
+    }
+
+    #endregion
 
     #region SmoothClipSwitch
 

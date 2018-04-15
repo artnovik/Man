@@ -120,8 +120,7 @@ public class Locomotion : CoreAnimator
     public void AnimAttack()
     {
         // Simply turn on/off weapon collider on certain attack animation points
-        PlayerControl.Instance.listWeapons[PlayerControl.Instance.curIndexWeapon].GetComponent<Collider>().enabled =
-            !PlayerControl.Instance.listWeapons[PlayerControl.Instance.curIndexWeapon].GetComponent<Collider>().enabled;
+        PlayerControl.Instance.SwitchWeaponColliders();
     }
 
     // For Enemy

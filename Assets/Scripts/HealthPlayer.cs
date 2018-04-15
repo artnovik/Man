@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class HealthPlayer : Health
 {
+    [SerializeField]
+    private Transform hitTransform;
+
     private void Start()
     {
         StartI();
@@ -26,6 +29,9 @@ public class HealthPlayer : Health
 
             // Custom implementation
             UIGamePlay.Instance.HealthBarValueChange(currentHealth);
+            UIGamePlay.Instance.ActivatePlayerHitScreenEffect();
+
+            EffectsManager.Instance.ActivateBloodEffect(hitTransform);
         }
     }
 

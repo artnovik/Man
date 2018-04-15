@@ -14,7 +14,9 @@ public class UIGamePlay : MonoBehaviour
 
     [Header("Camera")]
     public RectTransform targetCamera;
-    private Vector3 localCameraDir;
+    public RectTransform targetInvisibleCamera;
+    private Vector3 visibleCameraDir;
+    private Vector3 invisibleCameraDir;
 
     [Header("Weapons")]
     public Text numberWeapon;
@@ -74,7 +76,8 @@ public class UIGamePlay : MonoBehaviour
         InitializeCheatsMenu();
         pauseMenu.SetActive(false);
         deathScreen.SetActive(false);
-        //playerHealthBarCurrent.fillAmount = (float)PlayerControl.Instance.playerHealth.currentHealth;
+        playerHitScreenEffectImage.gameObject.SetActive(false);
+        screenEffectsGO.SetActive(false);
     }
 
     private void Update()
@@ -97,10 +100,15 @@ public class UIGamePlay : MonoBehaviour
 
     public void Camera()
     {
-        localCameraDir.x = targetCamera.localPosition.x;
-        localCameraDir.y = targetCamera.localPosition.y;
+        visibleCameraDir.x = targetCamera.localPosition.x;
+        visibleCameraDir.y = targetCamera.localPosition.y;
 
-        PlayerControl.Instance.cameraControl.rotateDirection += localCameraDir.normalized;
+        invisibleCameraDir.x = targetInvisibleCamera.localPosition.x;
+        invisibleCameraDir.y = targetInvisibleCamera.localPosition.y;
+
+
+        PlayerControl.Instance.cameraControl.rotateDirection += visibleCameraDir.normalized;
+        PlayerControl.Instance.cameraControl.rotateDirection += invisibleCameraDir.normalized;
     }
 
     #endregion
@@ -146,6 +154,7 @@ public class UIGamePlay : MonoBehaviour
     public void SwitchWeapon()
     {
         PlayerControl.Instance.NextWeapon();
+        AudioManager.Instance.WeaponChangeSound();
         numberWeapon.text = (PlayerControl.Instance.curIndexWeapon + 1).ToString();
     }
 
@@ -198,6 +207,7 @@ public class UIGamePlay : MonoBehaviour
         if (!pause)                                  // If Game is resumed now (pause == false) and we pause it
         {
             pauseMenu.SetActive(!pause);
+            AudioManager.Instance.WindowAppearSound();
             foreach (var controlElementGO in controlGroup)
             {
                 controlElementGO.SetActive(pause);
@@ -325,6 +335,35 @@ public class UIGamePlay : MonoBehaviour
 
     #endregion
 
+    #region ScreenEffects
+
+    [SerializeField]
+    private GameObject screenEffectsGO;
+
+    [SerializeField]
+    private Image playerHitScreenEffectImage;
+    private const float playerHitScreenEffectDuration = 2f;
+
+    private Coroutine screenEffectCoroutine;
+    private IEnumerator ScreenEffectRoutine(Image screenEffectImage, float duration)
+    {
+        screenEffectsGO.SetActive(true);
+        screenEffectImage.gameObject.SetActive(true);
+        screenEffectImage.color = Colors.screenEffect;
+        screenEffectImage.CrossFadeAlpha(0f, duration, false);
+
+        yield return new WaitForSeconds(duration);
+        screenEffectImage.gameObject.SetActive(false);
+        screenEffectsGO.SetActive(false);
+    }
+
+    public void ActivatePlayerHitScreenEffect()
+    {
+        screenEffectCoroutine = StartCoroutine(ScreenEffectRoutine(playerHitScreenEffectImage, playerHitScreenEffectDuration));
+    }
+
+    #endregion
+
     #region DeathScreen
 
     [Header("DeathScreen")]
@@ -341,7 +380,7 @@ public class UIGamePlay : MonoBehaviour
             element.SetActive(false);
         }
 
-        AudioManager.Instance.OnDeathDisableAllAidoSources();
+        AudioManager.Instance.OnDeathSound();
 
         deathScreen.SetActive(true);
     }

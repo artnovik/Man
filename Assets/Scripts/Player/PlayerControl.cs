@@ -6,7 +6,14 @@ using TDC.InputSystem;
 
 public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 {
-    #region Data
+    [Header("Data")]
+    public CameraControl cameraControl;
+    public Locomotion locomotion;
+    public PlayerView playerView;
+
+    public bool isPaused;
+    public bool inFightStatus;
+
     [Tooltip("Health reference")]
     [HideInInspector]
     public Health playerHealth;
@@ -17,30 +24,6 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     [Tooltip("User Interface reference")]
     [SerializeField]
     private UIGamePlay playerUI;
-
-    [Header("Data")]
-    public CameraControl cameraControl;
-    public Locomotion locomotion;
-    public PlayerView playerView;
-
-    [SerializeField]
-    private float movementSpeed = 1.2f;
-
-    public bool stateLockTarget = false;
-    public Transform target;
-
-    public Vector3 movementDirection;
-
-    [Header("Weapons")]
-    public int curIndexWeapon = 0;
-    public List<GameObject> listWeapons = new List<GameObject>();
-
-    private Transform localTransform;
-
-    public bool isPaused;
-    public bool inFightStatus;
-
-    #endregion
 
     #region Unity
 
@@ -71,8 +54,13 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 
         foreach (var weapon in listWeapons)
         {
-            weapon.GetComponent<Collider>().enabled = false;
+            foreach (var weaponCollider in weapon.GetComponentsInChildren<Collider>())
+            {
+                weaponCollider.enabled = false;
+            }
         }
+
+        GetCurrentWeaponColliders();
     }
 
     public void CoreUpdate()
@@ -108,6 +96,14 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     #endregion
 
     #region Locomotion
+
+    [Header("Locomotion")]
+    [SerializeField]
+    private float movementSpeed = 1.2f;
+    public bool stateLockTarget = false;
+    public Transform target;
+    public Vector3 movementDirection;
+    private Transform localTransform;
 
     private void Locomotion()
     {
@@ -152,7 +148,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     {
         if (inBattle)
         {
-            if (!oneSwitchBattleTrue && AudioManager.Instance.battleMusicAudioSource.volume == 0.0f)
+            if (!oneSwitchBattleTrue && AudioManager.Instance.BattleVolumeIsOff())
             {
                 AudioManager.Instance.BattleSoundChange(true);
                 oneSwitchBattleTrue = true;
@@ -161,7 +157,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         }
         else
         {
-            if (!oneSwitchBattleFalse && AudioManager.Instance.ambientMusicAudioSource.volume == 0.0f)
+            if (!oneSwitchBattleFalse && AudioManager.Instance.AmbientVolumeIsOff())
             {
                 AudioManager.Instance.BattleSoundChange(false);
                 oneSwitchBattleFalse = true;
@@ -233,6 +229,12 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 
     #region Weapon
 
+    [Header("Weapons")]
+    public int curIndexWeapon = 0;
+    public List<GameObject> listWeapons = new List<GameObject>();
+    [HideInInspector]
+    public Collider[] currentWeaponColliders;
+
     public void NextWeapon()
     {
         curIndexWeapon++;
@@ -250,6 +252,21 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         for (int i = 0; i < listWeapons.Count; i++)
         {
             listWeapons[i].SetActive(i == index);
+        }
+
+        GetCurrentWeaponColliders();
+    }
+
+    public Collider[] GetCurrentWeaponColliders()
+    {
+        return currentWeaponColliders = listWeapons[curIndexWeapon].GetComponentsInChildren<Collider>();
+    }
+
+    public void SwitchWeaponColliders()
+    {
+        foreach (var weaponCollider in currentWeaponColliders)
+        {
+            weaponCollider.enabled = !weaponCollider.enabled;
         }
     }
 
