@@ -61,7 +61,11 @@ public class HealthEnemy : Health
         GetComponent<EnemyUI>().DestroyEnemyUI(SpawnManager.Instance.GetDeadBodyDeleteDuration());
         GetComponent<AIBattle>().SetRagdoll(true);
         DisableCollidersBetweenEnemyAndPlayer(2f);
-        // ToDo Drop Weapon (at least)
+
+        enemyWeapon.transform.parent = null;
+        enemyWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
+        enemyWeapon.gameObject.AddComponent<Rigidbody>();
+
         DestroyComponents();
         DestroyBody(SpawnManager.Instance.GetDeadBodyDeleteDuration());
     }
