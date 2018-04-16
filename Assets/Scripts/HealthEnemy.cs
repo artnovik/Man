@@ -8,6 +8,9 @@ public class HealthEnemy : Health
 {
     private Collider playerCollider;
 
+    // ToDo Move into EnemyContainer (Inventory)
+    public Weapon enemyWeapon;
+
     #region HealthManager
 
     private void Start()
@@ -43,7 +46,9 @@ public class HealthEnemy : Health
         {
             if (collider.gameObject == weapon && !isDead)
             {
-                Damage(Random.Range(15, 35));
+                var takenDamage = PlayerControl.Instance.GetCurrentWeapon().GetDamage();
+                Damage(takenDamage);
+
                 EffectsManager.Instance.ActivateBloodEffect(collider.transform);
             }
         }
@@ -56,6 +61,7 @@ public class HealthEnemy : Health
         GetComponent<EnemyUI>().DestroyEnemyUI(SpawnManager.Instance.GetDeadBodyDeleteDuration());
         GetComponent<AIBattle>().SetRagdoll(true);
         DisableCollidersBetweenEnemyAndPlayer(2f);
+        // ToDo Drop Weapon (at least)
         DestroyComponents();
         DestroyBody(SpawnManager.Instance.GetDeadBodyDeleteDuration());
     }

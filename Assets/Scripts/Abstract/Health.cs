@@ -45,6 +45,7 @@ public abstract class Health : MonoBehaviour
         }
 
         currentHealth -= damageValue;
+        Debug.Log(gameObject.name + " took " + damageValue + " damage");
 
         if (currentHealth <= minHealth)
         {

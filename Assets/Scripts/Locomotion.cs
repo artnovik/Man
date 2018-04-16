@@ -128,11 +128,11 @@ public class Locomotion : CoreAnimator
     {
         if (targetLocomotion && !targetLocomotion.health.isDead)
         {
-            targetLocomotion.health.Damage(Random.Range(15, 35));
-            Debug.Log(targetLocomotion.health.currentHealth);
+            targetLocomotion.health.Damage(gameObject.GetComponent<HealthEnemy>().enemyWeapon.GetDamage());
         }
     }
 
+    // ToDo Squad menu
     private void OnMouseDown()
     {
         if (gameObject.CompareTag("Player"))
