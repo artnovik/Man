@@ -54,6 +54,10 @@ public class HealthEnemy : Health
         }
     }
 
+
+    //[SerializeField]
+    //private GameObject WeaponTakeUIPrefab;
+
     public override void Death()
     {
         DeathI();
@@ -65,6 +69,10 @@ public class HealthEnemy : Health
         enemyWeapon.transform.parent = null;
         enemyWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
         enemyWeapon.gameObject.AddComponent<Rigidbody>();
+        
+        // WeaponTakeUI
+        //var weaponTakeUI = Instantiate(WeaponTakeUIPrefab, enemyWeapon.transform);
+        //weaponTakeUI.GetComponentInChildren<Text>().text = enemyWeapon.GetName();
 
         DestroyComponents();
         DestroyBody(SpawnManager.Instance.GetDeadBodyDeleteDuration());

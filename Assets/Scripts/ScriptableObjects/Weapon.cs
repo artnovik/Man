@@ -44,4 +44,9 @@ public class Weapon : MonoBehaviour
     {
         return Random.Range(minDamage, maxDamage);
     }
+
+    public string GetName()
+    {
+        return name;
+    }
 }
