@@ -72,6 +72,7 @@ public class UIGamePlay : MonoBehaviour
         numberWeapon.text = (PlayerControl.Instance.curIndexWeapon + 1).ToString();
         messageGO.SetActive(false);
 
+        inventoryMenu.SetActive(false);
         pauseMenu.SetActive(true);
         InitializeCheatsMenu();
         pauseMenu.SetActive(false);
@@ -143,6 +144,7 @@ public class UIGamePlay : MonoBehaviour
         blockImage.color = pointerDownValue ? Colors.playerActiveUI : Colors.playerDefaultUI;
         attackButton.interactable = !pointerDownValue;
         switchWeaponButton.interactable = !pointerDownValue;
+        inventoryButton.interactable = !pointerDownValue;
     }
 
     public void LockTarget()
@@ -156,6 +158,29 @@ public class UIGamePlay : MonoBehaviour
         PlayerControl.Instance.NextWeapon();
         AudioManager.Instance.WeaponChangeSound();
         numberWeapon.text = (PlayerControl.Instance.curIndexWeapon + 1).ToString();
+    }
+
+    #endregion
+
+    #region Inventory
+
+    [Header("Inventory")]
+    [SerializeField]
+    private GameObject inventoryMenu;
+
+    [SerializeField]
+    private Button inventoryButton;
+
+    public void InventoryOpen()
+    {
+        inventoryMenu.SetActive(!inventoryMenu.activeSelf);
+        Time.timeScale = 0;
+    }
+
+    public void InventoryClose()
+    {
+        inventoryMenu.SetActive(!inventoryMenu.activeSelf);
+        Time.timeScale = 1;
     }
 
     #endregion

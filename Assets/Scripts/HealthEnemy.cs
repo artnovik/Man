@@ -17,6 +17,7 @@ public class HealthEnemy : Health
     {
         StartI();
 
+        // Custom implementation
         playerCollider = PlayerControl.Instance.playerCollider;
     }
 
@@ -24,14 +25,15 @@ public class HealthEnemy : Health
     {
         HealI(healValue);
 
-        GetComponent<EnemyUI>().HealthBarValueChange(currentHealth);
         // Custom implementation
+        GetComponent<EnemyUI>().HealthBarValueChange(currentHealth);
     }
 
     public override void Damage(int damageValue)
     {
         DamageI(damageValue);
 
+        // Custom implementation
         GetComponent<EnemyUI>().HealthBarValueChange(currentHealth);
 
         if (Cheats.Instance.LIFESTEAL)
@@ -62,6 +64,7 @@ public class HealthEnemy : Health
     {
         DeathI();
 
+        // Custom implementation
         GetComponent<EnemyUI>().DestroyEnemyUI(SpawnManager.Instance.GetDeadBodyDeleteDuration());
         GetComponent<AIBattle>().SetRagdoll(true);
         DisableCollidersBetweenEnemyAndPlayer(2f);

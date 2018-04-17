@@ -107,6 +107,9 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 
     private void Locomotion()
     {
+        if (playerHealth.isDead)
+            return;
+
         Vector3 keyboardDirection = Vector3.zero;
 
         keyboardDirection.x = Input.GetAxisRaw("Horizontal");
