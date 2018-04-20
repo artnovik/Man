@@ -16,6 +16,9 @@ public class WeaponStats : ScriptableObject
 
     public int staminaConsume;
 
+    public int buyValue;
+    public int sellValue;
+
     public SpeedEnum Speed;
     public enum SpeedEnum
     {

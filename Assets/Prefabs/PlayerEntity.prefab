@@ -339,6 +339,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4410477772275220}
   - component: {fileID: 65281991902957448}
+  - component: {fileID: 114883532410005756}
   m_Layer: 0
   m_Name: Scythe
   m_TagString: WeaponInPlayerHands
@@ -910,8 +911,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4467657420773382}
   - component: {fileID: 65572932289928900}
+  - component: {fileID: 114517313888816572}
   m_Layer: 0
-  m_Name: Kasilka
+  m_Name: SmallScythe
   m_TagString: WeaponInPlayerHands
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1034,6 +1036,7 @@ GameObject:
   - component: {fileID: 4084624462827438}
   - component: {fileID: 114724867351227820}
   - component: {fileID: 114834372176763480}
+  - component: {fileID: 114631954055323010}
   m_Layer: 0
   m_Name: PlayerEntity
   m_TagString: Untagged
@@ -1263,6 +1266,21 @@ GameObject:
   - component: {fileID: 4736217853787030}
   m_Layer: 0
   m_Name: TentacleBOne011
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1789043864473644
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4958657693177474}
+  m_Layer: 0
+  m_Name: dropItemsPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1681,6 +1699,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4927781381070796}
   - component: {fileID: 65798140889022800}
+  - component: {fileID: 114097155654739400}
   m_Layer: 0
   m_Name: Saw
   m_TagString: WeaponInPlayerHands
@@ -1780,7 +1799,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1658050725186712}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.79, y: 4.8304403e-17, z: -10.877185}
+  m_LocalPosition: {x: 0, y: 4.8304403e-17, z: -10.877185}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4817662477664072}
@@ -3201,6 +3220,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4962435904348192}
+  - {fileID: 4958657693177474}
   m_Father: {fileID: 4817662477664072}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3218,19 +3238,32 @@ Transform:
   m_Father: {fileID: 4736217853787030}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4958657693177474
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1789043864473644}
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: -1.15, z: 1.708}
+  m_LocalScale: {x: 1, y: 1.0000002, z: 1.0000002}
+  m_Children: []
+  m_Father: {fileID: 4937297052642256}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!4 &4962435904348192
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1224264338437174}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -0.26148093, z: 1.3330001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4937297052642256}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &4970122800786924
 Transform:
   m_ObjectHideFlags: 1
@@ -3723,6 +3756,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114097155654739400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1982010047296934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7922c9796079741a4509714ba74d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponStats: {fileID: 11400000, guid: 710eb93626f79ae41bdb798829bd63ec, type: 2}
 --- !u!114 &114146030649663362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3764,6 +3809,18 @@ MonoBehaviour:
   typeSpeed: 0
   animControl: {fileID: 95346201888160510}
   targetLocomotion: {fileID: 0}
+--- !u!114 &114517313888816572
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1601528930609020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7922c9796079741a4509714ba74d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponStats: {fileID: 11400000, guid: 9b90694c0ca5d444da8377d4e9a07354, type: 2}
 --- !u!114 &114587143568569328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3778,6 +3835,19 @@ MonoBehaviour:
   listTag:
   - Enemy
   listObject: []
+--- !u!114 &114631954055323010
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1658050725186712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca68b3018c6fd1a40bf4dfc466c4cf3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryCapacity: 27
+  weapons: []
 --- !u!114 &114724867351227820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3792,8 +3862,11 @@ MonoBehaviour:
   cameraControl: {fileID: 114834372176763480}
   locomotion: {fileID: 114507723874496848}
   playerView: {fileID: 114587143568569328}
+  playerTransform: {fileID: 4817662477664072}
+  dropItemsPoint: {fileID: 4958657693177474}
+  pickUpRadius: 2
   isPaused: 0
-  inFightStatus: 0
+  inBattle: 0
   playerHealth: {fileID: 0}
   playerCollider: {fileID: 136940142448556320}
   playerUI: {fileID: 0}
@@ -3849,6 +3922,18 @@ MonoBehaviour:
   minHealth: 0
   isDead: 0
   hitTransform: {fileID: 4962435904348192}
+--- !u!114 &114883532410005756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1235602614466690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7922c9796079741a4509714ba74d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponStats: {fileID: 11400000, guid: 7dd4a9dfc17a021438595d2f293d2563, type: 2}
 --- !u!124 &124598157937027974
 Behaviour:
   m_ObjectHideFlags: 1
@@ -4024,8 +4109,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 4247045237264414}
   m_AABB:
-    m_Center: {x: -0.00000011920929, y: 0.055553555, z: 1.1933985}
-    m_Extent: {x: 0.5976623, y: 0.22804603, z: 0.5310605}
+    m_Center: {x: 0, y: 0.055553664, z: 1.1933985}
+    m_Extent: {x: 0.5976623, y: 0.22804599, z: 0.5310605}
   m_DirtyAABB: 0
 --- !u!137 &137402627228092050
 SkinnedMeshRenderer:

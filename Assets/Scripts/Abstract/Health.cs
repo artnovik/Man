@@ -17,14 +17,13 @@ public abstract class Health : MonoBehaviour
 
     #region HealthManager
 
-    public void StartI()
+    public virtual void Start()
     {
         currentHealth = maxHealth;
         locomotion = GetComponent<Locomotion>();
     }
 
-    public abstract void Heal(int healValue);
-    protected void HealI(int healValue)
+    public virtual void Heal(int healValue)
     {
         if (isDead)
             return;
@@ -36,8 +35,7 @@ public abstract class Health : MonoBehaviour
         }
     }
 
-    public abstract void Damage(int damageValue);
-    protected void DamageI(int damageValue)
+    public virtual void Damage(int damageValue)
     {
         if (isDead)
         {
@@ -54,14 +52,13 @@ public abstract class Health : MonoBehaviour
         }
     }
 
-    public abstract void Death();
-    protected void DeathI()
+    public virtual void Death()
     {
         locomotion.animControl.SetTrigger("Death");
         locomotion.targetLocomotion = null;
 
         currentHealth = 0;
-        PlayerControl.Instance.inFightStatus = false;
+        PlayerControl.Instance.inBattle = false;
         isDead = true;
     }
 

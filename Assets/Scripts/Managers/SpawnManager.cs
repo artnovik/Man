@@ -51,20 +51,21 @@ public class SpawnManager : MonoBehaviour
         return GetCurrentEnemyQuantityOnMap(enemyPrefab) > 0;
     }
 
-    public void SpawnWithMessageIfNoEnemies(GameObject enemyPrefab, float delay)
+    public void SpawnEnemies(GameObject enemyPrefab, float delay, bool message)
     {
-        StartCoroutine(SpawnWithMessageIfNoEnemiesRoutine(enemyPrefab, delay));
+        StartCoroutine(SpawnWithMessageIfNoEnemiesRoutine(enemyPrefab, delay, message));
     }
 
-    private IEnumerator SpawnWithMessageIfNoEnemiesRoutine(GameObject enemyPrefab, float delay)
+    private IEnumerator SpawnWithMessageIfNoEnemiesRoutine(GameObject enemyPrefab, float delay, bool message)
     {
         yield return new WaitForSeconds(delay);
 
-        if (!CheckForEnemies(enemyPrefab))
+        if (message)
         {
             UIGamePlay.Instance.DisplayMessage(Messages.messageNoEnemies, Colors.yellowMessage, 3f, false);
             yield return new WaitForSeconds(3f);
-            SpawnEnemies(enemyPrefab, 4);
         }
+
+        SpawnEnemies(enemyPrefab, 4);
     }
 }

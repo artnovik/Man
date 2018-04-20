@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b5f569208e99db4ba9af20395badb6b, type: 3}
-  m_Name: Knife
+  m_Name: SmallScythe
   m_EditorClassIdentifier: 
-  name: Knife
-  description: Little, yet sharp piece of steel.
-  inventorySprite: {fileID: 21300000, guid: 76529888fb586f541876bdc029c135d3, type: 3}
+  name: Small Scythe
+  description: Little scythe.
+  inventorySprite: {fileID: 21300000, guid: f510e922ac39657449d5369dc33f7d26, type: 3}
   gamePrefab: {fileID: 1288697540270052, guid: bb5df6b26248c7d4fbb3ad829d674ff8, type: 2}
   minDamage: 24
   maxDamage: 29

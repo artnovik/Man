@@ -47,7 +47,7 @@ public class AIBattle : MonoBehaviour
 
         if (target && !target.gameObject.GetComponent<Health>().isDead)
         {
-            PlayerControl.Instance.inFightStatus = true;
+            PlayerControl.Instance.inBattle = true;
             chasedRecently = true;
 
             enemyUI.SetHealthBarStatus(true);
@@ -59,7 +59,7 @@ public class AIBattle : MonoBehaviour
         {
             if (chasedRecently)
             {
-                PlayerControl.Instance.inFightStatus = false;
+                PlayerControl.Instance.inBattle = false;
                 chasedRecently = false;
             }
 

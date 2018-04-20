@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b5f569208e99db4ba9af20395badb6b, type: 3}
+  m_Name: Scythe
+  m_EditorClassIdentifier: 
+  name: Scythe
+  description: Cruel, large deathbringer.
+  inventorySprite: {fileID: 21300000, guid: f510e922ac39657449d5369dc33f7d26, type: 3}
+  gamePrefab: {fileID: 1859788294356692, guid: ccbea003d5d8488448c5a34dfced17d4, type: 2}
+  minDamage: 36
+  maxDamage: 41
+  staminaConsume: 17
+  buyValue: 10
+  sellValue: 3
+  Speed: 2
+  Range: 2
+  DamageType: 0

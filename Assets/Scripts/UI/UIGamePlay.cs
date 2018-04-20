@@ -61,6 +61,8 @@ public class UIGamePlay : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        InventoryOpen();
     }
 
     #endregion
@@ -72,13 +74,15 @@ public class UIGamePlay : MonoBehaviour
         numberWeapon.text = (PlayerControl.Instance.curIndexWeapon + 1).ToString();
         messageGO.SetActive(false);
 
-        inventoryMenu.SetActive(false);
+        //inventoryMenu.SetActive(false);
         pauseMenu.SetActive(true);
         InitializeCheatsMenu();
         pauseMenu.SetActive(false);
         deathScreen.SetActive(false);
         playerHitScreenEffectImage.gameObject.SetActive(false);
         screenEffectsGO.SetActive(false);
+
+        InventoryClose();
     }
 
     private void Update()
@@ -174,6 +178,7 @@ public class UIGamePlay : MonoBehaviour
     public void InventoryOpen()
     {
         inventoryMenu.SetActive(!inventoryMenu.activeSelf);
+        InventoryUI.Instance.ClearInfoWindow();
         Time.timeScale = 0;
     }
 

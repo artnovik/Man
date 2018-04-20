@@ -10,12 +10,12 @@ public class HealthPlayer : Health
 
     private void Start()
     {
-        StartI();
+        base.Start();
     }
 
     public override void Heal(int healValue)
     {
-        HealI(healValue);
+        base.Heal(healValue);
 
         // Custom implementation
         UIGamePlay.Instance.HealthBarValueChange(currentHealth);
@@ -25,7 +25,7 @@ public class HealthPlayer : Health
     {
         if (!PlayerControl.Instance.isBlock && !Cheats.Instance.GOD_MODE)
         {
-            DamageI(damageValue);
+            base.Damage(damageValue);
 
             // Custom implementation
             UIGamePlay.Instance.HealthBarValueChange(currentHealth);
@@ -37,7 +37,7 @@ public class HealthPlayer : Health
 
     public override void Death()
     {
-        DeathI();
+        base.Death();
 
         // Custom implementation
         UIGamePlay.Instance.ShowDeathScreen();

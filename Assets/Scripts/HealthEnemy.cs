@@ -15,7 +15,7 @@ public class HealthEnemy : Health
 
     private void Start()
     {
-        StartI();
+        base.Start();
 
         // Custom implementation
         playerCollider = PlayerControl.Instance.playerCollider;
@@ -23,7 +23,7 @@ public class HealthEnemy : Health
 
     public override void Heal(int healValue)
     {
-        HealI(healValue);
+        base.Heal(healValue);
 
         // Custom implementation
         GetComponent<EnemyUI>().HealthBarValueChange(currentHealth);
@@ -31,7 +31,7 @@ public class HealthEnemy : Health
 
     public override void Damage(int damageValue)
     {
-        DamageI(damageValue);
+        base.Damage(damageValue);
 
         // Custom implementation
         GetComponent<EnemyUI>().HealthBarValueChange(currentHealth);
@@ -44,7 +44,7 @@ public class HealthEnemy : Health
 
     private void OnTriggerEnter(Collider collider)
     {
-        foreach (var weapon in PlayerControl.Instance.listWeapons)
+        foreach (GameObject weapon in PlayerControl.Instance.listWeapons)
         {
             if (collider.gameObject == weapon && !isDead)
             {
@@ -56,36 +56,20 @@ public class HealthEnemy : Health
         }
     }
 
-
-    //[SerializeField]
-    //private GameObject WeaponTakeUIPrefab;
-
     public override void Death()
     {
-        DeathI();
+        base.Death();
 
         // Custom implementation
-        GetComponent<EnemyUI>().DestroyEnemyUI(SpawnManager.Instance.GetDeadBodyDeleteDuration());
         GetComponent<AIBattle>().SetRagdoll(true);
         DisableCollidersBetweenEnemyAndPlayer(2f);
 
-        enemyWeapon.transform.parent = null;
-        enemyWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
-        enemyWeapon.gameObject.AddComponent<Rigidbody>();
-        
-        // WeaponTakeUI
-        //var weaponTakeUI = Instantiate(WeaponTakeUIPrefab, enemyWeapon.transform);
-        //weaponTakeUI.GetComponentInChildren<Text>().text = enemyWeapon.GetName();
+        Instantiate(enemyWeapon.weaponStats.gamePrefab, enemyWeapon.transform.position, enemyWeapon.transform.rotation,
+            null);
+        Destroy(enemyWeapon.gameObject);
 
-        DestroyComponents();
+        GetComponent<EnemyUI>().DestroyEnemyUI(SpawnManager.Instance.GetDeadBodyDeleteDuration());
         DestroyBody(SpawnManager.Instance.GetDeadBodyDeleteDuration());
-    }
-
-    private void DestroyComponents()
-    {
-        Destroy(GetComponent<Locomotion>());
-        Destroy(GetComponent<AIBattle>());
-        Destroy(GetComponent<CapsuleCollider>());
     }
 
     private void DestroyBody(float delay)
@@ -102,10 +86,10 @@ public class HealthEnemy : Health
     {
         yield return new WaitForSeconds(delay);
 
-        Collider[] enemyColliders = GetComponentsInChildren<Collider>();
-        foreach (Collider collider in enemyColliders)
+        var enemyColliders = GetComponentsInChildren<Collider>();
+        foreach (Collider col in enemyColliders)
         {
-            Physics.IgnoreCollision(collider, playerCollider);
+            Physics.IgnoreCollision(col, playerCollider);
         }
     }
 
@@ -114,9 +98,20 @@ public class HealthEnemy : Health
         yield return new WaitForSeconds(delay);
 
         // Nice spawning
-        SpawnManager.Instance.SpawnWithMessageIfNoEnemies(SpawnManager.Instance.enemyZombie, 0.5f);
+        if (!SpawnManager.Instance.CheckForEnemies(SpawnManager.Instance.enemyZombie))
+        {
+            SpawnManager.Instance.SpawnEnemies(SpawnManager.Instance.enemyZombie, 0.5f, true);
+        }
+
         // ToDo nice corpse disappearing animation, with blood puddle for X seconds
+        GenerateContainer();
+
         Destroy(gameObject);
+    }
+
+    private static void GenerateContainer()
+    {
+
     }
 
     #endregion

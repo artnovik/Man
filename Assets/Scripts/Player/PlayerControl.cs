@@ -10,9 +10,13 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     public CameraControl cameraControl;
     public Locomotion locomotion;
     public PlayerView playerView;
+    public Transform playerTransform;
+    public Transform dropItemsPoint;
+
+    public float pickUpRadius = 2f;
 
     public bool isPaused;
-    public bool inFightStatus;
+    public bool inBattle;
 
     [Tooltip("Health reference")]
     [HideInInspector]
@@ -128,15 +132,15 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
             }
         }
 
-        if (inFightStatus)
+        if (inBattle)
         {
-            BattleMusicControl(inFightStatus);
-            playerUI.SetPlayerBarsStatus(inFightStatus);
+            BattleMusicControl(inBattle);
+            playerUI.SetPlayerBarsStatus(inBattle);
         }
         else
         {
-            BattleMusicControl(inFightStatus);
-            playerUI.SetPlayerBarsStatus(inFightStatus);
+            BattleMusicControl(inBattle);
+            playerUI.SetPlayerBarsStatus(inBattle);
         }
     }
 

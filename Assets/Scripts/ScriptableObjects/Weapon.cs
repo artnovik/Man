@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField]
-    private WeaponStats weaponStats;
+    public WeaponStats weaponStats;
 
     private new string name;
     private string description;
