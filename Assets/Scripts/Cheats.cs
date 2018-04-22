@@ -34,23 +34,20 @@ public class Cheats : MonoBehaviour
     {
         GOD_MODE = value;
 
-        int playerPrefsValue;
-        PlayerPrefs.SetInt("GOD_MODE", playerPrefsValue = value ? 1 : 0);
+        PlayerPrefs.SetInt("GOD_MODE", value ? 1 : 0);
     }
 
     public void SetFPS_SHOW(bool value)
     {
         FPS_SHOW = value;
 
-        int playerPrefsValue;
-        PlayerPrefs.SetInt("FPS_SHOW", playerPrefsValue = value ? 1 : 0);
+        PlayerPrefs.SetInt("FPS_SHOW", value ? 1 : 0);
     }
 
     public void SetLIFESTEAL(bool value)
     {
         LIFESTEAL = value;
 
-        int playerPrefsValue;
-        PlayerPrefs.SetInt("LIFESTEAL", playerPrefsValue = value ? 1 : 0);
+        PlayerPrefs.SetInt("LIFESTEAL", value ? 1 : 0);
     }
 }

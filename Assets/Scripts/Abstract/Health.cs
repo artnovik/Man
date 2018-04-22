@@ -43,7 +43,7 @@ public abstract class Health : MonoBehaviour
         }
 
         currentHealth -= damageValue;
-        Debug.Log(gameObject.name + " took " + damageValue + " damage. Current HP: " + currentHealth);
+        Debug.Log(string.Format("{0} took {1} damage. Current HP: {2}", gameObject.name, damageValue, currentHealth));
 
         if (currentHealth <= minHealth)
         {
@@ -52,7 +52,7 @@ public abstract class Health : MonoBehaviour
         }
     }
 
-    public virtual void Death()
+    protected virtual void Death()
     {
         locomotion.animControl.SetTrigger("Death");
         locomotion.targetLocomotion = null;

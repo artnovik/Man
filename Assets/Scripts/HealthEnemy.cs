@@ -13,7 +13,7 @@ public class HealthEnemy : Health
 
     #region HealthManager
 
-    private void Start()
+    public override void Start()
     {
         base.Start();
 
@@ -38,7 +38,7 @@ public class HealthEnemy : Health
 
         if (Cheats.Instance.LIFESTEAL)
         {
-            PlayerControl.Instance.playerHealth.Heal((int)(damageValue * 0.5));
+            PlayerControl.Instance.playerHealth.Heal((int) (damageValue * 0.5));
         }
     }
 
@@ -56,7 +56,7 @@ public class HealthEnemy : Health
         }
     }
 
-    public override void Death()
+    protected override void Death()
     {
         base.Death();
 
@@ -111,7 +111,6 @@ public class HealthEnemy : Health
 
     private static void GenerateContainer()
     {
-
     }
 
     #endregion

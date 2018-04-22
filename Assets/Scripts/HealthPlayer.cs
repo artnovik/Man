@@ -8,7 +8,7 @@ public class HealthPlayer : Health
     [SerializeField]
     private Transform hitTransform;
 
-    private void Start()
+    public override void Start()
     {
         base.Start();
     }
@@ -35,7 +35,7 @@ public class HealthPlayer : Health
         }
     }
 
-    public override void Death()
+    protected override void Death()
     {
         base.Death();
 
