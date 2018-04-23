@@ -48,11 +48,15 @@ public abstract class Health : MonoBehaviour
         }
 
         currentHealth -= damageValue;
-        Debug.Log(string.Format("{0} took {1} damage. Current HP: {2}", gameObject.name, damageValue, currentHealth));
 
         if (currentHealth <= minHealth)
         {
             Death();
+        }
+
+        Debug.Log(string.Format("{0} took {1} damage. Current HP: {2}", gameObject.name, damageValue, currentHealth));
+        if (isDead)
+        {
             Debug.Log(string.Format("{0} died.", gameObject.name));
         }
     }

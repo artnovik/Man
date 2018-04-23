@@ -19,7 +19,6 @@ public class Interactable : MonoBehaviour
         if ((distanceBetweenPlayerAndObject <= radius))
         {
             Interact();
-            // Debug.Log(gameObject.name);
         }
     }
 
