@@ -69,9 +69,8 @@ public class UIGamePlay : MonoBehaviour
 
     private void Start()
     {
-        inventoryMenu.SetActive(true);
-        InventoryUI.Instance.StartCall();
-        inventoryMenu.SetActive(false);
+        inventoryMenu.GetComponent<InventoryUI>().StartCall();
+        
         numberWeapon.text = (PlayerControl.Instance.curIndexWeapon + 1).ToString();
         messageGO.SetActive(false);
 
