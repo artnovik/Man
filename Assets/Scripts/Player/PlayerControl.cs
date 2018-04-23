@@ -33,27 +33,8 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 
     private void Start()
     {
-        Initialization();
-
-        SwitchWeapon(curIndexWeapon);
-    }
-
-    private void Update()
-    {
-        CoreUpdate();
-    }
-
-    #endregion
-
-    #region Core
-
-    public void Initialization()
-    {
-        cameraControl.Initialization();
-        locomotion.Initialization();
         playerHealth = locomotion.health;
-
-        locomotion.animControl.transform.SetParent(null);
+        locomotion.animator.transform.SetParent(null);
         localTransform = transform;
 
         foreach (var weapon in listWeapons)
@@ -65,12 +46,12 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         }
 
         GetCurrentWeaponColliders();
+
+        SwitchWeapon(curIndexWeapon);
     }
 
-    public void CoreUpdate()
+    private void Update()
     {
-        cameraControl.CoreUpdate();
-
         if (stateLockTarget && target != null && !target.GetComponent<Health>().isDead)
         {
             cameraControl.target = target;
@@ -81,17 +62,6 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
             cameraControl.target = null;
             locomotion.targetLocomotion = null;
         }
-
-        /*if (target)
-        {
-            locomotion.target = target.GetComponent<Locomotion>();
-        }
-        else
-        {
-            locomotion.target = null;
-        }*/
-
-        locomotion.CoreUpdate();
 
         Locomotion();
         LockTargetControl();
@@ -122,7 +92,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         keyboardDirection += movementDirection;
 
         locomotion.Movement(cameraControl.parentCamera.TransformDirection(keyboardDirection));
-        localTransform.position = Vector3.Lerp(localTransform.position, locomotion.animControl.transform.position, movementSpeed);
+        localTransform.position = Vector3.Lerp(localTransform.position, locomotion.animator.transform.position, movementSpeed);
 
         if (!target)
         {

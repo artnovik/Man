@@ -63,7 +63,7 @@ public abstract class Health : MonoBehaviour
 
     protected virtual void Death()
     {
-        locomotion.animControl.SetTrigger("Death");
+        locomotion.animator.SetTrigger("Death");
         locomotion.targetLocomotion = null;
 
         currentHealth = 0;

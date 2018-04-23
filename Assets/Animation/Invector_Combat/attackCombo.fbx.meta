@@ -426,14 +426,14 @@ ModelImporter:
           rotationOrder: 0
       events:
       - time: 0.41520137
-        functionName: AnimAttack
+        functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.6633217
-        functionName: AnimAttack
+        functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -643,14 +643,14 @@ ModelImporter:
           rotationOrder: 0
       events:
       - time: 0.055118054
-        functionName: AnimAttack
+        functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.26442957
-        functionName: AnimAttack
+        functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -860,14 +860,14 @@ ModelImporter:
           rotationOrder: 0
       events:
       - time: 0.39107627
-        functionName: AnimAttack
+        functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.6664429
-        functionName: AnimAttack
+        functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

@@ -27,17 +27,16 @@ public class InventoryUI : MonoBehaviour
 
     private void Awake()
     {
-        inventory = Inventory.Instance;
-        inventory.onItemChangedCallback += UpdateInventoryUI;
-        slots = itemsContainer.GetComponentsInChildren<InventorySlot>();
         Instance = this;
     }
 
     #endregion
-
-    private void Start()
+    
+    public void StartCall()
     {
-
+        inventory = Inventory.Instance;
+        inventory.onItemChangedCallback += UpdateInventoryUI;
+        slots = itemsContainer.GetComponentsInChildren<InventorySlot>();
     }
 
     public void UpdateInventoryUI()

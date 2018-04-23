@@ -1069,7 +1069,7 @@ GameObject:
   - component: {fileID: 4477943911285594}
   - component: {fileID: 114201748951139448}
   - component: {fileID: 114386747600935810}
-  - component: {fileID: 114193148090953512}
+  - component: {fileID: 114488230682809896}
   - component: {fileID: 114044743799235528}
   - component: {fileID: 114939547921820984}
   - component: {fileID: 114469354785925220}
@@ -3256,8 +3256,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9152f771a5bcc1f4fb77e3a3b989973c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locomotion: {fileID: 0}
-  characterStats: {fileID: 0}
+  locomotion: {fileID: 114488230682809896}
+  characterStats: {fileID: 114939547921820984}
   maxHealth: 100
   minHealth: 0
   isDead: 0
@@ -3289,22 +3289,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 0
   m_FillOrigin: 0
---- !u!114 &114193148090953512
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1708815765540170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d305e5d4c35015d44aa8aac3ff271170, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: {fileID: 114044743799235528}
-  typeLocomotion: 0
-  typeSpeed: 0
-  animControl: {fileID: 95022380503117368}
-  targetLocomotion: {fileID: 0}
 --- !u!114 &114201748951139448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3318,9 +3302,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 195425044544071038}
   target: {fileID: 0}
-  locomotion: {fileID: 114193148090953512}
+  locomotion: {fileID: 114488230682809896}
   viewTrigger: {fileID: 114286284656136110}
-  enemyUI: {fileID: 0}
+  enemyUI: {fileID: 114469354785925220}
   isBattle: 0
 --- !u!114 &114238770495529934
 MonoBehaviour:
@@ -3415,6 +3399,22 @@ MonoBehaviour:
   enemyHealthBarCurrent: {fileID: 114104376914045810}
   enemyHealthBarEmpty: {fileID: 114238770495529934}
   health: {fileID: 0}
+--- !u!114 &114488230682809896
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1708815765540170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc7c45bf47855064d9f5e9fd58645a27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 114044743799235528}
+  typeLocomotion: 0
+  typeSpeed: 0
+  targetLocomotion: {fileID: 0}
+  animator: {fileID: 95022380503117368}
 --- !u!114 &114567141540111030
 MonoBehaviour:
   m_ObjectHideFlags: 1

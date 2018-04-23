@@ -34,24 +34,24 @@ public class CameraControl : MonoBehaviour
 
     #region Core
 
-    public void Initialization()
+    public void Start()
     {
         pivotPosition.y = height;
         pivotPosition.z = -distance;
     }
 
-    public void CoreUpdate()
+    public void Update()
     {
-        Position();
-        Rotate();
+        PositionControl();
+        RotationControl();
     }
 
-    private void Position()
+    private void PositionControl()
     {
         pivotCamera.transform.localPosition = Vector3.Lerp(pivotCamera.transform.localPosition, pivotPosition, smoothPosition);
     }
 
-    private void Rotate()
+    private void RotationControl()
     {
         if (!target)
         {

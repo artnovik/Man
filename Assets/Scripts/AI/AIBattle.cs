@@ -20,30 +20,15 @@ public class AIBattle : MonoBehaviour
 
     private void Start()
     {
-        Initialization();
-    }
-
-    private void Update()
-    {
-        CoreUpdate();
-    }
-
-    #endregion
-
-    #region Core
-
-    private void Initialization()
-    {
-        locomotion.Initialization();
-        locomotion.animControl.SetBool("Enemy", true);
+        locomotion = GetComponent<Locomotion>();
+        locomotion.animator.SetBool("Enemy", true);
         SetRagdoll(false);
         enemyUI = GetComponent<EnemyUI>();
     }
 
-    private void CoreUpdate()
+    private void Update()
     {
         ViewControl();
-        locomotion.CoreUpdate();
 
         if (target && !target.gameObject.GetComponent<Health>().isDead)
         {
@@ -70,6 +55,10 @@ public class AIBattle : MonoBehaviour
 
         Locomotion();
     }
+
+    #endregion
+
+    #region Core
 
     private void Locomotion()
     {

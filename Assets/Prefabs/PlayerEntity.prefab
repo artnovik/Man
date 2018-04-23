@@ -1296,11 +1296,11 @@ GameObject:
   - component: {fileID: 4817662477664072}
   - component: {fileID: 95346201888160510}
   - component: {fileID: 136940142448556320}
-  - component: {fileID: 114507723874496848}
+  - component: {fileID: 114202594628319402}
   - component: {fileID: 114876720922075246}
-  - component: {fileID: 54047526821628166}
-  - component: {fileID: 114146030649663362}
   - component: {fileID: 114383933205410896}
+  - component: {fileID: 114146030649663362}
+  - component: {fileID: 54047526821628166}
   m_Layer: 0
   m_Name: Player_Jack
   m_TagString: Player
@@ -3794,6 +3794,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponStats: {fileID: 11400000, guid: 08e931f4d3fb40741b1691b9c1be5386, type: 2}
+--- !u!114 &114202594628319402
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1792862599540310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680669ea6c933c642828636b8607215a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 114876720922075246}
+  typeLocomotion: 0
+  typeSpeed: 0
+  targetLocomotion: {fileID: 0}
+  animator: {fileID: 95346201888160510}
 --- !u!114 &114383933205410896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3812,22 +3828,6 @@ MonoBehaviour:
   arcane: {fileID: 0}
   fire: {fileID: 0}
   water: {fileID: 0}
---- !u!114 &114507723874496848
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1792862599540310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d305e5d4c35015d44aa8aac3ff271170, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: {fileID: 114876720922075246}
-  typeLocomotion: 0
-  typeSpeed: 0
-  animControl: {fileID: 95346201888160510}
-  targetLocomotion: {fileID: 0}
 --- !u!114 &114517313888816572
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3879,7 +3879,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraControl: {fileID: 114834372176763480}
-  locomotion: {fileID: 114507723874496848}
+  locomotion: {fileID: 114202594628319402}
   playerView: {fileID: 114587143568569328}
   playerTransform: {fileID: 4817662477664072}
   dropItemsPoint: {fileID: 4958657693177474}
@@ -3935,8 +3935,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d26cf123c726354d86c587da65d52b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locomotion: {fileID: 0}
-  characterStats: {fileID: 0}
+  locomotion: {fileID: 114202594628319402}
+  characterStats: {fileID: 114383933205410896}
   maxHealth: 100
   minHealth: 0
   isDead: 0
