@@ -47,7 +47,7 @@ namespace TDC.UI
                 return;
             }
 
-            base.CellWindow(_typeWindow, State);
+            //base.CellWindow(_typeWindow, State);
         }
 
         public void DisableAll(WindowControl.TTypePriority priority)

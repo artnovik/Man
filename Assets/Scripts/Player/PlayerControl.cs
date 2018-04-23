@@ -134,42 +134,13 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 
         if (inBattle)
         {
-            BattleMusicControl(inBattle);
-            playerUI.SetPlayerBarsStatus(inBattle);
+            AudioManager.Instance.BattleMusicControl(true);
+            playerUI.SetPlayerBarsStatus(true);
         }
         else
         {
-            BattleMusicControl(inBattle);
-            playerUI.SetPlayerBarsStatus(inBattle);
-        }
-    }
-
-    #endregion
-
-    #region BattleStateMusicControl
-
-    private bool oneSwitchBattleTrue;
-    private bool oneSwitchBattleFalse;
-
-    private void BattleMusicControl(bool inBattle)
-    {
-        if (inBattle)
-        {
-            if (!oneSwitchBattleTrue && AudioManager.Instance.BattleVolumeIsOff())
-            {
-                AudioManager.Instance.BattleSoundChange(true);
-                oneSwitchBattleTrue = true;
-                oneSwitchBattleFalse = false;
-            }
-        }
-        else
-        {
-            if (!oneSwitchBattleFalse && AudioManager.Instance.AmbientVolumeIsOff())
-            {
-                AudioManager.Instance.BattleSoundChange(false);
-                oneSwitchBattleFalse = true;
-                oneSwitchBattleTrue = false;
-            }
+            AudioManager.Instance.BattleMusicControl(false);
+            playerUI.SetPlayerBarsStatus(false);
         }
     }
 

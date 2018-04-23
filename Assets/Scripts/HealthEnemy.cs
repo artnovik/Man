@@ -38,7 +38,7 @@ public class HealthEnemy : Health
 
         if (Cheats.Instance.LIFESTEAL)
         {
-            PlayerControl.Instance.playerHealth.Heal((int) (damageValue * 0.5));
+            PlayerControl.Instance.playerHealth.Heal((int)(damageValue * 0.5));
         }
     }
 
@@ -63,6 +63,7 @@ public class HealthEnemy : Health
         // Custom implementation
         GetComponent<AIBattle>().SetRagdoll(true);
         DisableCollidersBetweenEnemyAndPlayer(2f);
+        DestroyComponents();
 
         Instantiate(enemyWeapon.weaponStats.gamePrefab, enemyWeapon.transform.position, enemyWeapon.transform.rotation,
             null);
@@ -70,6 +71,12 @@ public class HealthEnemy : Health
 
         GetComponent<EnemyUI>().DestroyEnemyUI(SpawnManager.Instance.GetDeadBodyDeleteDuration());
         DestroyBody(SpawnManager.Instance.GetDeadBodyDeleteDuration());
+    }
+
+    private void DestroyComponents()
+    {
+        Destroy(GetComponent<Locomotion>());
+        Destroy(GetComponent<AIBattle>());
     }
 
     private void DestroyBody(float delay)

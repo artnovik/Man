@@ -2,17 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoreAnimator : MonoBehaviour
-{
-    public const string MOVEMENT_STATE = "Movement";
-    public const string MOVEMENT_X = "MovX";
-    public const string MOVEMENT_Y = "MovY";
-    public const string ATTACK_STATE = "Attack";
-    public const string ATTACK_VALUE = "Attack_Value";
-}
-
-// ToDo separate for Player and Enemy
-public class Locomotion : CoreAnimator
+public class Locomotion : MonoBehaviour
 {
     [Tooltip("Health reference")]
     public Health health;
@@ -39,6 +29,15 @@ public class Locomotion : CoreAnimator
 
     private Transform localTransform;
     private float factor = 1f;
+
+    #region AnimationStates
+
+    public const string MOVEMENT_STATE = "Movement";
+    public const string MOVEMENT_X = "MovX";
+    public const string MOVEMENT_Y = "MovY";
+    public const string ATTACK_STATE = "Attack";
+
+    #endregion
 
     #region Core
 

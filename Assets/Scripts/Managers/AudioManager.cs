@@ -144,14 +144,46 @@ public class AudioManager : MonoBehaviour
         timeSinceNewPlaybackStarted = Time.timeSinceLevelLoad;
 
         // Fade in
-        while (oldSource.volume > newSourceVolume || newSource.volume < newSourceVolumeLevel)
+        while (oldSource.volume > newSourceVolume && newSource.volume < newSourceVolumeLevel)
         {
             yield return new WaitForSeconds(0.25f);
             oldSource.volume -= 0.01f;
             newSource.volume += 0.01f;
         }
 
+        oldSource.volume = 0;
+        newSource.volume = oldSourceVolume;
+
         oldSource.Pause();
+    }
+
+    #endregion
+    
+    #region BattleStateMusicControl
+
+    private bool oneSwitchBattleTrue;
+    private bool oneSwitchBattleFalse;
+
+    public void BattleMusicControl(bool inBattle)
+    {
+        if (inBattle)
+        {
+            if (!oneSwitchBattleTrue && BattleVolumeIsOff())
+            {
+                BattleSoundChange(true);
+                oneSwitchBattleTrue = true;
+                oneSwitchBattleFalse = false;
+            }
+        }
+        else
+        {
+            if (!oneSwitchBattleFalse && AmbientVolumeIsOff())
+            {
+                BattleSoundChange(false);
+                oneSwitchBattleFalse = true;
+                oneSwitchBattleTrue = false;
+            }
+        }
     }
 
     #endregion
