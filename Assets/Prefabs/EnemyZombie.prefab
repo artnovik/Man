@@ -1071,12 +1071,12 @@ GameObject:
   - component: {fileID: 114386747600935810}
   - component: {fileID: 114193148090953512}
   - component: {fileID: 114044743799235528}
+  - component: {fileID: 114939547921820984}
   - component: {fileID: 114469354785925220}
+  - component: {fileID: 114661968140573600}
   - component: {fileID: 95022380503117368}
   - component: {fileID: 195425044544071038}
-  - component: {fileID: 136127087145840070}
   - component: {fileID: 136571514283690512}
-  - component: {fileID: 114661968140573600}
   m_Layer: 0
   m_Name: EnemyZombie
   m_TagString: Enemy
@@ -3257,8 +3257,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locomotion: {fileID: 0}
+  characterStats: {fileID: 0}
   maxHealth: 100
-  currentHealth: 100
   minHealth: 0
   isDead: 0
   enemyWeapon: {fileID: 114895080710395028}
@@ -3456,6 +3456,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponStats: {fileID: 11400000, guid: 08e931f4d3fb40741b1691b9c1be5386, type: 2}
+--- !u!114 &114939547921820984
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1708815765540170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f12e69e613d9ca74eb9ee9fc3bc41d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endurance: {fileID: 0}
+  agility: {fileID: 0}
+  stamina: {fileID: 0}
+  strength: {fileID: 0}
+  arcane: {fileID: 0}
+  fire: {fileID: 0}
+  water: {fileID: 0}
 --- !u!135 &135476421251083016
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -3480,19 +3498,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.09213549
   m_Center: {x: -0.09213549, y: 0, z: 0}
---- !u!136 &136127087145840070
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1708815765540170}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136241725840158004
 CapsuleCollider:
   m_ObjectHideFlags: 1

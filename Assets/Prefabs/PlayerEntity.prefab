@@ -1300,6 +1300,7 @@ GameObject:
   - component: {fileID: 114876720922075246}
   - component: {fileID: 54047526821628166}
   - component: {fileID: 114146030649663362}
+  - component: {fileID: 114383933205410896}
   m_Layer: 0
   m_Name: Player_Jack
   m_TagString: Player
@@ -3793,6 +3794,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponStats: {fileID: 11400000, guid: 08e931f4d3fb40741b1691b9c1be5386, type: 2}
+--- !u!114 &114383933205410896
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1792862599540310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f12e69e613d9ca74eb9ee9fc3bc41d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endurance: {fileID: 0}
+  agility: {fileID: 0}
+  stamina: {fileID: 0}
+  strength: {fileID: 0}
+  arcane: {fileID: 0}
+  fire: {fileID: 0}
+  water: {fileID: 0}
 --- !u!114 &114507723874496848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3917,8 +3936,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locomotion: {fileID: 0}
+  characterStats: {fileID: 0}
   maxHealth: 100
-  currentHealth: 100
   minHealth: 0
   isDead: 0
   hitTransform: {fileID: 4962435904348192}

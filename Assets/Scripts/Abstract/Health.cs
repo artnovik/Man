@@ -8,9 +8,13 @@ public abstract class Health : MonoBehaviour
     [Tooltip("Locomotion reference")]
     public Locomotion locomotion;
 
+    [Tooltip("CStats reference")]
+    public CharacterStats characterStats;
+
     [Header("Health Manager")]
     public int maxHealth;
-    public int currentHealth;
+
+    public int currentHealth { get; private set; }
     public int minHealth;
 
     public bool isDead;
@@ -21,6 +25,7 @@ public abstract class Health : MonoBehaviour
     {
         currentHealth = maxHealth;
         locomotion = GetComponent<Locomotion>();
+        characterStats = GetComponent<CharacterStats>();
     }
 
     public virtual void Heal(int healValue)
@@ -48,7 +53,7 @@ public abstract class Health : MonoBehaviour
         if (currentHealth <= minHealth)
         {
             Death();
-            Debug.Log(gameObject.name + " died.");
+            Debug.Log(string.Format("{0} died.", gameObject.name));
         }
     }
 
