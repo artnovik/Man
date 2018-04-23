@@ -9,6 +9,9 @@ public class SpawnManager : MonoBehaviour
 
     public GameObject enemyZombie;
 
+    [SerializeField]
+    private bool autoSpawner;
+
     private uint deadBodyDeleteDuration = 5;
 
     #region Singleton
@@ -18,6 +21,41 @@ public class SpawnManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+    }
+
+    #endregion
+
+    #region AutoSpawner
+
+    private void Start()
+    {
+        if (autoSpawner)
+        {
+            GetStartTransforms(enemyZombie);
+        }
+    }
+
+    private GameObject[] allStartEnemies;
+    private List<Vector3> autoSpawnPositions = new List<Vector3>();
+    private List<Quaternion> autoSpawnRotations = new List<Quaternion>();
+
+    public void GetStartTransforms(GameObject enemyPrefab)
+    {
+        allStartEnemies = GameObject.FindGameObjectsWithTag(enemyPrefab.tag);
+
+        foreach (var enemy in allStartEnemies)
+        {
+            autoSpawnPositions.Add(enemy.transform.position);
+            autoSpawnRotations.Add(enemy.transform.rotation);
+        }
+    }
+
+    public void AutoSpawn(GameObject enemyPrefab)
+    {
+        for (int i = 0; i < allStartEnemies.Length; i++)
+        {
+            Instantiate(enemyPrefab, autoSpawnPositions[i], autoSpawnRotations[i]);
+        }
     }
 
     #endregion
@@ -48,7 +86,7 @@ public class SpawnManager : MonoBehaviour
 
     public bool CheckForEnemies(GameObject enemyPrefab)
     {
-        return GetCurrentEnemyQuantityOnMap(enemyPrefab) > 0;
+        return GetCurrentEnemyQuantityOnMap(enemyPrefab) > 1;
     }
 
     public void SpawnEnemies(GameObject enemyPrefab, float delay, bool message)
@@ -66,6 +104,13 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(3f);
         }
 
-        SpawnEnemies(enemyPrefab, 4);
+        if (autoSpawner)
+        {
+            AutoSpawn(enemyPrefab);
+        }
+        else
+        {
+            SpawnEnemies(enemyPrefab, (uint)spawnPointsTransforms.Length);
+        }
     }
 }
