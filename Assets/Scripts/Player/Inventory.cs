@@ -8,9 +8,9 @@ public class Inventory : MonoBehaviour
     [HideInInspector] public int inventoryCapacity = 27;
 
     public OnItemChanged onItemChangedCallback;
-    public List<WeaponStats> weapons = new List<WeaponStats>();
+    public List<Weapon> weapons = new List<Weapon>();
 
-    public void Add(WeaponStats weapon)
+    public void Add(Weapon weapon)
     {
         weapons.Add(weapon);
 
@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void Remove(WeaponStats weapon)
+    public void Remove(Weapon weapon)
     {
         weapons.Remove(weapon);
 

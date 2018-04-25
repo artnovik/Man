@@ -59,7 +59,7 @@ public class HealthEnemy : Health
         DisableCollidersBetweenEnemyAndPlayer(2f);
         DestroyComponents();
 
-        GameObject droppedWeapon = Instantiate(enemyWeapon.weaponStats.gamePrefab, enemyWeapon.transform.position,
+        GameObject droppedWeapon = Instantiate(enemyWeapon.gamePrefab, enemyWeapon.transform.position,
             enemyWeapon.transform.rotation,
             null);
         CollectiblesManager.Instance.SetParentAsCollectible(droppedWeapon);

@@ -176,7 +176,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     [Header("Weapons")] public int curIndexWeapon;
 
     public List<GameObject> listWeapons = new List<GameObject>();
-    private Weapon currentWeapon;
+    private WeaponOld currentWeapon;
 
     [HideInInspector] public Collider[] currentWeaponColliders;
 
@@ -192,7 +192,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         SwitchWeapon(curIndexWeapon);
     }
 
-    public void SwitchWeapon(int index)
+    private void SwitchWeapon(int index)
     {
         for (var i = 0; i < listWeapons.Count; i++) listWeapons[i].SetActive(i == index);
 
@@ -204,7 +204,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         return currentWeapon = listWeapons[curIndexWeapon].GetComponent<Weapon>();
     }
 
-    public Collider[] GetCurrentWeaponColliders()
+    private Collider[] GetCurrentWeaponColliders()
     {
         return currentWeaponColliders = listWeapons[curIndexWeapon].GetComponentsInChildren<Collider>();
     }

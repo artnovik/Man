@@ -42,7 +42,7 @@ public class InventoryUI : MonoBehaviour
     }
 
     public void FillInfoWindow(Sprite sprite, string name, int minDamage, int maxDamage,
-        WeaponStats.DamageTypeEnum damageType, WeaponStats.SpeedEnum speed, WeaponStats.RangeEnum range,
+        Weapon.DamageTypeEnum damageType, Weapon.SpeedEnum speed, Weapon.RangeEnum range,
         string description)
     {
         infoItemSprite.sprite = sprite;

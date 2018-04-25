@@ -1,41 +1,41 @@
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+[CreateAssetMenu(fileName = "New weapon", menuName = "Weapon")]
+public class Weapon : Item
 {
-    private WeaponStats.DamageTypeEnum DamageType;
-    private string description;
-    private GameObject gamePrefab; // To display in Game
-
-    private Sprite inventorySprite; // To display in Inventory
-    private int maxDamage;
-
-    private int minDamage;
-
-    private new string name;
-    private WeaponStats.RangeEnum Range;
-
-    private WeaponStats.SpeedEnum Speed;
-
-    private int staminaConsume;
-    public WeaponStats weaponStats;
-
-    private void Awake()
+    public enum DamageTypeEnum
     {
-        name = weaponStats.name;
-        description = weaponStats.description;
-
-        inventorySprite = weaponStats.inventorySprite;
-        gamePrefab = weaponStats.gamePrefab;
-
-        minDamage = weaponStats.minDamage;
-        maxDamage = weaponStats.maxDamage;
-
-        staminaConsume = weaponStats.staminaConsume;
-
-        Speed = weaponStats.Speed;
-        Range = weaponStats.Range;
-        DamageType = weaponStats.DamageType;
+        Normal = 0,
+        Arcane = 1,
+        Water = 2,
+        Fire = 3
     }
+
+    public enum RangeEnum
+    {
+        Small = 0,
+        Middle = 1,
+        Large = 2
+    }
+
+    public enum SpeedEnum
+    {
+        Fast = 0,
+        Normal = 1,
+        Slow = 2
+    }
+
+    public DamageTypeEnum DamageType;
+
+    public int maxDamage;
+
+    public int minDamage;
+
+    public RangeEnum Range;
+
+    public SpeedEnum Speed;
+
+    public int staminaConsume;
 
     public int GetDamage()
     {

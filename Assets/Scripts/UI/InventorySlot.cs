@@ -5,9 +5,9 @@ public class InventorySlot : MonoBehaviour
 {
     public Image icon;
     public Button removeButton;
-    private WeaponStats weaponStats;
+    private Weapon weaponStats;
 
-    public void AddItem(WeaponStats newWeapon)
+    public void AddItem(Weapon newWeapon)
     {
         weaponStats = newWeapon;
 
