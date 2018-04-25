@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using TDC.Audio;
 using UnityEngine;
 
 namespace TDC.UI
@@ -34,11 +34,11 @@ namespace TDC.UI
             Multiple
         }
 
-        [Header("Data Window")]
-        public TTypeWindow typeWindow;
+        [Header("Data Window")] public TTypeWindow typeWindow;
+
         public TTypePriority typePriority;
-        public bool initState = false;
-        public bool findCameraToCanvas = false;
+        public bool initState;
+        public bool findCameraToCanvas;
 
         public WindowManager windowManager { get; private set; }
         public GameObject main { get; private set; }
@@ -67,18 +67,17 @@ namespace TDC.UI
 
         public virtual void CoreUpdate()
         {
-
         }
 
         public virtual void ShowState(bool state)
         {
             if (animControl)
             {
-                if(state)
+                if (state)
                 {
                     SetActive(main, true);
                 }
-                else if(!state && main.activeSelf)
+                else if (!state && main.activeSelf)
                 {
                     StartCoroutine(DelayClose(state, animControl.GetCurrentAnimatorStateInfo(0).length));
                 }
@@ -97,20 +96,18 @@ namespace TDC.UI
             {
                 return animControl.GetBool(ANIMATOR_STATE_ENABLE);
             }
-            else
-            {
-                return main.activeSelf;
-            }
+
+            return main.activeSelf;
         }
 
         public virtual void Open()
         {
-            Core.Instance.CoreAudio.PlayOneShot(TDC.Audio.CoreAudio.DataSound.TType.SwitchWindow);
+            Core.Instance.CoreAudio.PlayOneShot(CoreAudio.DataSound.TType.SwitchWindow);
         }
 
         public virtual void Close()
         {
-            Core.Instance.CoreAudio.PlayOneShot(TDC.Audio.CoreAudio.DataSound.TType.SwitchWindow);
+            Core.Instance.CoreAudio.PlayOneShot(CoreAudio.DataSound.TType.SwitchWindow);
         }
 
         public IEnumerator DelayClose(bool state, float time)
@@ -122,7 +119,7 @@ namespace TDC.UI
 
         private void OnDestroy()
         {
-            if(windowManager)
+            if (windowManager)
             {
                 windowManager.ListWindow.Remove(this);
             }

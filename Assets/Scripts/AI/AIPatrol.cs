@@ -1,17 +1,15 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class AIPatrol : MonoBehaviour
 {
-    [SerializeField]
-    private Transform[] patrolPointsTransforms;
     private NavMeshAgent agent;
 
     private AIBattle AIBattle;
 
     private int destinationPoint;
+
+    [SerializeField] private Transform[] patrolPointsTransforms;
 
     private void Start()
     {
@@ -30,15 +28,19 @@ public class AIPatrol : MonoBehaviour
     {
         // Choose the next destination point when the agent gets
         // close to the current one.
-        if (!agent.pathPending && agent.remainingDistance < 0.5f/* && !AIBattle.isBattle*/)
+        if (!agent.pathPending && agent.remainingDistance < 0.5f /* && !AIBattle.isBattle*/)
+        {
             GotoNextPoint();
+        }
     }
 
     private void GotoNextPoint()
     {
         // Returns if no points have been set up
         if (patrolPointsTransforms.Length == 0)
+        {
             return;
+        }
 
         // Set the agent to go to the currently selected destination.
         agent.destination = patrolPointsTransforms[destinationPoint].position;

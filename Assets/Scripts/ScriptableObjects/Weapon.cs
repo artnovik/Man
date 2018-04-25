@@ -1,25 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public WeaponStats weaponStats;
-
-    private new string name;
+    private WeaponStats.DamageTypeEnum DamageType;
     private string description;
+    private GameObject gamePrefab; // To display in Game
 
-    private Sprite inventorySprite;       // To display in Inventory
-    private GameObject gamePrefab;        // To display in Game
-
-    private int minDamage;
+    private Sprite inventorySprite; // To display in Inventory
     private int maxDamage;
 
-    private int staminaConsume;
+    private int minDamage;
+
+    private new string name;
+    private WeaponStats.RangeEnum Range;
 
     private WeaponStats.SpeedEnum Speed;
-    private WeaponStats.RangeEnum Range;
-    private WeaponStats.DamageTypeEnum DamageType;
+
+    private int staminaConsume;
+    public WeaponStats weaponStats;
 
     private void Awake()
     {

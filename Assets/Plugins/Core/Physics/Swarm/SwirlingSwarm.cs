@@ -1,37 +1,47 @@
 // Swarm - Special renderer that draws a swarm of swirling/crawling lines.
 // https://github.com/keijiro/Swarm
 
-using UnityEngine;
 using Klak.Chromatics;
+using UnityEngine;
 
 namespace Swarm
 {
     public sealed class SwirlingSwarm : MonoBehaviour
     {
+        #region Hidden attributes
+
+        [SerializeField] [HideInInspector] private ComputeShader _compute;
+
+        #endregion
+
         #region Instancing properties
 
-        [SerializeField] int _instanceCount = 1000;
+        [SerializeField] private int _instanceCount = 1000;
 
-        public int instanceCount {
+        public int instanceCount
+        {
             get { return _instanceCount; }
         }
 
-        [SerializeField] TubeTemplate _template;
+        [SerializeField] private TubeTemplate _template;
 
-        public TubeTemplate template {
+        public TubeTemplate template
+        {
             get { return _template; }
         }
 
-        [SerializeField] float _radius = 0.005f;
+        [SerializeField] private float _radius = 0.005f;
 
-        public float radius {
+        public float radius
+        {
             get { return _radius; }
             set { _radius = value; }
         }
 
-        [SerializeField] float _length = 1;
+        [SerializeField] private float _length = 1;
 
-        public float length {
+        public float length
+        {
             get { return _length; }
             set { _length = value; }
         }
@@ -40,23 +50,26 @@ namespace Swarm
 
         #region Dynamics properties
 
-        [SerializeField] float _spread = 1;
+        [SerializeField] private float _spread = 1;
 
-        public float spread {
+        public float spread
+        {
             get { return _spread; }
             set { _spread = value; }
         }
 
-        [SerializeField] float _noiseFrequency = 0.5f;
+        [SerializeField] private float _noiseFrequency = 0.5f;
 
-        public float noiseFrequency {
+        public float noiseFrequency
+        {
             get { return _noiseFrequency; }
             set { _noiseFrequency = value; }
         }
 
-        [SerializeField] Vector3 _noiseMotion = Vector3.up * 0.1f;
+        [SerializeField] private Vector3 _noiseMotion = Vector3.up * 0.1f;
 
-        public Vector3 noiseMotion {
+        public Vector3 noiseMotion
+        {
             get { return _noiseMotion; }
             set { _noiseMotion = value; }
         }
@@ -65,15 +78,17 @@ namespace Swarm
 
         #region Material properties
 
-        [SerializeField] Material _material;
+        [SerializeField] private Material _material;
 
-        public Material material {
+        public Material material
+        {
             get { return _material; }
         }
 
-        [SerializeField] CosineGradient _gradient;
+        [SerializeField] private CosineGradient _gradient;
 
-        public CosineGradient gradient {
+        public CosineGradient gradient
+        {
             get { return _gradient; }
             set { _gradient = value; }
         }
@@ -82,44 +97,51 @@ namespace Swarm
 
         #region Misc properties
 
-        [SerializeField] int _randomSeed;
+        [SerializeField] private int _randomSeed;
 
-        public int randomSeed {
+        public int randomSeed
+        {
             set { _randomSeed = value; }
         }
 
         #endregion
 
-        #region Hidden attributes
-
-        [SerializeField, HideInInspector] ComputeShader _compute;
-
-        #endregion
-
         #region Private fields
 
-        ComputeBuffer _drawArgsBuffer;
-        ComputeBuffer _positionBuffer;
-        ComputeBuffer _tangentBuffer;
-        ComputeBuffer _normalBuffer;
-        bool _materialCloned;
-        MaterialPropertyBlock _props;
-        Vector3 _noiseOffset;
+        private ComputeBuffer _drawArgsBuffer;
+        private ComputeBuffer _positionBuffer;
+        private ComputeBuffer _tangentBuffer;
+        private ComputeBuffer _normalBuffer;
+        private bool _materialCloned;
+        private MaterialPropertyBlock _props;
+        private Vector3 _noiseOffset;
 
         #endregion
 
         #region Compute configurations
 
-        const int kThreadCount = 64;
-        int ThreadGroupCount { get { return _instanceCount / kThreadCount; } }
-        int InstanceCount { get { return kThreadCount * ThreadGroupCount; } }
-        int HistoryLength { get { return _template.segments + 1; } }
+        private const int kThreadCount = 64;
+
+        private int ThreadGroupCount
+        {
+            get { return _instanceCount / kThreadCount; }
+        }
+
+        private int InstanceCount
+        {
+            get { return kThreadCount * ThreadGroupCount; }
+        }
+
+        private int HistoryLength
+        {
+            get { return _template.segments + 1; }
+        }
 
         #endregion
 
         #region MonoBehaviour functions
 
-        void OnValidate()
+        private void OnValidate()
         {
             _instanceCount = Mathf.Max(kThreadCount, _instanceCount);
             _radius = Mathf.Max(0, _radius);
@@ -128,15 +150,16 @@ namespace Swarm
             _noiseFrequency = Mathf.Max(0, _noiseFrequency);
         }
 
-        void Start()
+        private void Start()
         {
             // Initialize the indirect draw args buffer.
             _drawArgsBuffer = new ComputeBuffer(
                 1, 5 * sizeof(uint), ComputeBufferType.IndirectArguments
             );
 
-            _drawArgsBuffer.SetData(new uint[5] {
-                _template.mesh.GetIndexCount(0), (uint)InstanceCount, 0, 0, 0
+            _drawArgsBuffer.SetData(new uint[5]
+            {
+                _template.mesh.GetIndexCount(0), (uint) InstanceCount, 0, 0, 0
             });
 
             // Allocate compute buffers.
@@ -156,16 +179,35 @@ namespace Swarm
             _noiseOffset = Vector3.one * _randomSeed;
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
-            if (_drawArgsBuffer != null) _drawArgsBuffer.Release();
-            if (_positionBuffer != null) _positionBuffer.Release();
-            if (_tangentBuffer != null) _tangentBuffer.Release();
-            if (_normalBuffer != null) _normalBuffer.Release();
-            if (_materialCloned) Destroy(_material);
+            if (_drawArgsBuffer != null)
+            {
+                _drawArgsBuffer.Release();
+            }
+
+            if (_positionBuffer != null)
+            {
+                _positionBuffer.Release();
+            }
+
+            if (_tangentBuffer != null)
+            {
+                _tangentBuffer.Release();
+            }
+
+            if (_normalBuffer != null)
+            {
+                _normalBuffer.Release();
+            }
+
+            if (_materialCloned)
+            {
+                Destroy(_material);
+            }
         }
 
-        void Update()
+        private void Update()
         {
             // Invoke the update compute kernel.
             var kernel = _compute.FindKernel("SwirlingUpdate");

@@ -1,8 +1,9 @@
 //
 // Custom editor for Grass
 //
-using UnityEngine;
+
 using UnityEditor;
+using UnityEngine;
 
 namespace Kvant
 {
@@ -10,57 +11,56 @@ namespace Kvant
     [CustomEditor(typeof(Grass))]
     public class GrassEditor : Editor
     {
-        SerializedProperty _density;
-        SerializedProperty _extent;
-        SerializedProperty _offset;
+        private static readonly GUIContent _textRandomPitch = new GUIContent("Random Pitch");
+        private static readonly GUIContent _textNoiseToPitch = new GUIContent("Noise To Pitch");
+        private static readonly GUIContent _textNoiseFrequency = new GUIContent("Noise Frequency");
+        private static readonly GUIContent _textNoiseSpeed = new GUIContent("Noise Speed");
+        private static readonly GUIContent _textNoiseAxis = new GUIContent("Noise Axis");
+        private static readonly GUIContent _textNoiseToScale = new GUIContent("Noise To Scale");
 
-        SerializedProperty _randomPitchAngle;
-        SerializedProperty _noisePitchAngle;
-        SerializedProperty _rotationNoiseFrequency;
-        SerializedProperty _rotationNoiseSpeed;
-        SerializedProperty _rotationNoiseAxis;
+        private static readonly GUIContent _textRandomScale = new GUIContent("Random Scale");
 
-        SerializedProperty _baseScale;
-        SerializedProperty _minRandomScale;
-        SerializedProperty _maxRandomScale;
-        SerializedProperty _scaleNoiseAmplitude;
-        SerializedProperty _scaleNoiseFrequency;
+        private SerializedProperty _baseScale;
+        private SerializedProperty _castShadows;
+        private SerializedProperty _density;
+        private SerializedProperty _extent;
+        private SerializedProperty _material;
+        private SerializedProperty _maxRandomScale;
+        private SerializedProperty _minRandomScale;
+        private SerializedProperty _noisePitchAngle;
+        private SerializedProperty _offset;
 
-        SerializedProperty _shapes;
-        SerializedProperty _material;
-        SerializedProperty _castShadows;
-        SerializedProperty _receiveShadows;
+        private SerializedProperty _randomPitchAngle;
+        private SerializedProperty _receiveShadows;
+        private SerializedProperty _rotationNoiseAxis;
+        private SerializedProperty _rotationNoiseFrequency;
+        private SerializedProperty _rotationNoiseSpeed;
+        private SerializedProperty _scaleNoiseAmplitude;
+        private SerializedProperty _scaleNoiseFrequency;
 
-        static GUIContent _textRandomPitch    = new GUIContent("Random Pitch");
-        static GUIContent _textNoiseToPitch   = new GUIContent("Noise To Pitch");
-        static GUIContent _textNoiseFrequency = new GUIContent("Noise Frequency");
-        static GUIContent _textNoiseSpeed     = new GUIContent("Noise Speed");
-        static GUIContent _textNoiseAxis      = new GUIContent("Noise Axis");
-        static GUIContent _textNoiseToScale   = new GUIContent("Noise To Scale");
+        private SerializedProperty _shapes;
 
-        static GUIContent _textRandomScale   = new GUIContent("Random Scale");
-
-        void OnEnable()
+        private void OnEnable()
         {
             _density = serializedObject.FindProperty("_density");
-            _extent  = serializedObject.FindProperty("_extent");
-            _offset  = serializedObject.FindProperty("_offset");
+            _extent = serializedObject.FindProperty("_extent");
+            _offset = serializedObject.FindProperty("_offset");
 
-            _randomPitchAngle       = serializedObject.FindProperty("_randomPitchAngle");
-            _noisePitchAngle        = serializedObject.FindProperty("_noisePitchAngle");
+            _randomPitchAngle = serializedObject.FindProperty("_randomPitchAngle");
+            _noisePitchAngle = serializedObject.FindProperty("_noisePitchAngle");
             _rotationNoiseFrequency = serializedObject.FindProperty("_rotationNoiseFrequency");
-            _rotationNoiseSpeed     = serializedObject.FindProperty("_rotationNoiseSpeed");
-            _rotationNoiseAxis      = serializedObject.FindProperty("_rotationNoiseAxis");
+            _rotationNoiseSpeed = serializedObject.FindProperty("_rotationNoiseSpeed");
+            _rotationNoiseAxis = serializedObject.FindProperty("_rotationNoiseAxis");
 
-            _baseScale           = serializedObject.FindProperty("_baseScale");
-            _minRandomScale      = serializedObject.FindProperty("_minRandomScale");
-            _maxRandomScale      = serializedObject.FindProperty("_maxRandomScale");
+            _baseScale = serializedObject.FindProperty("_baseScale");
+            _minRandomScale = serializedObject.FindProperty("_minRandomScale");
+            _maxRandomScale = serializedObject.FindProperty("_maxRandomScale");
             _scaleNoiseAmplitude = serializedObject.FindProperty("_scaleNoiseAmplitude");
             _scaleNoiseFrequency = serializedObject.FindProperty("_scaleNoiseFrequency");
 
-            _shapes         = serializedObject.FindProperty("_shapes");
-            _material       = serializedObject.FindProperty("_material");
-            _castShadows    = serializedObject.FindProperty("_castShadows");
+            _shapes = serializedObject.FindProperty("_shapes");
+            _material = serializedObject.FindProperty("_material");
+            _castShadows = serializedObject.FindProperty("_castShadows");
             _receiveShadows = serializedObject.FindProperty("_receiveShadows");
         }
 
@@ -72,7 +72,10 @@ namespace Kvant
 
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.PropertyField(_density);
-            if (EditorGUI.EndChangeCheck()) instance.NotifyConfigChange();
+            if (EditorGUI.EndChangeCheck())
+            {
+                instance.NotifyConfigChange();
+            }
 
             EditorGUILayout.PropertyField(_extent);
             EditorGUILayout.PropertyField(_offset);
@@ -100,7 +103,10 @@ namespace Kvant
 
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.PropertyField(_shapes, true);
-            if (EditorGUI.EndChangeCheck()) instance.NotifyConfigChange();
+            if (EditorGUI.EndChangeCheck())
+            {
+                instance.NotifyConfigChange();
+            }
 
             EditorGUILayout.PropertyField(_material);
             EditorGUILayout.PropertyField(_castShadows);
@@ -109,7 +115,8 @@ namespace Kvant
             serializedObject.ApplyModifiedProperties();
         }
 
-        void MinMaxSlider(GUIContent label, SerializedProperty propMin, SerializedProperty propMax, float minLimit, float maxLimit)
+        private void MinMaxSlider(GUIContent label, SerializedProperty propMin, SerializedProperty propMax,
+            float minLimit, float maxLimit)
         {
             var min = propMin.floatValue;
             var max = propMax.floatValue;
@@ -123,7 +130,7 @@ namespace Kvant
             EditorGUI.indentLevel = 0;
 
             // Float value boxes.
-            var rect = EditorGUILayout.GetControlRect();
+            Rect rect = EditorGUILayout.GetControlRect();
             rect.x += EditorGUIUtility.labelWidth;
             rect.width = (rect.width - EditorGUIUtility.labelWidth) / 2 - 2;
 
@@ -144,7 +151,8 @@ namespace Kvant
 
             EditorGUI.indentLevel = prevIndent;
 
-            if (EditorGUI.EndChangeCheck()) {
+            if (EditorGUI.EndChangeCheck())
+            {
                 propMin.floatValue = min;
                 propMax.floatValue = max;
             }

@@ -1,10 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using TDC.Audio;
+using TDC.LoadScreen;
+using TDC.SaveAndLoad;
+using TDC.UI;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
 //using UnityEditor;
 
-#if GoogleMobileAds 
+#if GoogleMobileAds
 using GoogleMobileAds.Api;
 #endif
 
@@ -15,19 +19,31 @@ namespace TDC
     {
         #region Data
 
-        #if GoogleMobileAds
+#if GoogleMobileAds
         [SerializeField] private CoreAdMob coreAdMob;
         public CoreAdMob CoreAdMob { get { return coreAdMob; } }
         #endif
 
         [SerializeField] private DataDebug dataDebug;
-        public DataDebug DataDebug { get { return dataDebug; } }
 
-        [SerializeField] private UI.DialogApp dialogApp;
-        public UI.DialogApp DialogApp { get { return dialogApp; } }
+        public DataDebug DataDebug
+        {
+            get { return dataDebug; }
+        }
+
+        [SerializeField] private DialogApp dialogApp;
+
+        public DialogApp DialogApp
+        {
+            get { return dialogApp; }
+        }
 
         [SerializeField] private CoreAudio coreAudio;
-        public CoreAudio CoreAudio { get { return coreAudio; } }
+
+        public CoreAudio CoreAudio
+        {
+            get { return coreAudio; }
+        }
 
         #endregion
 
@@ -51,18 +67,18 @@ namespace TDC
         {
             Globals.Instance.Initialization();
 
-            #if GoogleMobileAds
+#if GoogleMobileAds
             coreAdMob.Initialization();
             #endif
 
             DontDestroyOnLoad(gameObject);
 
 
-            List<int> initScene = new List<int>();
+            var initScene = new List<int>();
 
             initScene.Add(2);
 
-            LoadScreen.LoadManager.Instance.LoadScene(initScene, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            LoadManager.Instance.LoadScene(initScene, LoadSceneMode.Additive);
         }
 
         public void CoreUpdate()
@@ -76,21 +92,20 @@ namespace TDC
 
         public string GetStringColor(string text, DDebug.TColor type = DDebug.TColor.Default)
         {
-            foreach (var Item in DataDebug.listDebug)
-            {
+            foreach (DDebug Item in DataDebug.listDebug)
                 if (Item.TypeColor == type)
                 {
-                    string StrColor = Item.Color.r.ToString("X2") + Item.Color.g.ToString("X2") + Item.Color.b.ToString("X2");
+                    var StrColor = Item.Color.r.ToString("X2") + Item.Color.g.ToString("X2") +
+                                   Item.Color.b.ToString("X2");
                     return "<color=#" + StrColor + ">" + text + "</color>";
                 }
-            }
 
             return text;
         }
 
         public string DebugLog(string text, DDebug.TColor type = DDebug.TColor.Default)
         {
-            return (GetStringColor("[System] ", DDebug.TColor.System) + GetStringColor(text, type));
+            return GetStringColor("[System] ", DDebug.TColor.System) + GetStringColor(text, type);
         }
 
         #endregion
@@ -99,37 +114,38 @@ namespace TDC
     //[InitializeOnLoad]
     public class CoreConfiguration
     {
-        public static string pathDefineManager;
-
         private const string globalPathXml = "Assets\\Core\\Data\\";
         private const string globalNameXml = "globalConfiguration";
+        public static string pathDefineManager;
 
-        public static List<SaveAndLoad.CoreXml.DataXml> globalConfiguration = new List<SaveAndLoad.CoreXml.DataXml>();
+        public static List<CoreXml.DataXml> globalConfiguration = new List<CoreXml.DataXml>();
 
         static CoreConfiguration()
         {
-            globalConfiguration = new List<SaveAndLoad.CoreXml.DataXml>();
-            globalConfiguration = SaveAndLoad.CoreXml.Load(globalPathXml, globalNameXml);
+            globalConfiguration = new List<CoreXml.DataXml>();
+            globalConfiguration = CoreXml.Load(globalPathXml, globalNameXml);
 
             if (globalConfiguration == null)
             {
-                SaveAndLoad.CoreXml.DataXml gConfExample = new SaveAndLoad.CoreXml.DataXml();
+                var gConfExample = new CoreXml.DataXml();
                 gConfExample.Initialization("PathDefineManager", "Assets\\Core\\Data\\");
 
-                List<SaveAndLoad.CoreXml.DataXml> listExample = new List<SaveAndLoad.CoreXml.DataXml>();
+                var listExample = new List<CoreXml.DataXml>();
                 listExample.Add(gConfExample);
 
-                SaveAndLoad.CoreXml.Save(globalPathXml, globalNameXml, listExample);
+                CoreXml.Save(globalPathXml, globalNameXml, listExample);
                 return;
             }
 
             Debug.Log("Unity Core Initialization [" + globalConfiguration.Count + "]");
 
-            for (int i=0; i<globalConfiguration.Count; i++)
+            for (var i = 0; i < globalConfiguration.Count; i++)
             {
-                switch(globalConfiguration[i].name)
+                switch (globalConfiguration[i].name)
                 {
-                    case "PathDefineManager": pathDefineManager = globalConfiguration[i].text; break;
+                    case "PathDefineManager":
+                        pathDefineManager = globalConfiguration[i].text;
+                        break;
                 }
 
                 Debug.Log("Load path: " + globalConfiguration[i].text);
@@ -138,23 +154,23 @@ namespace TDC
 
         public static void EditConfiguration(string name, string value)
         {
-            if (globalConfiguration.Count == 0) { return; }
-
-            for (int i = 0; i < globalConfiguration.Count; i++)
+            if (globalConfiguration.Count == 0)
             {
+                return;
+            }
+
+            for (var i = 0; i < globalConfiguration.Count; i++)
                 if (globalConfiguration[i].name == name)
                 {
-
                     globalConfiguration[i].SetText(value);
                 }
-            }
 
             CoreSave();
         }
 
         public static void CoreSave()
         {
-            SaveAndLoad.CoreXml.Save(globalPathXml, globalNameXml, globalConfiguration);
+            CoreXml.Save(globalPathXml, globalNameXml, globalConfiguration);
             Debug.Log("Unity Core Save");
         }
     }

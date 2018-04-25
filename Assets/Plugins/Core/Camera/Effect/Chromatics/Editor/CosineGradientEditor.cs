@@ -7,16 +7,16 @@ namespace Klak.Chromatics
     [CustomEditor(typeof(CosineGradient))]
     public class CosineGradientEditor : Editor
     {
-        GraphDrawer _graph;
-        PreviewDrawer _preview;
+        private SerializedProperty _blueCoeffs;
+        private GraphDrawer _graph;
+        private SerializedProperty _greenCoeffs;
+        private PreviewDrawer _preview;
 
-        SerializedProperty _redCoeffs;
-        SerializedProperty _greenCoeffs;
-        SerializedProperty _blueCoeffs;
+        [SerializeField] private Shader _previewShader;
 
-        [SerializeField] Shader _previewShader;
+        private SerializedProperty _redCoeffs;
 
-        void OnEnable()
+        private void OnEnable()
         {
             _graph = new GraphDrawer();
             _preview = new PreviewDrawer(_previewShader);
@@ -26,7 +26,7 @@ namespace Klak.Chromatics
             _blueCoeffs = serializedObject.FindProperty("_blueCoeffs");
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             _preview.Cleanup();
         }
@@ -35,11 +35,11 @@ namespace Klak.Chromatics
         {
             serializedObject.Update();
 
-            _graph.DrawGraph((CosineGradient)target);
+            _graph.DrawGraph((CosineGradient) target);
 
             EditorGUILayout.Space();
 
-            _preview.DrawPreview((CosineGradient)target);
+            _preview.DrawPreview((CosineGradient) target);
 
             EditorGUILayout.Space();
 
@@ -50,9 +50,9 @@ namespace Klak.Chromatics
             serializedObject.ApplyModifiedProperties();
         }
 
-        void ShowSliders(string label, SerializedProperty prop)
+        private void ShowSliders(string label, SerializedProperty prop)
         {
-            var v = prop.vector4Value;
+            Vector4 v = prop.vector4Value;
 
             EditorGUILayout.LabelField(label);
             EditorGUI.BeginChangeCheck();
@@ -65,7 +65,9 @@ namespace Klak.Chromatics
             EditorGUI.indentLevel--;
 
             if (EditorGUI.EndChangeCheck())
+            {
                 prop.vector4Value = new Vector4(v.x, v.y, v.z, v.w);
+            }
         }
     }
 
@@ -82,7 +84,7 @@ namespace Klak.Chromatics
             DrawRect(0, 0, 1, 1, 0.1f, 0.4f);
 
             // Horizontal line
-            var lineColor = Color.white * 0.4f;
+            Color lineColor = Color.white * 0.4f;
             DrawLine(0, 0.5f, 1, 0.5f, lineColor);
 
             // Vertical lines
@@ -96,11 +98,11 @@ namespace Klak.Chromatics
             DrawGradientCurve(grad.blueCoeffs, Color.blue);
         }
 
-        void DrawGradientCurve(Vector4 coeffs, Color color)
+        private void DrawGradientCurve(Vector4 coeffs, Color color)
         {
             for (var i = 0; i < _curveResolution; i++)
             {
-                var x = (float)i / (_curveResolution - 1);
+                var x = (float) i / (_curveResolution - 1);
                 var theta = (coeffs.z * x + coeffs.w) * Mathf.PI * 2;
                 var y = coeffs.x + coeffs.y * Mathf.Cos(theta);
                 _curveVertices[i] = PointInRect(x, Mathf.Clamp01(y));
@@ -115,17 +117,17 @@ namespace Klak.Chromatics
         #region Graph Functions
 
         // Number of vertices in curve
-        const int _curveResolution = 96;
+        private const int _curveResolution = 96;
 
         // Vertex buffers
-        Vector3[] _rectVertices = new Vector3[4];
-        Vector3[] _lineVertices = new Vector3[2];
-        Vector3[] _curveVertices = new Vector3[_curveResolution];
+        private readonly Vector3[] _rectVertices = new Vector3[4];
+        private readonly Vector3[] _lineVertices = new Vector3[2];
+        private readonly Vector3[] _curveVertices = new Vector3[_curveResolution];
 
-        Rect _rectGraph;
+        private Rect _rectGraph;
 
         // Transform a point into the graph rect.
-        Vector3 PointInRect(float x, float y)
+        private Vector3 PointInRect(float x, float y)
         {
             x = Mathf.Lerp(_rectGraph.x, _rectGraph.xMax, x);
             y = Mathf.Lerp(_rectGraph.yMax, _rectGraph.y, y);
@@ -133,7 +135,7 @@ namespace Klak.Chromatics
         }
 
         // Draw a line in the graph rect.
-        void DrawLine(float x1, float y1, float x2, float y2, Color color)
+        private void DrawLine(float x1, float y1, float x2, float y2, Color color)
         {
             _lineVertices[0] = PointInRect(x1, y1);
             _lineVertices[1] = PointInRect(x2, y2);
@@ -142,7 +144,7 @@ namespace Klak.Chromatics
         }
 
         // Draw a rect in the graph rect.
-        void DrawRect(float x1, float y1, float x2, float y2, float fill, float line)
+        private void DrawRect(float x1, float y1, float x2, float y2, float fill, float line)
         {
             _rectVertices[0] = PointInRect(x1, y1);
             _rectVertices[1] = PointInRect(x2, y1);
@@ -162,7 +164,7 @@ namespace Klak.Chromatics
     // A utility class for drawing a gradient preview area.
     public class PreviewDrawer
     {
-        Material _material;
+        private Material _material;
 
         public PreviewDrawer(Shader shader)
         {
@@ -172,7 +174,11 @@ namespace Klak.Chromatics
 
         public void Cleanup()
         {
-            if (_material != null) Object.DestroyImmediate(_material);
+            if (_material != null)
+            {
+                Object.DestroyImmediate(_material);
+            }
+
             _material = null;
         }
 

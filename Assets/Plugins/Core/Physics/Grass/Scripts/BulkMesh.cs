@@ -1,19 +1,20 @@
 //
 // Bulk mesh container
 //
+
+using System;
 using UnityEngine;
 
 namespace Kvant
 {
     public partial class Grass
     {
-        [System.Serializable]
-        class BulkMesh
+        [Serializable]
+        private class BulkMesh
         {
             #region Public Properties
 
-            Mesh _mesh;
-            public Mesh mesh { get { return _mesh; } }
+            public Mesh mesh { get; private set; }
 
             #endregion
 
@@ -32,7 +33,10 @@ namespace Kvant
 
             public void Release()
             {
-                if (_mesh) DestroyImmediate(_mesh);
+                if (mesh)
+                {
+                    DestroyImmediate(mesh);
+                }
             }
 
             #endregion
@@ -40,76 +44,87 @@ namespace Kvant
             #region Private Methods
 
             // Cache structure which stores shape information
-            struct ShapeCacheData
+            private struct ShapeCacheData
             {
-                Vector3[] vertices;
-                Vector3[] normals;
-                Vector4[] tangents;
-                Vector2[] uv;
-                int[] indices;
+                private readonly Vector3[] vertices;
+                private readonly Vector3[] normals;
+                private readonly Vector4[] tangents;
+                private readonly Vector2[] uv;
+                private readonly int[] indices;
 
                 public ShapeCacheData(Mesh mesh)
                 {
                     if (mesh)
                     {
                         vertices = mesh.vertices;
-                        normals  = mesh.normals;
+                        normals = mesh.normals;
                         tangents = mesh.tangents;
-                        uv       = mesh.uv;
-                        indices  = mesh.GetIndices(0);
+                        uv = mesh.uv;
+                        indices = mesh.GetIndices(0);
                     }
                     else
                     {
                         // An empty mesh was given; replaces with a two-sided quad.
-                        vertices = new Vector3[] {
+                        vertices = new[]
+                        {
                             new Vector3(-1, +1, 0), new Vector3(+1, +1, 0),
                             new Vector3(-1, -1, 0), new Vector3(+1, -1, 0),
                             new Vector3(+1, +1, 0), new Vector3(-1, +1, 0),
                             new Vector3(+1, -1, 0), new Vector3(-1, -1, 0)
                         };
-                        normals = new Vector3[] {
-                             Vector3.forward,  Vector3.forward,
-                             Vector3.forward,  Vector3.forward,
+                        normals = new[]
+                        {
+                            Vector3.forward, Vector3.forward,
+                            Vector3.forward, Vector3.forward,
                             -Vector3.forward, -Vector3.forward,
-                            -Vector3.forward, -Vector3.forward,
+                            -Vector3.forward, -Vector3.forward
                         };
-                        tangents = new Vector4[] {
-                            new Vector4( 1, 0, 0, 1), new Vector4( 1, 0, 0, 1),
-                            new Vector4( 1, 0, 0, 1), new Vector4( 1, 0, 0, 1),
+                        tangents = new[]
+                        {
+                            new Vector4(1, 0, 0, 1), new Vector4(1, 0, 0, 1),
+                            new Vector4(1, 0, 0, 1), new Vector4(1, 0, 0, 1),
                             new Vector4(-1, 0, 0, 1), new Vector4(-1, 0, 0, 1),
                             new Vector4(-1, 0, 0, 1), new Vector4(-1, 0, 0, 1)
                         };
-                        uv = new Vector2[] {
+                        uv = new[]
+                        {
                             new Vector2(0, 1), new Vector2(1, 1),
                             new Vector2(0, 0), new Vector2(1, 0),
                             new Vector2(1, 1), new Vector2(0, 1),
                             new Vector2(1, 0), new Vector2(0, 0)
                         };
-                        indices = new int[] {0, 1, 2, 3, 2, 1, 4, 5, 6, 7, 6, 5};
+                        indices = new[] {0, 1, 2, 3, 2, 1, 4, 5, 6, 7, 6, 5};
                     }
                 }
 
-                public int VertexCount { get { return vertices.Length; } }
-                public int IndexCount { get { return indices.Length; } }
+                public int VertexCount
+                {
+                    get { return vertices.Length; }
+                }
+
+                public int IndexCount
+                {
+                    get { return indices.Length; }
+                }
 
                 public void CopyVerticesTo(Vector3[] destination, int position)
                 {
-                    System.Array.Copy(vertices, 0, destination, position, vertices.Length);
+                    Array.Copy(vertices, 0, destination, position, vertices.Length);
                 }
 
                 public void CopyNormalsTo(Vector3[] destination, int position)
                 {
-                    System.Array.Copy(normals, 0, destination, position, normals.Length);
+                    Array.Copy(normals, 0, destination, position, normals.Length);
                 }
 
                 public void CopyTangentsTo(Vector4[] destination, int position)
                 {
-                    System.Array.Copy(tangents, 0, destination, position, tangents.Length);
+                    Array.Copy(tangents, 0, destination, position, tangents.Length);
                 }
 
                 public void CopyUVTo(Vector2[] destination, int position)
                 {
-                    System.Array.Copy(uv, 0, destination, position, uv.Length);
+                    Array.Copy(uv, 0, destination, position, uv.Length);
                 }
 
                 public void CopyIndicesTo(int[] destination, int position, int offset)
@@ -120,7 +135,7 @@ namespace Kvant
             }
 
             // Mesh combiner function
-            void CombineMeshes(Mesh[] shapes, int copyCount)
+            private void CombineMeshes(Mesh[] shapes, int copyCount)
             {
                 ShapeCacheData[] cache;
 
@@ -141,45 +156,53 @@ namespace Kvant
                 // Count the number of vertices and indices in the shape cache.
                 var vc_shapes = 0;
                 var ic_shapes = 0;
-                foreach (var s in cache) {
+                foreach (ShapeCacheData s in cache)
+                {
                     vc_shapes += s.VertexCount;
                     ic_shapes += s.IndexCount;
                 }
 
                 // If there is nothing, break.
-                if (vc_shapes == 0) return;
+                if (vc_shapes == 0)
+                {
+                    return;
+                }
 
                 // Determine the number of vertices/indicies.
                 var vc = 0;
                 var ic = 0;
                 for (var i = 0; i < copyCount; i++)
                 {
-                    var s = cache[i % cache.Length];
-                    if (vc + s.VertexCount > 65535) break;
+                    ShapeCacheData s = cache[i % cache.Length];
+                    if (vc + s.VertexCount > 65535)
+                    {
+                        break;
+                    }
+
                     vc += s.VertexCount;
                     ic += s.IndexCount;
                 }
 
                 // Create vertex arrays.
                 var vertices = new Vector3[vc];
-                var normals  = new Vector3[vc];
+                var normals = new Vector3[vc];
                 var tangents = new Vector4[vc];
-                var uv       = new Vector2[vc];
-                var uv2      = new Vector2[vc];
+                var uv = new Vector2[vc];
+                var uv2 = new Vector2[vc];
                 var indicies = new int[ic];
 
                 for (int v_i = 0, i_i = 0, e_i = 0; v_i < vc; e_i++)
                 {
-                    var s = cache[e_i % cache.Length];
+                    ShapeCacheData s = cache[e_i % cache.Length];
 
                     s.CopyVerticesTo(vertices, v_i);
-                    s.CopyNormalsTo (normals,  v_i);
+                    s.CopyNormalsTo(normals, v_i);
                     s.CopyTangentsTo(tangents, v_i);
-                    s.CopyUVTo      (uv,       v_i);
+                    s.CopyUVTo(uv, v_i);
 
                     s.CopyIndicesTo(indicies, i_i, v_i);
 
-                    var coord = new Vector2((float)e_i / copyCount, 0);
+                    var coord = new Vector2((float) e_i / copyCount, 0);
                     for (var i = 0; i < s.VertexCount; i++) uv2[v_i + i] = coord;
 
                     v_i += s.VertexCount;
@@ -187,22 +210,22 @@ namespace Kvant
                 }
 
                 // Create a mesh object.
-                _mesh = new Mesh();
+                mesh = new Mesh();
 
-                _mesh.vertices = vertices;
-                _mesh.normals  = normals;
-                _mesh.tangents = tangents;
-                _mesh.uv       = uv;
-                _mesh.uv2      = uv2;
+                mesh.vertices = vertices;
+                mesh.normals = normals;
+                mesh.tangents = tangents;
+                mesh.uv = uv;
+                mesh.uv2 = uv2;
 
-                _mesh.SetIndices(indicies, MeshTopology.Triangles, 0);
+                mesh.SetIndices(indicies, MeshTopology.Triangles, 0);
                 ;
 
                 // This only for temporary use. Don't save.
-                _mesh.hideFlags = HideFlags.DontSave;
+                mesh.hideFlags = HideFlags.DontSave;
 
                 // Avoid being culled.
-                _mesh.bounds = new Bounds(Vector3.zero, Vector3.one * 1000);
+                mesh.bounds = new Bounds(Vector3.zero, Vector3.one * 1000);
             }
 
             #endregion

@@ -1,31 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TDC.InputSystem
 {
     public class InputManager : MonoBehaviourSingleton<InputManager>
     {
-
         #region Data
 
         public delegate void OnStartHold();
+
         public event OnStartHold startHold;
 
         public delegate void OnDelayHold();
+
         public event OnDelayHold delayHold;
 
         public delegate void OnEndHold();
+
         public event OnEndHold endHold;
 
         public delegate void OnSwap();
+
         public event OnSwap swap;
 
         public Vector2 touchPosition { get; private set; }
         public Vector2 updatePosition { get; private set; }
         public float deltaX { get; private set; }
-        private bool stateSwap = false;
-
+        private bool stateSwap;
 
         #endregion
 
@@ -52,54 +52,45 @@ namespace TDC.InputSystem
         private void StartHold()
         {
             foreach (Touch touches in Input.touches)
-            {
                 if (touches.phase == TouchPhase.Began)
                 {
                     startHold();
                     return;
                 }
-            }
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 startHold();
-                return;
             }
         }
 
         private void DelayHold()
         {
             foreach (Touch touches in Input.touches)
-            {
                 if (touches.phase != TouchPhase.Ended && touches.phase != TouchPhase.Canceled)
                 {
                     delayHold();
                     return;
                 }
-            }
 
             if (Input.GetKey(KeyCode.Space))
             {
                 delayHold();
-                return;
             }
         }
 
         private void EndHold()
         {
             foreach (Touch touches in Input.touches)
-            {
                 if (touches.phase == TouchPhase.Ended || touches.phase == TouchPhase.Canceled)
                 {
                     endHold();
                     return;
                 }
-            }
 
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 endHold();
-                return;
             }
         }
 
@@ -112,20 +103,22 @@ namespace TDC.InputSystem
                 touchPosition = touches.position;
                 return;
             }
-            
         }
 
         private void DelaySwap()
         {
-            if (stateSwap) { return; }
+            if (stateSwap)
+            {
+                return;
+            }
 
             foreach (Touch touches in Input.touches)
             {
-                deltaX = (touches.deltaPosition.magnitude / Time.deltaTime) / 100;
+                deltaX = touches.deltaPosition.magnitude / Time.deltaTime / 100;
                 updatePosition = -(touches.position - touchPosition);
             }
 
-            if(deltaX > 10)
+            if (deltaX > 10)
             {
                 swap();
                 EndSwap();

@@ -1,26 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace TDC.UI
 {
     [AddComponentMenu("TDC/UI/WindowManager")]
     public class WindowManager : CoreUI
     {
-        #region Data
-
-        [Header("Data")]
-        [SerializeField] private List<WindowControl> listWindow;
-
-        public List<WindowControl> ListWindow { get { return listWindow; } }
-
-        #endregion
-
         protected virtual void Update()
         {
             CoreUpdate();
         }
+
+        #region Data
+
+        [Header("Data")] [SerializeField] private List<WindowControl> listWindow;
+
+        public List<WindowControl> ListWindow
+        {
+            get { return listWindow; }
+        }
+
+        #endregion
 
         #region Core
 
@@ -35,21 +35,18 @@ namespace TDC.UI
 
         public virtual void CoreUpdate()
         {
-            foreach(WindowControl window in ListWindow)
-            {
+            foreach (WindowControl window in ListWindow)
                 if (window.gameObject.activeSelf)
                 {
                     window.CoreUpdate();
                 }
-            }
         }
 
         public virtual void CellWindow(WindowControl.TTypeWindow _typeWindow, bool state = false)
         {
-            var Priority = GetWindow(_typeWindow).typePriority;
+            WindowControl.TTypePriority Priority = GetWindow(_typeWindow).typePriority;
 
             foreach (WindowControl window in ListWindow)
-            {
                 if (window.typeWindow == _typeWindow)
                 {
                     window.Open();
@@ -61,18 +58,15 @@ namespace TDC.UI
                     window.Close();
                     window.ShowState(false);
                 }
-            }
         }
 
         public virtual WindowControl GetWindow(WindowControl.TTypeWindow _typeWindow)
         {
             foreach (WindowControl window in ListWindow)
-            {
                 if (window.typeWindow == _typeWindow)
                 {
                     return window;
                 }
-            }
 
             return null;
         }
@@ -80,26 +74,22 @@ namespace TDC.UI
         public virtual bool GetWindowState(WindowControl.TTypeWindow _typeWindow)
         {
             foreach (WindowControl window in ListWindow)
-            {
                 if (window.typeWindow == _typeWindow)
                 {
                     return window.GetState();
                 }
-            }
 
-            Core.Instance.DebugLog  ("Window not found", DDebug.TColor.Error);
+            Core.Instance.DebugLog("Window not found", DDebug.TColor.Error);
             return false;
         }
 
         protected virtual WindowControl.TTypePriority PriotiryWindow(WindowControl.TTypeWindow _TypeWindow)
         {
-            foreach(WindowControl window in ListWindow)
-            {
-                if(window.typeWindow == _TypeWindow)
+            foreach (WindowControl window in ListWindow)
+                if (window.typeWindow == _TypeWindow)
                 {
                     return window.typePriority;
                 }
-            }
 
             return WindowControl.TTypePriority.Singleton;
         }

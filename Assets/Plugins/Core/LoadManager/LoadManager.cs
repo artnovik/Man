@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 namespace TDC.LoadScreen
 {
     [AddComponentMenu("TDC/LoadManager")]
     public class LoadManager : MonoBehaviourSingleton<LoadManager>
     {
+        public delegate void OnLoad();
+
+        public event OnLoad eventLoad;
+
         #region Data
 
         private const string nameSceneLoader = "LoadManager";
         public float progress { get; private set; }
 
         #endregion
-
-        public delegate void OnLoad();
-        public event OnLoad eventLoad = null;
 
         #region Core
 
@@ -26,13 +26,14 @@ namespace TDC.LoadScreen
             StartCoroutine(LoadAsynchronously(sceneIndex, mode));
         }
 
-        protected virtual IEnumerator LoadAsynchronously(List<int> sceneIndex, LoadSceneMode mode = LoadSceneMode.Single)
+        protected virtual IEnumerator LoadAsynchronously(List<int> sceneIndex,
+            LoadSceneMode mode = LoadSceneMode.Single)
         {
             SceneManager.LoadScene(nameSceneLoader);
 
             yield return new WaitForSeconds(0.5f);
 
-            for (int i = 0; i < sceneIndex.Count; i++)
+            for (var i = 0; i < sceneIndex.Count; i++)
             {
                 AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex[i], mode);
 
@@ -46,9 +47,10 @@ namespace TDC.LoadScreen
                 {
                     if (operation.progress > 0)
                     {
-                        progress = (Mathf.Clamp01(operation.progress / .9f) / sceneIndex.Count) * (i + 1);
+                        progress = Mathf.Clamp01(operation.progress / .9f) / sceneIndex.Count * (i + 1);
                     }
-                    Debug.Log((Core.Instance.DebugLog("Load: " + (progress * 100), DDebug.TColor.Warning)));
+
+                    Debug.Log(Core.Instance.DebugLog("Load: " + progress * 100, DDebug.TColor.Warning));
 
                     yield return null;
                 }
@@ -62,6 +64,6 @@ namespace TDC.LoadScreen
             }
         }
 
-#endregion
+        #endregion
     }
 }

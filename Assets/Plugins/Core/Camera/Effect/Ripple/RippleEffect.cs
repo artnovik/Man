@@ -1,12 +1,20 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace TDC.CameraEngine.Effect
 {
     [AddComponentMenu("TDC/Camera/Effect/Ripple")]
     public class RippleEffect : MonoBehaviour
     {
+        #region Unity
+
+        private void OnRenderImage(RenderTexture source, RenderTexture destination)
+        {
+            Graphics.Blit(source, destination, material);
+        }
+
+        #endregion
+
         #region Data
 
         public int maxCount = 1;
@@ -25,28 +33,23 @@ namespace TDC.CameraEngine.Effect
             new Keyframe(0.99f, 0.50f, 0, 0)
         );
 
-        [Range(0.01f, 1.0f)]
-        public float refractionStrength = 0.5f;
+        [Range(0.01f, 1.0f)] public float refractionStrength = 0.5f;
 
         public Color reflectionColor = Color.gray;
 
-        [Range(0.01f, 1.0f)]
-        public float reflectionStrength = 0.7f;
+        [Range(0.01f, 1.0f)] public float reflectionStrength = 0.7f;
 
-        [Range(1.0f, 3.0f)]
-        public float waveSpeed = 1.25f;
+        [Range(1.0f, 3.0f)] public float waveSpeed = 1.25f;
 
-        [Range(0.0f, 2.0f)]
-        public float dropInterval = 0.5f;
+        [Range(0.0f, 2.0f)] public float dropInterval = 0.5f;
 
-        [SerializeField, HideInInspector]
-        Shader shader;
+        [SerializeField] [HideInInspector] private Shader shader;
 
-        class Droplet
+        private class Droplet
         {
-            Vector2 position;
-            float time;
-            bool state;
+            private Vector2 position;
+            private bool state;
+            private float time;
 
             public Droplet()
             {
@@ -61,8 +64,8 @@ namespace TDC.CameraEngine.Effect
 
             public void Target(Vector2 worldPosition)
             {
-                position.x = (worldPosition.x * 100 / Screen.width) / 100;
-                position.y = (worldPosition.y * 100 / Screen.height) / 100;
+                position.x = worldPosition.x * 100 / Screen.width / 100;
+                position.y = worldPosition.y * 100 / Screen.height / 100;
 
                 time = 0;
                 state = true;
@@ -74,7 +77,7 @@ namespace TDC.CameraEngine.Effect
                 {
                     time += Time.deltaTime;
 
-                    if(time > 3f)
+                    if (time > 3f)
                     {
                         state = false;
                     }
@@ -87,7 +90,7 @@ namespace TDC.CameraEngine.Effect
             }
         }
 
-        private List<Droplet> droplets = new List<Droplet>();
+        private readonly List<Droplet> droplets = new List<Droplet>();
         private Texture2D gradTexture;
         private Material material;
         private float timer;
@@ -95,23 +98,11 @@ namespace TDC.CameraEngine.Effect
 
         #endregion
 
-        #region Unity
-
-        void OnRenderImage(RenderTexture source, RenderTexture destination)
-        {
-            Graphics.Blit(source, destination, material);
-        }
-
-        #endregion
-
         #region Core
 
         public void Initialization()
         {
-            for(int i=0; i<maxCount; i++)
-            {
-                droplets.Add(new Droplet());
-            }
+            for (var i = 0; i < maxCount; i++) droplets.Add(new Droplet());
 
             gradTexture = new Texture2D(128, 1, TextureFormat.Alpha8, false);
             gradTexture.wrapMode = TextureWrapMode.Clamp;
@@ -122,6 +113,7 @@ namespace TDC.CameraEngine.Effect
                 var a = waveform.Evaluate(x);
                 gradTexture.SetPixel(i, 0, new Color(a, a, a, a));
             }
+
             gradTexture.Apply();
 
             material = new Material(shader);
@@ -152,10 +144,8 @@ namespace TDC.CameraEngine.Effect
         {
             var c = GetComponent<Camera>();
 
-            for (int i=0; i < droplets.Count; i++)
-            {
+            for (var i = 0; i < droplets.Count; i++)
                 material.SetVector("_Drop1", droplets[i].MakeShaderParameter(c.aspect));
-            }
 
             material.SetColor("_Reflection", reflectionColor);
             material.SetVector("_Params1", new Vector4(c.aspect, 1, 1 / waveSpeed, 0));

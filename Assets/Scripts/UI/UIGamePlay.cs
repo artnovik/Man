@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -8,51 +6,44 @@ using UnityEngine.UI;
 
 public class UIGamePlay : MonoBehaviour
 {
-    [Header("Locomotion")]
-    public RectTransform targetLocomotion;
+    [SerializeField] private Button attackButton;
+
+    [SerializeField] private Image blockImage;
+
+    [SerializeField] private GameObject[] controlGroup;
+
+    [Header("ControlUI")] [SerializeField] private Image eyeLockTargetImage;
+
+    private Vector3 invisibleCameraDir;
     private Vector3 localLocomotionDir;
 
-    [Header("Camera")]
-    public RectTransform targetCamera;
-    public RectTransform targetInvisibleCamera;
-    private Vector3 visibleCameraDir;
-    private Vector3 invisibleCameraDir;
-
-    [Header("Weapons")]
-    public Text numberWeapon;
-
-    [Header("ControlUI")]
-    [SerializeField]
-    private Image eyeLockTargetImage;
-    [SerializeField]
-    private Image blockImage;
-
-    [SerializeField]
-    private Button attackButton;
-    [SerializeField]
-    private Button switchWeaponButton;
-
-    [SerializeField]
-    private GameObject[] controlGroup;
-
-    [Header("MessageForPlayer")]
-    [SerializeField]
+    [Header("MessageForPlayer")] [SerializeField]
     private GameObject messageGO;
-    [SerializeField]
-    private Text messageText;
 
-    [Header("PlayerBars")]
-    [SerializeField]
+    [SerializeField] private Text messageText;
+
+    [Header("Weapons")] public Text numberWeapon;
+
+    [SerializeField] public Image[] playerBars;
+
+    [Header("PlayerBars")] [SerializeField]
     public Image playerHealthBarCurrent;
-    [SerializeField]
-    public Image playerHealthBarEmpty;
-    [SerializeField]
-    public Image playerStaminaBarCurrent;
-    [SerializeField]
-    public Image playerStaminaBarEmpty;
 
-    [SerializeField]
-    public Image[] playerBars;
+    [SerializeField] public Image playerHealthBarEmpty;
+
+    [SerializeField] public Image playerStaminaBarCurrent;
+
+    [SerializeField] public Image playerStaminaBarEmpty;
+
+    [SerializeField] private Button switchWeaponButton;
+
+    [Header("Camera")] public RectTransform targetCamera;
+
+    public RectTransform targetInvisibleCamera;
+
+    [Header("Locomotion")] public RectTransform targetLocomotion;
+
+    private Vector3 visibleCameraDir;
 
     #region Singleton
 
@@ -69,15 +60,8 @@ public class UIGamePlay : MonoBehaviour
 
     private void Start()
     {
-        inventoryMenu.GetComponent<InventoryUI>().StartCall();
-        
         numberWeapon.text = (PlayerControl.Instance.curIndexWeapon + 1).ToString();
-        messageGO.SetActive(false);
-
-        pauseMenu.SetActive(true);
         InitializeCheatsMenu();
-        pauseMenu.SetActive(false);
-        deathScreen.SetActive(false);
         playerHitScreenEffectImage.gameObject.SetActive(false);
         screenEffectsGO.SetActive(false);
     }
@@ -119,15 +103,13 @@ public class UIGamePlay : MonoBehaviour
 
     public void HealthBarValueChange(int currentHealth)
     {
-        playerHealthBarCurrent.fillAmount = (float)currentHealth / 100;
+        playerHealthBarCurrent.fillAmount = (float) currentHealth / 100;
     }
 
     public void SetPlayerBarsStatus(bool brightVisibility)
     {
-        foreach (var playerBarImage in playerBars)
-        {
+        foreach (Image playerBarImage in playerBars)
             playerBarImage.color = brightVisibility ? Colors.playerEngagedUI : Colors.playerCalmUI;
-        }
     }
 
     #endregion
@@ -151,7 +133,8 @@ public class UIGamePlay : MonoBehaviour
     public void LockTarget()
     {
         PlayerControl.Instance.LockTarget();
-        eyeLockTargetImage.color = PlayerControl.Instance.stateLockTarget ? Colors.playerActiveUI : Colors.playerDefaultUI;
+        eyeLockTargetImage.color =
+            PlayerControl.Instance.stateLockTarget ? Colors.playerActiveUI : Colors.playerDefaultUI;
     }
 
     public void SwitchWeapon()
@@ -165,12 +148,9 @@ public class UIGamePlay : MonoBehaviour
 
     #region Inventory
 
-    [Header("Inventory")]
-    [SerializeField]
-    private GameObject inventoryMenu;
+    [Header("Inventory")] [SerializeField] private GameObject inventoryMenu;
 
-    [SerializeField]
-    private Button inventoryButton;
+    [SerializeField] private Button inventoryButton;
 
     public void InventoryOpen()
     {
@@ -199,7 +179,9 @@ public class UIGamePlay : MonoBehaviour
             StopCoroutine(displayMessageCoroutine);
 
             if (blinkMessageCoroutine != null)
+            {
                 StopCoroutine(blinkMessageCoroutine);
+            }
         }
 
         displayMessageCoroutine = StartCoroutine(DisplayMessageRoutine(text, color, duration, blinking));
@@ -211,11 +193,16 @@ public class UIGamePlay : MonoBehaviour
         messageText.color = color;
         messageGO.SetActive(true);
         if (blinking)
+        {
             blinkMessageCoroutine = StartCoroutine(Blink(messageText, false));
+        }
 
         yield return new WaitForSeconds(duration);
         if (blinking)
+        {
             StopCoroutine(blinkMessageCoroutine);
+        }
+
         messageGO.SetActive(false);
         messageText.text = string.Empty;
     }
@@ -224,32 +211,25 @@ public class UIGamePlay : MonoBehaviour
 
     #region PauseResume
 
-    [Header("PauseMenu")]
-    public GameObject pauseMenu;
+    [Header("PauseMenu")] public GameObject pauseMenu;
 
     public void PauseResume()
     {
-        bool pause = PlayerControl.Instance.isPaused;
+        var pause = PlayerControl.Instance.isPaused;
 
-        if (!pause)                                  // If Game is resumed now (pause == false) and we pause it
+        if (!pause) // If Game is resumed now (pause == false) and we pause it
         {
             pauseMenu.SetActive(!pause);
             AudioManager.Instance.WindowAppearSound();
-            foreach (var controlElementGO in controlGroup)
-            {
-                controlElementGO.SetActive(pause);
-            }
+            foreach (GameObject controlElementGO in controlGroup) controlElementGO.SetActive(pause);
             StartBlinkingPauseText();
             Time.timeScale = 0f;
             PlayerControl.Instance.isPaused = true;
         }
-        else                                         // If Game is paused now (pause == true) and we resume it
+        else // If Game is paused now (pause == true) and we resume it
         {
             pauseMenu.SetActive(!pause);
-            foreach (var controlElementGO in controlGroup)
-            {
-                controlElementGO.SetActive(pause);
-            }
+            foreach (GameObject controlElementGO in controlGroup) controlElementGO.SetActive(pause);
             StopBlinkingPauseText();
             Time.timeScale = 1f;
             PlayerControl.Instance.isPaused = false;
@@ -258,8 +238,7 @@ public class UIGamePlay : MonoBehaviour
 
     #region BlinkingTextRoutine
 
-    [SerializeField]
-    private Text pauseText;
+    [SerializeField] private Text pauseText;
 
     private Coroutine blinkPauseCoroutine;
     private Coroutine waitForRealSecondsCoroutine;
@@ -269,7 +248,6 @@ public class UIGamePlay : MonoBehaviour
         text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
 
         while (true)
-        {
             switch (text.color.a.ToString())
             {
                 case "0":
@@ -282,6 +260,7 @@ public class UIGamePlay : MonoBehaviour
                     {
                         yield return new WaitForSeconds(0.5f);
                     }
+
                     break;
                 case "1":
                     text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
@@ -293,19 +272,16 @@ public class UIGamePlay : MonoBehaviour
                     {
                         yield return new WaitForSeconds(0.5f);
                     }
+
                     break;
             }
-        }
     }
 
     // "TimeScale won't affect" Coroutine
     public static IEnumerator WaitForRealSeconds(float time)
     {
-        float start = Time.realtimeSinceStartup;
-        while (Time.realtimeSinceStartup < start + time)
-        {
-            yield return null;
-        }
+        var start = Time.realtimeSinceStartup;
+        while (Time.realtimeSinceStartup < start + time) yield return null;
     }
 
     private void StartBlinkingPauseText()
@@ -323,8 +299,8 @@ public class UIGamePlay : MonoBehaviour
 
     #region CheatsMenu
 
-    [Header("CheatMenu")]
-    [SerializeField] private Toggle GOD_MODE_Toggle;
+    [Header("CheatMenu")] [SerializeField] private Toggle GOD_MODE_Toggle;
+
     [SerializeField] private Toggle FPS_SHOW_Toggle;
     [SerializeField] private Toggle LIFESTEAL_Toggle;
 
@@ -341,7 +317,7 @@ public class UIGamePlay : MonoBehaviour
 
     public void SetCheatValue(bool value)
     {
-        var clickedCheatToggle = EventSystem.current.currentSelectedGameObject;
+        GameObject clickedCheatToggle = EventSystem.current.currentSelectedGameObject;
 
         if (clickedCheatToggle == GOD_MODE_Toggle.gameObject)
         {
@@ -364,14 +340,14 @@ public class UIGamePlay : MonoBehaviour
 
     #region ScreenEffects
 
-    [SerializeField]
-    private GameObject screenEffectsGO;
+    [SerializeField] private GameObject screenEffectsGO;
 
-    [SerializeField]
-    private Image playerHitScreenEffectImage;
+    [SerializeField] private Image playerHitScreenEffectImage;
+
     private const float playerHitScreenEffectDuration = 2f;
 
     private Coroutine screenEffectCoroutine;
+
     private IEnumerator ScreenEffectRoutine(Image screenEffectImage, float duration)
     {
         screenEffectsGO.SetActive(true);
@@ -386,26 +362,22 @@ public class UIGamePlay : MonoBehaviour
 
     public void ActivatePlayerHitScreenEffect()
     {
-        screenEffectCoroutine = StartCoroutine(ScreenEffectRoutine(playerHitScreenEffectImage, playerHitScreenEffectDuration));
+        screenEffectCoroutine =
+            StartCoroutine(ScreenEffectRoutine(playerHitScreenEffectImage, playerHitScreenEffectDuration));
     }
 
     #endregion
 
     #region DeathScreen
 
-    [Header("DeathScreen")]
-    [SerializeField]
+    [Header("DeathScreen")] [SerializeField]
     private GameObject deathScreen;
 
-    [SerializeField]
-    private GameObject[] hideOnDeathObjects;
+    [SerializeField] private GameObject[] hideOnDeathObjects;
 
     public void ShowDeathScreen()
     {
-        foreach (var element in hideOnDeathObjects)
-        {
-            element.SetActive(false);
-        }
+        foreach (GameObject element in hideOnDeathObjects) element.SetActive(false);
 
         AudioManager.Instance.OnDeathSound();
 

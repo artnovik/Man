@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using TDC.Profile;
 using TDC.SaveAndLoad;
-using TDC.Profile;
 
 namespace TDC
 {
@@ -13,7 +10,7 @@ namespace TDC
         public CoreWorldTime coreWorldTime;
         public CorePlayerPrefs corePlayerPrefs;
 
-        #if GoogleMobileAds
+#if GoogleMobileAds
         public CoreAdMob coreAdMob;
         #endif
 
@@ -24,7 +21,6 @@ namespace TDC
             coreProfile = new CoreProfile();
             coreWorldTime = new CoreWorldTime();
             corePlayerPrefs = new CorePlayerPrefs();
-
         }
 
         public virtual void CoreUpdate()

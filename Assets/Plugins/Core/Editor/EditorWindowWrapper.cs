@@ -1,17 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEditor;
 using UnityEngine;
-using UnityEditor;
 
 namespace TDC
 {
     public class EditorWindowWrapper : EditorWindow
     {
-        protected Color mainColor;
-        protected Color labelColor;
         protected Color backgroundColor;
         protected Color disableColor;
         protected Color enableColor;
+        protected Color labelColor;
+        protected Color mainColor;
 
         protected void Initialization()
         {

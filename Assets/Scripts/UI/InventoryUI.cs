@@ -1,50 +1,27 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
+    [SerializeField] private Text infoItemDamage;
+
+    [SerializeField] private Text infoItemDescription;
+
+    [SerializeField] private Text infoItemName;
+
+    [SerializeField] private Image infoItemSprite;
+
+    [SerializeField] private Text infoItemTypes;
+
+    private Inventory inventory;
     public Transform itemsContainer;
     private InventorySlot[] slots;
-    private Inventory inventory;
 
-    [SerializeField]
-    private Image infoItemSprite;
-    [SerializeField]
-    private Text infoItemName;
-    [SerializeField]
-    private Text infoItemDamage;
-    [SerializeField]
-    private Text infoItemTypes;
-    [SerializeField]
-    private Text infoItemDescription;
-
-    #region Singleton
-
-    public static InventoryUI Instance;
-
-    private void Awake()
+    private void UpdateInventoryUI()
     {
-        Instance = this;
-    }
+        // ToDO Update MoneyCount
 
-    #endregion
-    
-    public void StartCall()
-    {
-        inventory = Inventory.Instance;
-        inventory.onItemChangedCallback += UpdateInventoryUI;
-        slots = itemsContainer.GetComponentsInChildren<InventorySlot>();
-    }
-
-    public void UpdateInventoryUI()
-    {
-        // Update MoneyCount
-
-        for (int i = 0; i < slots.Length; i++)
-        {
+        for (var i = 0; i < slots.Length; i++)
             if (i < inventory.weapons.Count)
             {
                 slots[i].AddItem(inventory.weapons[i]);
@@ -57,7 +34,6 @@ public class InventoryUI : MonoBehaviour
                     ClearInfoWindow();
                 }
             }
-        }
     }
 
     public void SelectItem(InventorySlot slot)
@@ -65,7 +41,9 @@ public class InventoryUI : MonoBehaviour
         slot.Select();
     }
 
-    public void FillInfoWindow(Sprite sprite, string name, int minDamage, int maxDamage, WeaponStats.DamageTypeEnum damageType, WeaponStats.SpeedEnum speed, WeaponStats.RangeEnum range, string description)
+    public void FillInfoWindow(Sprite sprite, string name, int minDamage, int maxDamage,
+        WeaponStats.DamageTypeEnum damageType, WeaponStats.SpeedEnum speed, WeaponStats.RangeEnum range,
+        string description)
     {
         infoItemSprite.sprite = sprite;
         infoItemName.text = name;
@@ -82,4 +60,19 @@ public class InventoryUI : MonoBehaviour
         infoItemTypes.text = string.Empty;
         infoItemDescription.text = string.Empty;
     }
+
+    #region Singleton
+
+    public static InventoryUI Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+
+        inventory = Inventory.Instance;
+        inventory.onItemChangedCallback += UpdateInventoryUI;
+        slots = itemsContainer.GetComponentsInChildren<InventorySlot>();
+    }
+
+    #endregion
 }

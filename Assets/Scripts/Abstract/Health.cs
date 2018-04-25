@@ -1,23 +1,18 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Health : MonoBehaviour
 {
-    [Tooltip("Locomotion reference")]
-    public Locomotion locomotion;
-
-    [Tooltip("CStats reference")]
-    public CharacterStats characterStats;
-
-    [Header("Health Manager")]
-    public int maxHealth;
-
-    public int currentHealth { get; private set; }
-    public int minHealth;
+    [Tooltip("CStats reference")] public CharacterStats characterStats;
 
     public bool isDead;
+
+    [Tooltip("Locomotion reference")] public Locomotion locomotion;
+
+    [Header("Health Manager")] public int maxHealth;
+
+    public int minHealth;
+
+    public int currentHealth { get; private set; }
 
     #region HealthManager
 
@@ -31,7 +26,9 @@ public abstract class Health : MonoBehaviour
     public virtual void Heal(int healValue)
     {
         if (isDead)
+        {
             return;
+        }
 
         currentHealth += healValue;
         if (currentHealth > maxHealth)

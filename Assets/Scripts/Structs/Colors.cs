@@ -11,7 +11,7 @@ public struct Colors
 
     public static readonly Color32 playerActiveUI = new Color32(170, 50, 50, 255);
     public static readonly Color32 playerDefaultUI = new Color32(255, 255, 255, 255);
-    
+
     public static readonly Color32 screenEffect = new Color32(255, 255, 255, 255);
 
     public static readonly Color32 enemyEngagedHP = new Color32(255, 255, 255, 255);

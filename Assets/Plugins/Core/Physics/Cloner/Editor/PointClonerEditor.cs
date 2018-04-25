@@ -1,8 +1,8 @@
 // Cloner - An example of use of procedural instancing.
 // https://github.com/keijiro/Cloner
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 namespace Cloner
 {
@@ -10,37 +10,26 @@ namespace Cloner
     [CustomEditor(typeof(PointCloner))]
     public sealed class PointClonerEditor : Editor
     {
-        SerializedProperty _pointSource;
-        SerializedProperty _template;
-        SerializedProperty _templateScale;
+        private SerializedProperty _bounds;
 
-        SerializedProperty _displacementByNoise;
-        SerializedProperty _rotationByNoise;
-        SerializedProperty _scaleByNoise;
-        SerializedProperty _scaleByPulse;
+        private SerializedProperty _displacementByNoise;
+        private SerializedProperty _gradient;
 
-        SerializedProperty _noiseFrequency;
-        SerializedProperty _noiseSpeed;
-        SerializedProperty _pulseProbability;
-        SerializedProperty _pulseSpeed;
+        private SerializedProperty _material;
 
-        SerializedProperty _material;
-        SerializedProperty _gradient;
-        SerializedProperty _bounds;
-        SerializedProperty _randomSeed;
+        private SerializedProperty _noiseFrequency;
+        private SerializedProperty _noiseSpeed;
+        private SerializedProperty _pointSource;
+        private SerializedProperty _pulseProbability;
+        private SerializedProperty _pulseSpeed;
+        private SerializedProperty _randomSeed;
+        private SerializedProperty _rotationByNoise;
+        private SerializedProperty _scaleByNoise;
+        private SerializedProperty _scaleByPulse;
+        private SerializedProperty _template;
+        private SerializedProperty _templateScale;
 
-        static class Labels
-        {
-            public static GUIContent frequency = new GUIContent("Frequency");
-            public static GUIContent orientation = new GUIContent("Orientation");
-            public static GUIContent position = new GUIContent("Position");
-            public static GUIContent probability = new GUIContent("Probability");
-            public static GUIContent scale = new GUIContent("Scale");
-            public static GUIContent scalePulse = new GUIContent("Scale (pulse)");
-            public static GUIContent speed = new GUIContent("Speed");
-        }
-
-        void OnEnable()
+        private void OnEnable()
         {
             _pointSource = serializedObject.FindProperty("_pointSource");
             _template = serializedObject.FindProperty("_template");
@@ -110,8 +99,21 @@ namespace Cloner
             serializedObject.ApplyModifiedProperties();
 
             if (reallocate)
+            {
                 foreach (MonoBehaviour r in targets)
                     r.SendMessage("ReallocateBuffer");
+            }
+        }
+
+        private static class Labels
+        {
+            public static readonly GUIContent frequency = new GUIContent("Frequency");
+            public static readonly GUIContent orientation = new GUIContent("Orientation");
+            public static readonly GUIContent position = new GUIContent("Position");
+            public static readonly GUIContent probability = new GUIContent("Probability");
+            public static readonly GUIContent scale = new GUIContent("Scale");
+            public static readonly GUIContent scalePulse = new GUIContent("Scale (pulse)");
+            public static readonly GUIContent speed = new GUIContent("Speed");
         }
     }
 }

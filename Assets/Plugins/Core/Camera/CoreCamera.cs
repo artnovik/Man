@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TDC.CameraEngine.Effect;
 using UnityEngine;
-using UnityEngine.UI;
-using TDC.CameraEngine.Effect;
 
 namespace TDC.CameraEngine
 {
@@ -11,18 +8,18 @@ namespace TDC.CameraEngine
     {
         #region Data
 
-        [Header("Data")]
-        public Vector3 offset;
+        [Header("Data")] public Vector3 offset;
+
         public float lerp = 0.1f;
         public bool freezeY;
 
-        [Header("VelocityMode")]
-        public bool velocityMode = false;
+        [Header("VelocityMode")] public bool velocityMode;
+
         [Range(0f, 1f)] public float velocityPower;
         private float velocityFactor;
 
-        [Header("Link")]
-        public Transform rootCamera;
+        [Header("Link")] public Transform rootCamera;
+
         public Transform pivotCamera;
         public CameraShaker cameraShake;
         public RippleEffect rippleEffect;
@@ -40,7 +37,10 @@ namespace TDC.CameraEngine
         {
             target = targetPlayer;
 
-            if (awakeCameraPosition == Vector3.zero) { awakeCameraPosition = rootCamera.position; }
+            if (awakeCameraPosition == Vector3.zero)
+            {
+                awakeCameraPosition = rootCamera.position;
+            }
 
             targetRigidbody = target.GetComponent<Rigidbody2D>();
             fixCamPosition = rootCamera.position;
@@ -53,7 +53,10 @@ namespace TDC.CameraEngine
 
         private void FixedUpdate()
         {
-            if (!target) { return; }
+            if (!target)
+            {
+                return;
+            }
 
             Movement();
             VelocityMode();
@@ -61,16 +64,21 @@ namespace TDC.CameraEngine
 
         public void CoreUpdate()
         {
-            if (!target) { return; }
+            if (!target)
+            {
+                return;
+            }
 
-            rootCamera.position = Vector3.Lerp(rootCamera.position, fixCamPosition, 0.15f + (targetRigidbody.velocity.magnitude / 80));
+            rootCamera.position = Vector3.Lerp(rootCamera.position, fixCamPosition,
+                0.15f + targetRigidbody.velocity.magnitude / 80);
         }
 
         private void Movement()
         {
             if (velocityMode)
             {
-                fixCamPosition.x = Mathf.Lerp(fixCamPosition.x, target.transform.position.x, 0.4f + (targetRigidbody.velocity.magnitude / 80));
+                fixCamPosition.x = Mathf.Lerp(fixCamPosition.x, target.transform.position.x,
+                    0.4f + targetRigidbody.velocity.magnitude / 80);
             }
             else
             {
@@ -91,7 +99,11 @@ namespace TDC.CameraEngine
 
         private void VelocityMode()
         {
-            if (!velocityMode) { return; }
+            if (!velocityMode)
+            {
+                return;
+            }
+
             if (!targetRigidbody)
             {
                 velocityMode = false;
@@ -103,7 +115,6 @@ namespace TDC.CameraEngine
 
 
             fixCamPosition.z = Mathf.Lerp(fixCamPosition.z, awakeCameraPosition.z - velocityFactor, lerp);
-
         }
 
         public void CoreReset()

@@ -1,5 +1,5 @@
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 namespace Kvant
 {
@@ -8,29 +8,29 @@ namespace Kvant
     {
         #region Editor functions
 
-        SerializedProperty _target;
-        SerializedProperty _template;
+        private SerializedProperty _target;
+        private SerializedProperty _template;
 
-        SerializedProperty _maxTimeStep;
-        SerializedProperty _randomSeed;
+        private SerializedProperty _maxTimeStep;
+        private SerializedProperty _randomSeed;
 
-        SerializedProperty _length;
-        SerializedProperty _lengthRandomness;
+        private SerializedProperty _length;
+        private SerializedProperty _lengthRandomness;
 
-        SerializedProperty _spring;
-        SerializedProperty _damping;
-        SerializedProperty _gravity;
+        private SerializedProperty _spring;
+        private SerializedProperty _damping;
+        private SerializedProperty _gravity;
 
-        SerializedProperty _noiseAmplitude;
-        SerializedProperty _noiseFrequency;
-        SerializedProperty _noiseSpeed;
+        private SerializedProperty _noiseAmplitude;
+        private SerializedProperty _noiseFrequency;
+        private SerializedProperty _noiseSpeed;
 
-        static GUIContent _textAmplitude = new GUIContent("Amplitude");
-        static GUIContent _textFrequency = new GUIContent("Frequency");
-        static GUIContent _textRandomness = new GUIContent("Randomness");
-        static GUIContent _textSpeed = new GUIContent("Speed");
+        private static readonly GUIContent _textAmplitude = new GUIContent("Amplitude");
+        private static readonly GUIContent _textFrequency = new GUIContent("Frequency");
+        private static readonly GUIContent _textRandomness = new GUIContent("Randomness");
+        private static readonly GUIContent _textSpeed = new GUIContent("Speed");
 
-        void OnEnable()
+        private void OnEnable()
         {
             _target = serializedObject.FindProperty("_target");
             _template = serializedObject.FindProperty("_template");
@@ -54,11 +54,14 @@ namespace Kvant
         {
             serializedObject.Update();
 
-            bool needsReset = false;
-            bool reconfigured = false;
+            var needsReset = false;
+            var reconfigured = false;
 
             // VVV Check changes from here (needsReset; editor only) VVV
-            if (!Application.isPlaying) EditorGUI.BeginChangeCheck();
+            if (!Application.isPlaying)
+            {
+                EditorGUI.BeginChangeCheck();
+            }
 
             EditorGUILayout.PropertyField(_target);
 
@@ -102,17 +105,29 @@ namespace Kvant
             EditorGUILayout.PropertyField(_noiseFrequency, _textFrequency);
             EditorGUILayout.PropertyField(_noiseSpeed, _textSpeed);
 
-            if (!Application.isPlaying) needsReset |= EditorGUI.EndChangeCheck();
+            if (!Application.isPlaying)
+            {
+                needsReset |= EditorGUI.EndChangeCheck();
+            }
             // ^^^ Check changes to here (needsReset; editor only) ^^^
 
             serializedObject.ApplyModifiedProperties();
 
             // Set reset flags if there are any changes.
-            if (needsReset || reconfigured) {
-                foreach (var t in targets) {
-                    var wig = (WigController)t;
-                    if (needsReset) wig.ResetSimulation();
-                    if (reconfigured) wig.RequestReconfigurationFromEditor();
+            if (needsReset || reconfigured)
+            {
+                foreach (Object t in targets)
+                {
+                    var wig = (WigController) t;
+                    if (needsReset)
+                    {
+                        wig.ResetSimulation();
+                    }
+
+                    if (reconfigured)
+                    {
+                        wig.RequestReconfigurationFromEditor();
+                    }
                 }
             }
         }

@@ -9,25 +9,27 @@ namespace DFVolume
     {
         #region Exposed attributes
 
-        [SerializeField] int _resolution = 50;
+        [SerializeField] private int _resolution = 50;
 
-        public int resolution {
+        public int resolution
+        {
             get { return _resolution; }
         }
 
-        [SerializeField] float _extent = 0.5f;
+        [SerializeField] private float _extent = 0.5f;
 
-        public float extent {
+        public float extent
+        {
             get { return _extent; }
         }
 
         #endregion
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
 
         #region Editor functions
 
-        void OnDrawGizmos()
+        private void OnDrawGizmos()
         {
             Gizmos.matrix = transform.localToWorldMatrix;
             Gizmos.color = Color.yellow;
@@ -49,7 +51,7 @@ namespace DFVolume
                     {
                         var z = 2.0f * zi / (_resolution - 1) - 1;
 
-                        var pt = new Vector3(x, y, z) * _extent;
+                        Vector3 pt = new Vector3(x, y, z) * _extent;
                         pt = transform.TransformPoint(pt);
 
                         var dist = SearchDistance(pt) * 0.5f / _extent;
@@ -63,27 +65,23 @@ namespace DFVolume
             var dds2 = (_resolution - 1) / 2.0f;
 
             for (var xi = 0; xi < _resolution; xi++)
+            for (var yi = 0; yi < _resolution; yi++)
+            for (var zi = 0; zi < _resolution; zi++)
             {
-                for (var yi = 0; yi < _resolution; yi++)
-                {
-                    for (var zi = 0; zi < _resolution; zi++)
-                    {
-                        var d = df[GetIndex(xi, yi, zi)];
-                        var dx0 = df[GetIndex(xi - 1, yi, zi)];
-                        var dx1 = df[GetIndex(xi + 1, yi, zi)];
-                        var dy0 = df[GetIndex(xi, yi - 1, zi)];
-                        var dy1 = df[GetIndex(xi, yi + 1, zi)];
-                        var dz0 = df[GetIndex(xi, yi, zi - 1)];
-                        var dz1 = df[GetIndex(xi, yi, zi + 1)];
+                var d = df[GetIndex(xi, yi, zi)];
+                var dx0 = df[GetIndex(xi - 1, yi, zi)];
+                var dx1 = df[GetIndex(xi + 1, yi, zi)];
+                var dy0 = df[GetIndex(xi, yi - 1, zi)];
+                var dy1 = df[GetIndex(xi, yi + 1, zi)];
+                var dz0 = df[GetIndex(xi, yi, zi - 1)];
+                var dz1 = df[GetIndex(xi, yi, zi + 1)];
 
-                        bmp[GetIndex(xi, yi, zi)] = new Color(
-                            (dx1 - dx0) * dds2,
-                            (dy1 - dy0) * dds2,
-                            (dz1 - dz0) * dds2,
-                            d
-                        );
-                    }
-                }
+                bmp[GetIndex(xi, yi, zi)] = new Color(
+                    (dx1 - dx0) * dds2,
+                    (dy1 - dy0) * dds2,
+                    (dz1 - dz0) * dds2,
+                    d
+                );
             }
 
             return bmp;
@@ -93,7 +91,7 @@ namespace DFVolume
 
         #region Private functions
 
-        int GetIndex(int xi, int yi, int zi)
+        private int GetIndex(int xi, int yi, int zi)
         {
             xi = Mathf.Clamp(xi, 0, _resolution - 1);
             yi = Mathf.Clamp(yi, 0, _resolution - 1);
@@ -101,7 +99,7 @@ namespace DFVolume
             return xi + _resolution * (yi + _resolution * zi);
         }
 
-        float SearchDistance(Vector3 pt)
+        private float SearchDistance(Vector3 pt)
         {
             var r = _extent;
             var s = _extent * 0.5f;
@@ -117,6 +115,6 @@ namespace DFVolume
 
         #endregion
 
-        #endif
+#endif
     }
 }

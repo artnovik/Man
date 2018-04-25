@@ -1,39 +1,50 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [Header("Exploration")]
-    [SerializeField]
-    private AudioSource ambientAudioSource;
-    [SerializeField]
-    private AudioSource ambientMusicAudioSource;
-    private float ambientMusicSaveTime = 50f;
+    private readonly float ambientMusicSaveTime = 50f;
 
-    [SerializeField]
-    private AudioClip windAudioClip;
-    [SerializeField]
-    private AudioClip ambientAudioClip;
-
-    [Header("Battle")]
-    [SerializeField]
-    private AudioSource battleMusicAudioSource;
-    [SerializeField]
-    private AudioClip battleAudioClip;
-    private float battleMusicSaveTime = 10f;
-
-    [Header("Interface")]
-    [SerializeField]
-    private AudioSource interfaceAudioSource;
-    [SerializeField]
-    private AudioClip windowAppearAudioClip;
-    [SerializeField]
-    private AudioClip weaponChangeAudioClip;
-    [SerializeField]
-    private AudioClip diabloDeathLaughAudioClip;
-
+    private readonly float battleMusicSaveTime = 10f;
     private AudioSource[] allAudioSources;
+
+    [SerializeField] private AudioClip ambientAudioClip;
+
+    [Header("Exploration")] [SerializeField]
+    private AudioSource ambientAudioSource;
+
+    [SerializeField] private AudioSource ambientMusicAudioSource;
+
+    [SerializeField] private AudioClip battleAudioClip;
+
+    [Header("Battle")] [SerializeField] private AudioSource battleMusicAudioSource;
+
+    [SerializeField] private AudioClip diabloDeathLaughAudioClip;
+
+    [Header("Interface")] [SerializeField] private AudioSource interfaceAudioSource;
+
+    [SerializeField] private AudioClip weaponChangeAudioClip;
+
+    [SerializeField] private AudioClip windAudioClip;
+
+    [SerializeField] private AudioClip windowAppearAudioClip;
+
+    private void SetClip(AudioSource aSource, AudioClip newClip)
+    {
+        aSource.clip = newClip;
+    }
+
+    #region OnDeath
+
+    public void OnDeathSound()
+    {
+        foreach (AudioSource audioSource in allAudioSources) audioSource.enabled = false;
+
+        interfaceAudioSource.enabled = true;
+        interfaceAudioSource.PlayOneShot(diabloDeathLaughAudioClip);
+    }
+
+    #endregion
 
     #region Singleton
 
@@ -48,22 +59,19 @@ public class AudioManager : MonoBehaviour
 
     #endregion
 
-    private void SetClip(AudioSource aSource, AudioClip newClip)
-    {
-        aSource.clip = newClip;
-    }
-
     #region Battle
 
     public void BattleSoundChange(bool battleState)
     {
         if (battleState)
         {
-            SmoothClipSwitch(ambientMusicAudioSource, battleMusicAudioSource, ambientMusicAudioSource.volume, battleMusicSaveTime);
+            SmoothClipSwitch(ambientMusicAudioSource, battleMusicAudioSource, ambientMusicAudioSource.volume,
+                battleMusicSaveTime);
         }
         else
         {
-            SmoothClipSwitch(battleMusicAudioSource, ambientMusicAudioSource, battleMusicAudioSource.volume, ambientMusicSaveTime);
+            SmoothClipSwitch(battleMusicAudioSource, ambientMusicAudioSource, battleMusicAudioSource.volume,
+                ambientMusicSaveTime);
         }
     }
 
@@ -75,21 +83,6 @@ public class AudioManager : MonoBehaviour
     public bool AmbientVolumeIsOff()
     {
         return ambientMusicAudioSource.volume == 0.0f;
-    }
-
-    #endregion
-
-    #region OnDeath
-
-    public void OnDeathSound()
-    {
-        foreach (var audioSource in allAudioSources)
-        {
-            audioSource.enabled = false;
-        }
-
-        interfaceAudioSource.enabled = true;
-        interfaceAudioSource.PlayOneShot(diabloDeathLaughAudioClip);
     }
 
     #endregion
@@ -112,26 +105,29 @@ public class AudioManager : MonoBehaviour
 
     private Coroutine smoothClipSwitchCoroutine;
 
-    public void SmoothClipSwitch(AudioSource oldSource, AudioSource newSource, float newSourceVolumeLevel, float saveNewClipDuration)
+    public void SmoothClipSwitch(AudioSource oldSource, AudioSource newSource, float newSourceVolumeLevel,
+        float saveNewClipDuration)
     {
         if (smoothClipSwitchCoroutine != null)
         {
             StopCoroutine(smoothClipSwitchCoroutine);
         }
 
-        smoothClipSwitchCoroutine = StartCoroutine(SmoothClipSwitchRoutine(oldSource, newSource, newSourceVolumeLevel, saveNewClipDuration));
+        smoothClipSwitchCoroutine =
+            StartCoroutine(SmoothClipSwitchRoutine(oldSource, newSource, newSourceVolumeLevel, saveNewClipDuration));
     }
 
     private float timeSinceNewPlaybackStarted;
 
-    private IEnumerator SmoothClipSwitchRoutine(AudioSource oldSource, AudioSource newSource, float newSourceVolumeLevel, float saveNewClipDuration)
+    private IEnumerator SmoothClipSwitchRoutine(AudioSource oldSource, AudioSource newSource,
+        float newSourceVolumeLevel, float saveNewClipDuration)
     {
         newSource.volume = 0;
 
-        float oldSourceVolume = oldSource.volume;
-        float newSourceVolume = newSource.volume;
+        var oldSourceVolume = oldSource.volume;
+        var newSourceVolume = newSource.volume;
 
-        if ((Time.timeSinceLevelLoad - timeSinceNewPlaybackStarted) < saveNewClipDuration)
+        if (Time.timeSinceLevelLoad - timeSinceNewPlaybackStarted < saveNewClipDuration)
         {
             newSource.Play();
         }
@@ -158,7 +154,7 @@ public class AudioManager : MonoBehaviour
     }
 
     #endregion
-    
+
     #region BattleStateMusicControl
 
     private bool oneSwitchBattleTrue;

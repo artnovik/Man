@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace TDC
 {
@@ -11,13 +10,15 @@ namespace TDC
         {
             get
             {
-                if (instance != null) return instance;
+                if (instance != null)
+                {
+                    return instance;
+                }
 
-                var component = FindObjectOfType(typeof(T));
+                Object component = FindObjectOfType(typeof(T));
                 if (component == null)
                 {
                     instance = new GameObject(typeof(T).ToString()).AddComponent<T>();
-
                 }
                 else
                 {
@@ -38,6 +39,5 @@ namespace TDC
             Debug.Log("Deleting MonoBehaviourSingleton of type: " + typeof(T));
             instance = default(T);
         }
-
     }
 }

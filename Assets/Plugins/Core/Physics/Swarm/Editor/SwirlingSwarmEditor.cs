@@ -1,36 +1,31 @@
 // Swarm - Special renderer that draws a swarm of swirling/crawling lines.
 // https://github.com/keijiro/Swarm
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 namespace Swarm
 {
     // Custom inspector for SwirlingSwarm
-    [CustomEditor(typeof(SwirlingSwarm)), CanEditMultipleObjects]
+    [CustomEditor(typeof(SwirlingSwarm))]
+    [CanEditMultipleObjects]
     public class SwirlingSwarmEditor : Editor
     {
-        SerializedProperty _instanceCount;
-        SerializedProperty _template;
-        SerializedProperty _radius;
-        SerializedProperty _length;
+        private SerializedProperty _gradient;
+        private SerializedProperty _instanceCount;
+        private SerializedProperty _length;
 
-        SerializedProperty _spread;
-        SerializedProperty _noiseFrequency;
-        SerializedProperty _noiseMotion;
+        private SerializedProperty _material;
+        private SerializedProperty _noiseFrequency;
+        private SerializedProperty _noiseMotion;
+        private SerializedProperty _radius;
 
-        SerializedProperty _material;
-        SerializedProperty _gradient;
+        private SerializedProperty _randomSeed;
 
-        SerializedProperty _randomSeed;
+        private SerializedProperty _spread;
+        private SerializedProperty _template;
 
-        static class Labels
-        {
-            public static GUIContent frequency = new GUIContent("Frequency");
-            public static GUIContent motion = new GUIContent("Motion");
-        }
-
-        void OnEnable()
+        private void OnEnable()
         {
             _instanceCount = serializedObject.FindProperty("_instanceCount");
             _template = serializedObject.FindProperty("_template");
@@ -71,6 +66,12 @@ namespace Swarm
             EditorGUILayout.PropertyField(_randomSeed);
 
             serializedObject.ApplyModifiedProperties();
+        }
+
+        private static class Labels
+        {
+            public static readonly GUIContent frequency = new GUIContent("Frequency");
+            public static readonly GUIContent motion = new GUIContent("Motion");
         }
     }
 }

@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TDC
 {
     [AddComponentMenu("TDC/Physics/TriggerView")]
     public class TriggerView : CoreVisibleTrigger
     {
-
         #region Unity
 
         protected virtual void OnTriggerEnter2D(Collider2D collision)

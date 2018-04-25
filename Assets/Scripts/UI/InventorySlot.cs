@@ -3,10 +3,9 @@ using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour
 {
-    private WeaponStats weaponStats;
-    public Button removeButton;
-
     public Image icon;
+    public Button removeButton;
+    private WeaponStats weaponStats;
 
     public void AddItem(WeaponStats newWeapon)
     {
@@ -29,7 +28,9 @@ public class InventorySlot : MonoBehaviour
 
     public void OnRemoveButtonClick()
     {
-        Instantiate(weaponStats.gamePrefab, PlayerControl.Instance.dropItemsPoint.position, PlayerControl.Instance.dropItemsPoint.rotation);
+        GameObject droppedWeapon = Instantiate(weaponStats.gamePrefab, PlayerControl.Instance.dropItemsPoint.position,
+            PlayerControl.Instance.dropItemsPoint.rotation);
+        CollectiblesManager.Instance.SetParentAsCollectible(droppedWeapon);
 
         Inventory.Instance.Remove(weaponStats);
     }
@@ -38,7 +39,9 @@ public class InventorySlot : MonoBehaviour
     {
         if (weaponStats != null)
         {
-            InventoryUI.Instance.FillInfoWindow(weaponStats.inventorySprite, weaponStats.name, weaponStats.minDamage, weaponStats.maxDamage, weaponStats.DamageType, weaponStats.Speed, weaponStats.Range, weaponStats.description);
+            InventoryUI.Instance.FillInfoWindow(weaponStats.inventorySprite, weaponStats.name, weaponStats.minDamage,
+                weaponStats.maxDamage, weaponStats.DamageType, weaponStats.Speed, weaponStats.Range,
+                weaponStats.description);
         }
         else
         {

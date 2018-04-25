@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEditor;
 using UnityEngine;
-using UnityEditor;
 
 namespace TDC
 {
@@ -9,7 +7,7 @@ namespace TDC
     {
         #region Data
 
-        private static string nameWindow = "PlayerPrefs";
+        private static readonly string nameWindow = "PlayerPrefs";
 
         #endregion
 
@@ -30,14 +28,13 @@ namespace TDC
         [MenuItem("TDC/Player Prefs")]
         public static void InitializationWindow()
         {
-            CorePlayerPrefsEditor window = (CorePlayerPrefsEditor)GetWindow(typeof(CorePlayerPrefsEditor));
+            var window = (CorePlayerPrefsEditor) GetWindow(typeof(CorePlayerPrefsEditor));
             window.titleContent = new GUIContent(nameWindow);
             window.Show();
         }
 
         public void CoreUpdate()
         {
-
         }
 
         #endregion

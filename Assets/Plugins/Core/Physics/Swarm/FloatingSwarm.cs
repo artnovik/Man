@@ -1,195 +1,16 @@
 // Swarm - Special renderer that draws a swarm of swirling/crawling lines.
 // https://github.com/keijiro/Swarm
 
-using UnityEngine;
 using Klak.Chromatics;
+using UnityEngine;
 
 namespace Swarm
 {
     public sealed class FloatingSwarm : MonoBehaviour
     {
-        #region Instancing properties
-
-        [SerializeField] int _instanceCount = 1000;
-
-        public int instanceCount {
-            get { return _instanceCount; }
-        }
-
-        [SerializeField] TubeTemplate _template;
-
-        public TubeTemplate template {
-            get { return _template; }
-        }
-
-        [SerializeField] float _radius = 0.005f;
-
-        public float radius {
-            get { return _radius; }
-            set { _radius = value; }
-        }
-
-        [SerializeField, Range(0, 1)] float _trim = 1;
-
-        public float trim {
-            get { return _trim; }
-            set { _trim = value; }
-        }
-
-        #endregion
-
-        #region Dynamics and attractor properteis
-
-        [SerializeField] Transform _attractor;
-
-        public Transform attractor {
-            get { return _attractor; }
-            set { _attractor = value; }
-        }
-
-        [SerializeField] Vector3 _attractorPosition = Vector3.zero;
-
-        public Vector3 attractorPosition {
-            get { return _attractorPosition; }
-            set { _attractorPosition = value; }
-        }
-
-        [SerializeField] float _attractorSpread = 0.01f;
-
-        public float attractorSpread {
-            get { return _attractorSpread; }
-            set { _attractorSpread = value; }
-        }
-
-        [SerializeField] float _attractorForce = 5.0f;
-
-        public float attractorForce {
-            get { return _attractorForce; }
-            set { _attractorForce = value; }
-        }
-
-        [SerializeField, Range(0, 1)] float _forceRandomness = 0.5f;
-
-        public float forceRandomness {
-            get { return _forceRandomness; }
-            set { _forceRandomness = value; }
-        }
-
-        [SerializeField, Range(0, 6)] float _drag = 2.0f;
-
-        public float drag {
-            get { return _drag; }
-            set { _drag = value; }
-        }
-
-        #endregion
-
-        #region Noise field properties
-
-        [SerializeField] float _headNoiseForce = 0.5f;
-
-        public float headNoiseForce {
-            get { return _headNoiseForce; }
-            set { _headNoiseForce = value; }
-        }
-
-        [SerializeField] float _headNoiseFrequency = 0.5f;
-
-        public float headNoiseFrequency {
-            get { return _headNoiseFrequency; }
-            set { _headNoiseFrequency = value; }
-        }
-
-        [SerializeField] float _trailNoiseVelocity = 0.01f;
-
-        public float trailNoiseVelocity {
-            get { return _trailNoiseVelocity; }
-            set { _trailNoiseVelocity = value; }
-        }
-
-        [SerializeField] float _trailNoiseFrequency = 0.5f;
-
-        public float trailNoiseFrequency {
-            get { return _trailNoiseFrequency; }
-            set { _trailNoiseFrequency = value; }
-        }
-
-        [SerializeField] float _noiseSpread = 0.5f;
-
-        public float noiseSpread {
-            get { return _noiseSpread; }
-            set { _noiseSpread = value; }
-        }
-
-        [SerializeField] float _noiseMotion = 0.15f;
-
-        public float noiseMotion {
-            get { return _noiseMotion; }
-            set { _noiseMotion = value; }
-        }
-
-        #endregion
-
-        #region Material properties
-
-        [SerializeField] Material _material;
-
-        public Material material {
-            get { return _material; }
-        }
-
-        [SerializeField] CosineGradient _gradient;
-
-        public CosineGradient gradient {
-            get { return _gradient; }
-            set { _gradient = value; }
-        }
-
-        #endregion
-
-        #region Misc properties
-
-        [SerializeField] int _randomSeed;
-
-        public int randomSeed {
-            set { _randomSeed = value; }
-        }
-
-        #endregion
-
         #region Hidden attributes
 
-        [SerializeField, HideInInspector] ComputeShader _compute;
-
-        #endregion
-
-        #region Private members
-
-        ComputeBuffer _drawArgsBuffer;
-        ComputeBuffer _positionBuffer;
-        ComputeBuffer _velocityBuffer;
-        ComputeBuffer _tangentBuffer;
-        ComputeBuffer _normalBuffer;
-        bool _materialCloned;
-        MaterialPropertyBlock _props;
-        Vector3 _noiseOffset;
-
-        Vector4 AttractorVector {
-            get {
-                var p = _attractor ? _attractor.position : _attractorPosition;
-                p = transform.InverseTransformPoint(p);
-                return new Vector4(p.x, p.y, p.z, _attractorSpread);
-            }
-        }
-
-        #endregion
-
-        #region Compute configurations
-
-        const int kThreadCount = 64;
-        int ThreadGroupCount { get { return _instanceCount / kThreadCount; } }
-        int InstanceCount { get { return kThreadCount * ThreadGroupCount; } }
-        int HistoryLength { get { return _template.segments + 1; } }
+        [SerializeField] [HideInInspector] private ComputeShader _compute;
 
         #endregion
 
@@ -214,9 +35,221 @@ namespace Swarm
 
         #endregion
 
+        #region Instancing properties
+
+        [SerializeField] private int _instanceCount = 1000;
+
+        public int instanceCount
+        {
+            get { return _instanceCount; }
+        }
+
+        [SerializeField] private TubeTemplate _template;
+
+        public TubeTemplate template
+        {
+            get { return _template; }
+        }
+
+        [SerializeField] private float _radius = 0.005f;
+
+        public float radius
+        {
+            get { return _radius; }
+            set { _radius = value; }
+        }
+
+        [SerializeField] [Range(0, 1)] private float _trim = 1;
+
+        public float trim
+        {
+            get { return _trim; }
+            set { _trim = value; }
+        }
+
+        #endregion
+
+        #region Dynamics and attractor properteis
+
+        [SerializeField] private Transform _attractor;
+
+        public Transform attractor
+        {
+            get { return _attractor; }
+            set { _attractor = value; }
+        }
+
+        [SerializeField] private Vector3 _attractorPosition = Vector3.zero;
+
+        public Vector3 attractorPosition
+        {
+            get { return _attractorPosition; }
+            set { _attractorPosition = value; }
+        }
+
+        [SerializeField] private float _attractorSpread = 0.01f;
+
+        public float attractorSpread
+        {
+            get { return _attractorSpread; }
+            set { _attractorSpread = value; }
+        }
+
+        [SerializeField] private float _attractorForce = 5.0f;
+
+        public float attractorForce
+        {
+            get { return _attractorForce; }
+            set { _attractorForce = value; }
+        }
+
+        [SerializeField] [Range(0, 1)] private float _forceRandomness = 0.5f;
+
+        public float forceRandomness
+        {
+            get { return _forceRandomness; }
+            set { _forceRandomness = value; }
+        }
+
+        [SerializeField] [Range(0, 6)] private float _drag = 2.0f;
+
+        public float drag
+        {
+            get { return _drag; }
+            set { _drag = value; }
+        }
+
+        #endregion
+
+        #region Noise field properties
+
+        [SerializeField] private float _headNoiseForce = 0.5f;
+
+        public float headNoiseForce
+        {
+            get { return _headNoiseForce; }
+            set { _headNoiseForce = value; }
+        }
+
+        [SerializeField] private float _headNoiseFrequency = 0.5f;
+
+        public float headNoiseFrequency
+        {
+            get { return _headNoiseFrequency; }
+            set { _headNoiseFrequency = value; }
+        }
+
+        [SerializeField] private float _trailNoiseVelocity = 0.01f;
+
+        public float trailNoiseVelocity
+        {
+            get { return _trailNoiseVelocity; }
+            set { _trailNoiseVelocity = value; }
+        }
+
+        [SerializeField] private float _trailNoiseFrequency = 0.5f;
+
+        public float trailNoiseFrequency
+        {
+            get { return _trailNoiseFrequency; }
+            set { _trailNoiseFrequency = value; }
+        }
+
+        [SerializeField] private float _noiseSpread = 0.5f;
+
+        public float noiseSpread
+        {
+            get { return _noiseSpread; }
+            set { _noiseSpread = value; }
+        }
+
+        [SerializeField] private float _noiseMotion = 0.15f;
+
+        public float noiseMotion
+        {
+            get { return _noiseMotion; }
+            set { _noiseMotion = value; }
+        }
+
+        #endregion
+
+        #region Material properties
+
+        [SerializeField] private Material _material;
+
+        public Material material
+        {
+            get { return _material; }
+        }
+
+        [SerializeField] private CosineGradient _gradient;
+
+        public CosineGradient gradient
+        {
+            get { return _gradient; }
+            set { _gradient = value; }
+        }
+
+        #endregion
+
+        #region Misc properties
+
+        [SerializeField] private int _randomSeed;
+
+        public int randomSeed
+        {
+            set { _randomSeed = value; }
+        }
+
+        #endregion
+
+        #region Private members
+
+        private ComputeBuffer _drawArgsBuffer;
+        private ComputeBuffer _positionBuffer;
+        private ComputeBuffer _velocityBuffer;
+        private ComputeBuffer _tangentBuffer;
+        private ComputeBuffer _normalBuffer;
+        private bool _materialCloned;
+        private MaterialPropertyBlock _props;
+        private Vector3 _noiseOffset;
+
+        private Vector4 AttractorVector
+        {
+            get
+            {
+                Vector3 p = _attractor ? _attractor.position : _attractorPosition;
+                p = transform.InverseTransformPoint(p);
+                return new Vector4(p.x, p.y, p.z, _attractorSpread);
+            }
+        }
+
+        #endregion
+
+        #region Compute configurations
+
+        private const int kThreadCount = 64;
+
+        private int ThreadGroupCount
+        {
+            get { return _instanceCount / kThreadCount; }
+        }
+
+        private int InstanceCount
+        {
+            get { return kThreadCount * ThreadGroupCount; }
+        }
+
+        private int HistoryLength
+        {
+            get { return _template.segments + 1; }
+        }
+
+        #endregion
+
         #region MonoBehaviour functions
 
-        void OnValidate()
+        private void OnValidate()
         {
             _instanceCount = Mathf.Max(kThreadCount, _instanceCount);
             _radius = Mathf.Max(0, _radius);
@@ -228,15 +261,16 @@ namespace Swarm
             _noiseSpread = Mathf.Max(0, _noiseSpread);
         }
 
-        void Start()
+        private void Start()
         {
             // Initialize the indirect draw args buffer.
             _drawArgsBuffer = new ComputeBuffer(
                 1, 5 * sizeof(uint), ComputeBufferType.IndirectArguments
             );
 
-            _drawArgsBuffer.SetData(new uint[5] {
-                _template.mesh.GetIndexCount(0), (uint)InstanceCount, 0, 0, 0
+            _drawArgsBuffer.SetData(new uint[5]
+            {
+                _template.mesh.GetIndexCount(0), (uint) InstanceCount, 0, 0, 0
             });
 
             // Allocate compute buffers.
@@ -259,17 +293,40 @@ namespace Swarm
             _noiseOffset = Vector3.one * _randomSeed;
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
-            if (_drawArgsBuffer != null) _drawArgsBuffer.Release();
-            if (_positionBuffer != null) _positionBuffer.Release();
-            if (_velocityBuffer != null) _velocityBuffer.Release();
-            if (_tangentBuffer != null) _tangentBuffer.Release();
-            if (_normalBuffer != null) _normalBuffer.Release();
-            if (_materialCloned) Destroy(_material);
+            if (_drawArgsBuffer != null)
+            {
+                _drawArgsBuffer.Release();
+            }
+
+            if (_positionBuffer != null)
+            {
+                _positionBuffer.Release();
+            }
+
+            if (_velocityBuffer != null)
+            {
+                _velocityBuffer.Release();
+            }
+
+            if (_tangentBuffer != null)
+            {
+                _tangentBuffer.Release();
+            }
+
+            if (_normalBuffer != null)
+            {
+                _normalBuffer.Release();
+            }
+
+            if (_materialCloned)
+            {
+                Destroy(_material);
+            }
         }
 
-        void Update()
+        private void Update()
         {
             var delta = Mathf.Min(Time.deltaTime, 1.0f / 30);
 
@@ -328,7 +385,7 @@ namespace Swarm
 
             _material.SetInt("_InstanceCount", InstanceCount);
             _material.SetInt("_HistoryLength", HistoryLength);
-            _material.SetInt("_IndexLimit", (int)(_trim * HistoryLength));
+            _material.SetInt("_IndexLimit", (int) (_trim * HistoryLength));
 
             Graphics.DrawMeshInstancedIndirect(
                 _template.mesh, 0, _material,

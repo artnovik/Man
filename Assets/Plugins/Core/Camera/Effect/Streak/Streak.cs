@@ -1,8 +1,8 @@
 // Kino/Streak - Anamorphic lens flare effect for Unity
 // https://github.com/keijiro/KinoStreak
 
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace TDC.CameraEngine.Effect
 {
@@ -13,34 +13,34 @@ namespace TDC.CameraEngine.Effect
     {
         #region Editable variables and public properties
 
-        [SerializeField, Range(0, 5)]
-        float _threshold = 1;
+        [SerializeField] [Range(0, 5)] private float _threshold = 1;
 
-        public float threshold {
+        public float threshold
+        {
             get { return _threshold; }
             set { _threshold = value; }
         }
 
-        [SerializeField, Range(0, 1)]
-        float _stretch = 0.75f;
+        [SerializeField] [Range(0, 1)] private float _stretch = 0.75f;
 
-        public float stretch {
+        public float stretch
+        {
             get { return _stretch; }
             set { _stretch = value; }
         }
 
-        [SerializeField, Range(0, 1)]
-        float _intensity = 0.3f;
+        [SerializeField] [Range(0, 1)] private float _intensity = 0.3f;
 
-        public float intensity {
+        public float intensity
+        {
             get { return _intensity; }
             set { _intensity = value; }
         }
 
-        [SerializeField, ColorUsage(false)]
-        Color _tint = new Color(0.55f, 0.55f, 1);
+        [SerializeField] [ColorUsage(false)] private Color _tint = new Color(0.55f, 0.55f, 1);
 
-        public Color tint {
+        public Color tint
+        {
             get { return _tint; }
             set { _tint = value; }
         }
@@ -49,16 +49,16 @@ namespace TDC.CameraEngine.Effect
 
         #region Private variables and functions
 
-        [SerializeField, HideInInspector] Shader _shader;
-        Material _material;
+        [SerializeField] [HideInInspector] private Shader _shader;
+        private Material _material;
 
         // This stack is reused between frames to avoid GC memory allocation.
-        Stack<RenderTexture> _mipStack = new Stack<RenderTexture>();
+        private readonly Stack<RenderTexture> _mipStack = new Stack<RenderTexture>();
 
-        RenderTexture GetTempRT(int width, int height)
+        private RenderTexture GetTempRT(int width, int height)
         {
             var format = RenderTextureFormat.ARGBHalf;
-            var rt = RenderTexture.GetTemporary(width, height, 0, format);
+            RenderTexture rt = RenderTexture.GetTemporary(width, height, 0, format);
             return rt;
         }
 
@@ -66,18 +66,22 @@ namespace TDC.CameraEngine.Effect
 
         #region MonoBehaviour functions
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             if (_material != null)
             {
                 if (Application.isPlaying)
+                {
                     Destroy(_material);
+                }
                 else
+                {
                     DestroyImmediate(_material);
+                }
             }
         }
 
-        void OnRenderImage(RenderTexture source, RenderTexture destination)
+        private void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
             if (_material == null)
             {
@@ -94,16 +98,16 @@ namespace TDC.CameraEngine.Effect
             // Apply the prefilter and make it half height.
             var width = source.width;
             var height = source.height / 2;
-            var prefiltered = GetTempRT(width, height);
+            RenderTexture prefiltered = GetTempRT(width, height);
             Graphics.Blit(source, prefiltered, _material, 0);
 
             // Build a MIP pyramid.
-            var last = prefiltered;
+            RenderTexture last = prefiltered;
 
             while (width > 16) // minimum width = 8
             {
                 width /= 2;
-                var down = GetTempRT(width, height);
+                RenderTexture down = GetTempRT(width, height);
                 Graphics.Blit(last, down, _material, 1);
                 _mipStack.Push(last = down);
             }
@@ -114,8 +118,8 @@ namespace TDC.CameraEngine.Effect
             // Upsample and combine.
             while (_mipStack.Count > 0)
             {
-                var hi = _mipStack.Pop();
-                var up = GetTempRT(hi.width, hi.height);
+                RenderTexture hi = _mipStack.Pop();
+                RenderTexture up = GetTempRT(hi.width, hi.height);
                 _material.SetTexture("_HighTex", hi);
                 Graphics.Blit(last, up, _material, 2);
                 RenderTexture.ReleaseTemporary(last);

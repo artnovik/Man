@@ -1,27 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Cheats : MonoBehaviour
 {
-    #region Singleton
-
-    public static Cheats Instance;
-
-    private void Awake()
-    {
-        Instance = this;
-
-        InitializePlayerPrefs();
-    }
-
-    #endregion
+    public float DEAD_BODIES_DURATION;
+    public bool FPS_SHOW;
 
     public bool GOD_MODE;
-    public bool FPS_SHOW;
     public bool LIFESTEAL;
-
-    public float DEAD_BODIES_DURATION;
 
     private void InitializePlayerPrefs()
     {
@@ -50,4 +35,17 @@ public class Cheats : MonoBehaviour
 
         PlayerPrefs.SetInt("LIFESTEAL", value ? 1 : 0);
     }
+
+    #region Singleton
+
+    public static Cheats Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+
+        InitializePlayerPrefs();
+    }
+
+    #endregion
 }

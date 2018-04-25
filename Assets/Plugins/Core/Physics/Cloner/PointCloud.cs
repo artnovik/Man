@@ -1,9 +1,9 @@
 // Cloner - An example of use of procedural instancing.
 // https://github.com/keijiro/Cloner
 
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Cloner
 {
@@ -17,15 +17,51 @@ namespace Cloner
     //
     public sealed class PointCloud : ScriptableObject
     {
+        #region Editor functions
+
+#if UNITY_EDITOR
+
+        public void InitWithMesh(Mesh mesh)
+        {
+            _bounds = mesh.bounds;
+
+            // Input points
+            var inVertices = mesh.vertices;
+            var inNormals = mesh.normals;
+            var inTangents = mesh.tangents;
+
+            // Enumerate unique points.
+            var outVertices = new List<Vector3>();
+            var outIndices = new List<int>();
+
+            for (var i = 0; i < inVertices.Length; i++)
+                if (!outVertices.Any(_ => _ == inVertices[i]))
+                {
+                    outVertices.Add(inVertices[i]);
+                    outIndices.Add(i);
+                }
+
+            // Convert the data into Vector4 arrays.
+            _positionData = outIndices.Select(i => (Vector4) inVertices[i]).ToArray();
+            _normalData = outIndices.Select(i => (Vector4) inNormals[i]).ToArray();
+            _tangentData = outIndices.Select(i => inTangents[i]).ToArray();
+        }
+
+#endif
+
+        #endregion
+
         #region Public properties and methods
 
         /// Number of points.
-        public int pointCount {
+        public int pointCount
+        {
             get { return _positionData.Length; }
         }
 
         /// Bounding box of the point cloud.
-        public Bounds bounds {
+        public Bounds bounds
+        {
             get { return _bounds; }
         }
 
@@ -60,46 +96,10 @@ namespace Cloner
 
         #region Serialized data fields
 
-        [SerializeField] Bounds _bounds;
-        [SerializeField] Vector4[] _positionData;
-        [SerializeField] Vector4[] _normalData;
-        [SerializeField] Vector4[] _tangentData;
-
-        #endregion
-
-        #region Editor functions
-
-        #if UNITY_EDITOR
-
-        public void InitWithMesh(Mesh mesh)
-        {
-            _bounds = mesh.bounds;
-
-            // Input points
-            var inVertices = mesh.vertices;
-            var inNormals = mesh.normals;
-            var inTangents = mesh.tangents;
-
-            // Enumerate unique points.
-            var outVertices = new List<Vector3>();
-            var outIndices = new List<int>();
-
-            for (var i = 0; i < inVertices.Length; i++)
-            {
-                if (!outVertices.Any(_ => _ == inVertices[i]))
-                {
-                    outVertices.Add(inVertices[i]);
-                    outIndices.Add(i);
-                }
-            }
-
-            // Convert the data into Vector4 arrays.
-            _positionData = outIndices.Select(i => (Vector4)inVertices[i]).ToArray();
-            _normalData   = outIndices.Select(i => (Vector4)inNormals [i]).ToArray();
-            _tangentData  = outIndices.Select(i =>          inTangents[i]).ToArray();
-        }
-
-        #endif
+        [SerializeField] private Bounds _bounds;
+        [SerializeField] private Vector4[] _positionData;
+        [SerializeField] private Vector4[] _normalData;
+        [SerializeField] private Vector4[] _tangentData;
 
         #endregion
     }

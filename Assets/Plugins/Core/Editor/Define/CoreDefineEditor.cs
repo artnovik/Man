@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEditor;
 using UnityEngine;
-using UnityEditor;
-using TDC.SaveAndLoad;
 
 namespace TDC
 {
@@ -10,7 +7,7 @@ namespace TDC
     {
         #region Data
 
-        private static string nameWindow = "DefineManager";
+        private static readonly string nameWindow = "DefineManager";
 
         #endregion
 
@@ -38,7 +35,7 @@ namespace TDC
         [MenuItem("TDC/Define Manager")]
         public static void InitializationWindow()
         {
-            CoreDefineEditor window = (CoreDefineEditor)GetWindow(typeof(CoreDefineEditor));
+            var window = (CoreDefineEditor) GetWindow(typeof(CoreDefineEditor));
             window.titleContent = new GUIContent(nameWindow);
             window.Show();
         }
@@ -106,7 +103,7 @@ namespace TDC
             GUI.color = new Color(1f, 1f, 1f);
 
 
-            for (int i = 0; i < CoreDefine.listPlatform.Count; i++)
+            for (var i = 0; i < CoreDefine.listPlatform.Count; i++)
             {
                 EditorGUILayout.BeginHorizontal(directiveLineStyle, GUILayout.Height(32));
                 {
@@ -124,6 +121,7 @@ namespace TDC
                             CoreDefine.listPlatform[i].state = false;
                             CoreDefine.SaveDefine();
                         }
+
                         GUI.color = Color.white;
                     }
                     else
@@ -134,6 +132,7 @@ namespace TDC
                             CoreDefine.listPlatform[i].state = true;
                             CoreDefine.SaveDefine();
                         }
+
                         GUI.color = Color.white;
                     }
 
@@ -147,15 +146,19 @@ namespace TDC
                     {
                         GUI.color = Color.white;
                     }
-                    CoreDefine.listPlatform[i].name = GUILayout.TextField(CoreDefine.listPlatform[i].name, textFieldStyle, GUILayout.Width(300), GUILayout.Height(25));
+
+                    CoreDefine.listPlatform[i].name = GUILayout.TextField(CoreDefine.listPlatform[i].name,
+                        textFieldStyle, GUILayout.Width(300), GUILayout.Height(25));
                     GUI.color = Color.white;
 
                     GUILayout.Space(3);
 
-                    if (GUILayout.Button(new GUIContent("-", "Delete Define"), textButtondStyle, GUILayout.Width(25), GUILayout.Height(25)))
+                    if (GUILayout.Button(new GUIContent("-", "Delete Define"), textButtondStyle, GUILayout.Width(25),
+                        GUILayout.Height(25)))
                     {
                         CoreDefine.RemoveDefine(CoreDefine.listPlatform[i].name);
                     }
+
                     GUILayout.FlexibleSpace();
                 }
                 EditorGUILayout.EndHorizontal();
@@ -168,14 +171,16 @@ namespace TDC
                 GUILayout.Label("Dev", labelStyle, GUILayout.Height(25));
 
 
-                if (GUILayout.Button(new GUIContent("+", "Add new Define"), textButtondStyle, GUILayout.Width(50), GUILayout.Height(25)))
+                if (GUILayout.Button(new GUIContent("+", "Add new Define"), textButtondStyle, GUILayout.Width(50),
+                    GUILayout.Height(25)))
                 {
                     CoreDefine.AddDefine("New Define");
                 }
 
                 GUILayout.Space(25);
 
-                if (GUILayout.Button(new GUIContent("Save", "Add new Define"), textButtondStyle, GUILayout.Width(300), GUILayout.Height(25)))
+                if (GUILayout.Button(new GUIContent("Save", "Add new Define"), textButtondStyle, GUILayout.Width(300),
+                    GUILayout.Height(25)))
                 {
                     CoreDefine.SaveDefine();
                     CoreConfiguration.EditConfiguration("PathDefineManager", CoreConfiguration.pathDefineManager);
@@ -187,12 +192,12 @@ namespace TDC
 
                 GUILayout.Space(5);
 
-                CoreConfiguration.pathDefineManager = GUILayout.TextField(CoreConfiguration.pathDefineManager, textFieldStyle, GUILayout.Width(500), GUILayout.Height(25));
+                CoreConfiguration.pathDefineManager = GUILayout.TextField(CoreConfiguration.pathDefineManager,
+                    textFieldStyle, GUILayout.Width(500), GUILayout.Height(25));
 
                 GUILayout.FlexibleSpace();
             }
             EditorGUILayout.EndHorizontal();
-
         }
 
         #endregion

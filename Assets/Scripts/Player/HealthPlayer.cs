@@ -1,12 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthPlayer : Health
 {
-    [SerializeField]
-    private Transform hitTransform;
+    [SerializeField] private Transform hitTransform;
 
     public override void Start()
     {

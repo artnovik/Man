@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    [SerializeField]
-    protected float radius = 2f;
+    [SerializeField] protected float radius = 2f;
 
     private void OnDrawGizmosSelected()
     {
@@ -16,7 +15,7 @@ public class Interactable : MonoBehaviour
         var distanceBetweenPlayerAndObject = Vector3.Distance(gameObject.transform.position,
             PlayerControl.Instance.playerTransform.position);
 
-        if ((distanceBetweenPlayerAndObject <= radius))
+        if (distanceBetweenPlayerAndObject <= radius)
         {
             Interact();
         }

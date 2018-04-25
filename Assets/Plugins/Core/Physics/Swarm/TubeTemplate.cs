@@ -1,43 +1,17 @@
 // Swarm - Special renderer that draws a swarm of swirling/crawling lines.
 // https://github.com/keijiro/Swarm
 
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Swarm
 {
     // Pre-built template mesh for tube shapes.
     public sealed class TubeTemplate : ScriptableObject
     {
-        #region Exposed properties
-
-        [Tooltip("Number of vertices on a ring.")]
-        [SerializeField] int _divisions = 6;
-
-        public int divisions {
-            get { return Mathf.Clamp(_divisions, 2, 64); }
-        }
-
-        [Tooltip("Number of segments in a tube.")]
-        [SerializeField] int _segments = 256;
-
-        public int segments {
-            get { return Mathf.Clamp(_segments, 4, 4096); }
-        }
-
-        #endregion
-
-        #region Serialized data
-
-        [SerializeField] Mesh _mesh;
-
-        public Mesh mesh { get { return _mesh; } }
-
-        #endregion
-
         #region Editor functions
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
 
         public void Rebuild()
         {
@@ -49,12 +23,10 @@ namespace Swarm
 
             // Tube body vertices
             for (var i = 0; i < _segments + 1; i++)
+            for (var j = 0; j < _divisions; j++)
             {
-                for (var j = 0; j < _divisions; j++)
-                {
-                    var phi = Mathf.PI * 2 * j / _divisions;
-                    vertices.Add(new Vector3(phi, 0, i));
-                }
+                var phi = Mathf.PI * 2 * j / _divisions;
+                vertices.Add(new Vector3(phi, 0, i));
             }
 
             // Tail tip
@@ -123,13 +95,44 @@ namespace Swarm
             _mesh.UploadMeshData(true);
         }
 
-        #endif
+#endif
+
+        #endregion
+
+        #region Exposed properties
+
+        [Tooltip("Number of vertices on a ring.")] [SerializeField]
+        private int _divisions = 6;
+
+        public int divisions
+        {
+            get { return Mathf.Clamp(_divisions, 2, 64); }
+        }
+
+        [Tooltip("Number of segments in a tube.")] [SerializeField]
+        private int _segments = 256;
+
+        public int segments
+        {
+            get { return Mathf.Clamp(_segments, 4, 4096); }
+        }
+
+        #endregion
+
+        #region Serialized data
+
+        [SerializeField] private Mesh _mesh;
+
+        public Mesh mesh
+        {
+            get { return _mesh; }
+        }
 
         #endregion
 
         #region ScriptableObject functions
 
-        void OnEnable()
+        private void OnEnable()
         {
             if (_mesh == null)
             {
@@ -138,7 +141,7 @@ namespace Swarm
             }
         }
 
-        void OnValidate()
+        private void OnValidate()
         {
             _divisions = Mathf.Clamp(_divisions, 2, 64);
             _segments = Mathf.Clamp(_segments, 4, 4096);

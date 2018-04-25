@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace TDC.Profile
+﻿namespace TDC.Profile
 {
     public class CoreProfile
     {

@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using TDC.LoadScreen;
+using TDC.UI;
 using UnityEditor;
+using UnityEngine;
 
 namespace TDC
 {
@@ -15,12 +15,10 @@ namespace TDC
 
         private void Start()
         {
-
         }
 
         private void Update()
         {
-
         }
 
         #endregion
@@ -29,12 +27,10 @@ namespace TDC
 
         public void Initialization()
         {
-
         }
 
         public void CoreUpdate()
         {
-
         }
 
         #region UI
@@ -45,7 +41,7 @@ namespace TDC
             var gameObject = new GameObject("TDC|Core");
             gameObject.transform.localPosition = Vector3.zero;
             gameObject.AddComponent<Core>();
-            gameObject.AddComponent<LoadScreen.LoadManager>();
+            gameObject.AddComponent<LoadManager>();
             gameObject.AddComponent<PoolManager.PoolManager>();
 
             if (Selection.objects.Length > 0)
@@ -54,7 +50,7 @@ namespace TDC
                 gameObject.transform.localPosition = Vector3.zero;
             }
 
-            Selection.objects = new[] { gameObject };
+            Selection.objects = new[] {gameObject};
             EditorApplication.ExecuteMenuItem("GameObject/Move To View");
         }
 
@@ -63,7 +59,7 @@ namespace TDC
         {
             var gameObject = new GameObject("TDC|WindowManager");
             gameObject.transform.localPosition = Vector3.zero;
-            gameObject.AddComponent<UI.WindowManager>();
+            gameObject.AddComponent<WindowManager>();
 
             if (Selection.objects.Length > 0)
             {
@@ -71,7 +67,7 @@ namespace TDC
                 gameObject.transform.localPosition = Vector3.zero;
             }
 
-            Selection.objects = new[] { gameObject };
+            Selection.objects = new[] {gameObject};
             EditorApplication.ExecuteMenuItem("GameObject/Move To View");
         }
 
@@ -80,16 +76,17 @@ namespace TDC
         {
             var gameObject = new GameObject("TDC|WindowControl");
             gameObject.transform.localPosition = Vector3.zero;
-            gameObject.AddComponent<UI.WindowControl>();
+            gameObject.AddComponent<WindowControl>();
 
-            if(Selection.objects.Length > 0)
+            if (Selection.objects.Length > 0)
             {
                 gameObject.transform.SetParent(Selection.transforms[0]);
                 gameObject.transform.localPosition = Vector3.zero;
 
-                if (Selection.transforms[0].GetComponent<UI.WindowManager>())
+                if (Selection.transforms[0].GetComponent<WindowManager>())
                 {
-                    Selection.transforms[0].GetComponent<UI.WindowManager>().ListWindow.Add(gameObject.GetComponent<UI.WindowControl>());
+                    Selection.transforms[0].GetComponent<WindowManager>().ListWindow
+                        .Add(gameObject.GetComponent<WindowControl>());
                 }
             }
         }
@@ -101,7 +98,7 @@ namespace TDC
         {
             var gameObject = new GameObject("TDC|Button");
             gameObject.transform.localPosition = Vector3.zero;
-            gameObject.AddComponent<UI.ButtonUI>();
+            gameObject.AddComponent<ButtonUI>();
 
             if (Selection.objects.Length > 0)
             {
@@ -109,7 +106,7 @@ namespace TDC
                 gameObject.transform.localPosition = Vector3.zero;
             }
 
-            Selection.objects = new[] { gameObject };
+            Selection.objects = new[] {gameObject};
             EditorApplication.ExecuteMenuItem("GameObject/Move To View");
         }
 

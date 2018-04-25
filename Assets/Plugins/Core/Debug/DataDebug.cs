@@ -1,24 +1,29 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 #region ClassData
 
-[System.Serializable]
+[Serializable]
 public class DDebug
 {
     public enum TColor
     {
-        Error, Warning, Apply, Default, System
+        Error,
+        Warning,
+        Apply,
+        Default,
+        System
     }
 
-    public TColor TypeColor;
     public Color32 Color;
+
+    public TColor TypeColor;
 }
 
 #endregion
 
-[System.Serializable]
+[Serializable]
 public class DataDebug
 {
     public List<DDebug> listDebug;

@@ -1,15 +1,11 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class HealthEnemy : Health
 {
-    private Collider playerCollider;
-
     // ToDo Move into EnemyContainer (Inventory)
     public Weapon enemyWeapon;
+    private Collider playerCollider;
 
     #region HealthManager
 
@@ -38,14 +34,13 @@ public class HealthEnemy : Health
 
         if (Cheats.Instance.LIFESTEAL)
         {
-            PlayerControl.Instance.playerHealth.Heal((int)(damageValue * 0.5));
+            PlayerControl.Instance.playerHealth.Heal((int) (damageValue * 0.5));
         }
     }
 
     private void OnTriggerEnter(Collider collider)
     {
         foreach (GameObject weapon in PlayerControl.Instance.listWeapons)
-        {
             if (collider.gameObject == weapon && !isDead)
             {
                 var takenDamage = PlayerControl.Instance.GetCurrentWeapon().GetDamage();
@@ -53,7 +48,6 @@ public class HealthEnemy : Health
 
                 EffectsManager.Instance.ActivateBloodEffect(collider.transform);
             }
-        }
     }
 
     protected override void Death()
@@ -65,8 +59,10 @@ public class HealthEnemy : Health
         DisableCollidersBetweenEnemyAndPlayer(2f);
         DestroyComponents();
 
-        Instantiate(enemyWeapon.weaponStats.gamePrefab, enemyWeapon.transform.position, enemyWeapon.transform.rotation,
+        GameObject droppedWeapon = Instantiate(enemyWeapon.weaponStats.gamePrefab, enemyWeapon.transform.position,
+            enemyWeapon.transform.rotation,
             null);
+        CollectiblesManager.Instance.SetParentAsCollectible(droppedWeapon);
         Destroy(enemyWeapon.gameObject);
 
         GetComponent<EnemyUI>().DestroyEnemyUI(SpawnManager.Instance.GetDeadBodyDeleteDuration());
@@ -94,10 +90,7 @@ public class HealthEnemy : Health
         yield return new WaitForSeconds(delay);
 
         var enemyColliders = GetComponentsInChildren<Collider>();
-        foreach (Collider col in enemyColliders)
-        {
-            Physics.IgnoreCollision(col, playerCollider);
-        }
+        foreach (Collider col in enemyColliders) Physics.IgnoreCollision(col, playerCollider);
     }
 
     private IEnumerator Destroy(float delay)

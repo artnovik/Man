@@ -1,20 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+using TDC;
 using UnityEngine;
 using UnityEngine.AI;
-using TDC;
 
 public class AIBattle : MonoBehaviour
 {
     public NavMeshAgent agent;
-    public Transform target;
-    public Locomotion locomotion;
-    public CoreTrigger viewTrigger;
+    private bool chasedRecently;
 
     public EnemyUI enemyUI;
 
     public bool isBattle;
-    private bool chasedRecently;
+    public Locomotion locomotion;
+    public Transform target;
+    public CoreTrigger viewTrigger;
 
     #region Unity
 
@@ -89,14 +87,12 @@ public class AIBattle : MonoBehaviour
     private void ViewControl()
     {
         foreach (Transform tar in viewTrigger.listObject)
-        {
             if (tar)
             {
                 target = tar;
                 locomotion.targetLocomotion = target.GetComponent<Locomotion>();
                 return;
             }
-        }
 
         locomotion.targetLocomotion = null;
         target = null;
@@ -104,11 +100,8 @@ public class AIBattle : MonoBehaviour
 
     private void SetKinematic(bool newValue)
     {
-        Rigidbody[] bodies = GetComponentsInChildren<Rigidbody>();
-        foreach (Rigidbody rb in bodies)
-        {
-            rb.isKinematic = newValue;
-        }
+        var bodies = GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in bodies) rb.isKinematic = newValue;
     }
 
     public void SetRagdoll(bool value)

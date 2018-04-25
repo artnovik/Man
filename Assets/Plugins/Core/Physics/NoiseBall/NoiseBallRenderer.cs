@@ -6,68 +6,9 @@ namespace NoiseBall
     [ExecuteInEditMode]
     public class NoiseBallRenderer : MonoBehaviour
     {
-        #region Exposed Parameters
-
-        [SerializeField]
-        NoiseBallMesh _mesh;
-
-        [Space]
-        [SerializeField]
-        float _radius = 1.0f;
-
-        [SerializeField]
-        float _noiseAmplitude = 0.05f;
-
-        [SerializeField]
-        float _noiseFrequency = 1.0f;
-
-        [SerializeField]
-        float _noiseMotion = 0.2f;
-
-        [Space]
-        [SerializeField, ColorUsage(false, true, 0, 8, 0.125f, 3)]
-        Color _lineColor = Color.white;
-
-        [SerializeField, ColorUsage(false)]
-        Color _surfaceColor = Color.white;
-
-        [SerializeField, Range(0, 1)]
-        float _metallic = 0.5f;
-
-        [SerializeField, Range(0, 1)]
-        float _smoothness = 0.5f;
-
-        [Space]
-        [SerializeField]
-        ShadowCastingMode _castShadows;
-
-        [SerializeField]
-        bool _receiveShadows;
-
-        #endregion
-
-        #region Private Resources
-
-        [SerializeField, HideInInspector]
-        Shader _surfaceShader;
-
-        [SerializeField, HideInInspector]
-        Shader _lineShader;
-
-        #endregion
-
-        #region Private Variables
-
-        Material _surfaceMaterial;
-        Material _lineMaterial;
-        MaterialPropertyBlock _materialProperties;
-        Vector3 _noiseOffset;
-
-        #endregion
-
         #region MonoBehaviour Functions
 
-        void Update()
+        private void Update()
         {
             if (_surfaceMaterial == null)
             {
@@ -82,7 +23,9 @@ namespace NoiseBall
             }
 
             if (_materialProperties == null)
+            {
                 _materialProperties = new MaterialPropertyBlock();
+            }
 
             _noiseOffset += new Vector3(0.13f, 0.82f, 0.11f) * _noiseMotion * Time.deltaTime;
 
@@ -110,6 +53,50 @@ namespace NoiseBall
                 _castShadows, _receiveShadows, transform
             );
         }
+
+        #endregion
+
+        #region Exposed Parameters
+
+        [SerializeField] private NoiseBallMesh _mesh;
+
+        [Space] [SerializeField] private float _radius = 1.0f;
+
+        [SerializeField] private float _noiseAmplitude = 0.05f;
+
+        [SerializeField] private float _noiseFrequency = 1.0f;
+
+        [SerializeField] private float _noiseMotion = 0.2f;
+
+        [Space] [SerializeField] [ColorUsage(false, true, 0, 8, 0.125f, 3)]
+        private Color _lineColor = Color.white;
+
+        [SerializeField] [ColorUsage(false)] private Color _surfaceColor = Color.white;
+
+        [SerializeField] [Range(0, 1)] private float _metallic = 0.5f;
+
+        [SerializeField] [Range(0, 1)] private float _smoothness = 0.5f;
+
+        [Space] [SerializeField] private ShadowCastingMode _castShadows;
+
+        [SerializeField] private bool _receiveShadows;
+
+        #endregion
+
+        #region Private Resources
+
+        [SerializeField] [HideInInspector] private Shader _surfaceShader;
+
+        [SerializeField] [HideInInspector] private Shader _lineShader;
+
+        #endregion
+
+        #region Private Variables
+
+        private Material _surfaceMaterial;
+        private Material _lineMaterial;
+        private MaterialPropertyBlock _materialProperties;
+        private Vector3 _noiseOffset;
 
         #endregion
     }

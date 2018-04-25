@@ -1,55 +1,41 @@
 // Swarm - Special renderer that draws a swarm of swirling/crawling lines.
 // https://github.com/keijiro/Swarm
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 namespace Swarm
 {
     // Custom inspector for FloatingSwarm
-    [CustomEditor(typeof(FloatingSwarm)), CanEditMultipleObjects]
+    [CustomEditor(typeof(FloatingSwarm))]
+    [CanEditMultipleObjects]
     public class FloatingSwarmEditor : Editor
     {
-        SerializedProperty _instanceCount;
-        SerializedProperty _template;
-        SerializedProperty _radius;
-        SerializedProperty _trim;
+        private SerializedProperty _attractor;
+        private SerializedProperty _attractorForce;
+        private SerializedProperty _attractorPosition;
+        private SerializedProperty _attractorSpread;
+        private SerializedProperty _drag;
 
-        SerializedProperty _attractor;
-        SerializedProperty _attractorPosition;
-        SerializedProperty _attractorSpread;
-        SerializedProperty _attractorForce;
+        private SerializedProperty _forceRandomness;
+        private SerializedProperty _gradient;
 
-        SerializedProperty _forceRandomness;
-        SerializedProperty _drag;
+        private SerializedProperty _headNoiseForce;
+        private SerializedProperty _headNoiseFrequency;
+        private SerializedProperty _instanceCount;
 
-        SerializedProperty _headNoiseForce;
-        SerializedProperty _headNoiseFrequency;
-        SerializedProperty _trailNoiseVelocity;
-        SerializedProperty _trailNoiseFrequency;
-        SerializedProperty _noiseSpread;
-        SerializedProperty _noiseMotion;
+        private SerializedProperty _material;
+        private SerializedProperty _noiseMotion;
+        private SerializedProperty _noiseSpread;
+        private SerializedProperty _radius;
 
-        SerializedProperty _material;
-        SerializedProperty _gradient;
+        private SerializedProperty _randomSeed;
+        private SerializedProperty _template;
+        private SerializedProperty _trailNoiseFrequency;
+        private SerializedProperty _trailNoiseVelocity;
+        private SerializedProperty _trim;
 
-        SerializedProperty _randomSeed;
-
-        static class Labels
-        {
-            public static GUIContent force = new GUIContent("Force");
-            public static GUIContent frequency = new GUIContent("Frequency");
-            public static GUIContent headForce = new GUIContent("Force (head)");
-            public static GUIContent headFrequency = new GUIContent("Frequency (head)");
-            public static GUIContent motion = new GUIContent("Motion");
-            public static GUIContent position = new GUIContent("Position");
-            public static GUIContent randomness = new GUIContent("Randomness");
-            public static GUIContent spread = new GUIContent("Spread");
-            public static GUIContent trailFrequency = new GUIContent("Frequency (trail)");
-            public static GUIContent trailVelocity = new GUIContent("Velocity (trail)");
-        }
-
-        void OnEnable()
+        private void OnEnable()
         {
             _instanceCount = serializedObject.FindProperty("_instanceCount");
             _template = serializedObject.FindProperty("_template");
@@ -91,7 +77,10 @@ namespace Swarm
             EditorGUILayout.PropertyField(_attractor);
             EditorGUI.indentLevel++;
             if (_attractor.objectReferenceValue == null)
+            {
                 EditorGUILayout.PropertyField(_attractorPosition, Labels.position);
+            }
+
             EditorGUILayout.PropertyField(_attractorSpread, Labels.spread);
             EditorGUILayout.PropertyField(_attractorForce, Labels.force);
             EditorGUILayout.PropertyField(_forceRandomness, Labels.randomness);
@@ -115,7 +104,23 @@ namespace Swarm
             serializedObject.ApplyModifiedProperties();
 
             if (Application.isPlaying && GUILayout.Button("Reset"))
+            {
                 foreach (FloatingSwarm fs in targets) fs.ResetPositions();
+            }
+        }
+
+        private static class Labels
+        {
+            public static readonly GUIContent force = new GUIContent("Force");
+            public static GUIContent frequency = new GUIContent("Frequency");
+            public static readonly GUIContent headForce = new GUIContent("Force (head)");
+            public static readonly GUIContent headFrequency = new GUIContent("Frequency (head)");
+            public static readonly GUIContent motion = new GUIContent("Motion");
+            public static readonly GUIContent position = new GUIContent("Position");
+            public static readonly GUIContent randomness = new GUIContent("Randomness");
+            public static readonly GUIContent spread = new GUIContent("Spread");
+            public static readonly GUIContent trailFrequency = new GUIContent("Frequency (trail)");
+            public static readonly GUIContent trailVelocity = new GUIContent("Velocity (trail)");
         }
     }
 }

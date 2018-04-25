@@ -1,26 +1,20 @@
 // Cloner - An example of use of procedural instancing.
 // https://github.com/keijiro/Cloner
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 namespace Cloner
 {
     public class ClonerMaterialEditor : ShaderGUI
     {
-        static class Labels
-        {
-            public static GUIContent albedoMap = new GUIContent("Albedo Map");
-            public static GUIContent normalMap = new GUIContent("Normal Map");
-        }
-
         public override void OnGUI(MaterialEditor editor, MaterialProperty[] props)
         {
             EditorGUI.BeginChangeCheck();
 
             // Albedo map
-            var texture = FindProperty("_MainTex", props);
-            var option = FindProperty("_Color", props);
+            MaterialProperty texture = FindProperty("_MainTex", props);
+            MaterialProperty option = FindProperty("_Color", props);
             editor.TexturePropertySingleLine(Labels.albedoMap, texture, option);
 
             // Metallic/Smoothness
@@ -38,6 +32,12 @@ namespace Cloner
             // Scale/Tiling
             texture = FindProperty("_MainTex", props);
             editor.TextureScaleOffsetProperty(texture);
+        }
+
+        private static class Labels
+        {
+            public static readonly GUIContent albedoMap = new GUIContent("Albedo Map");
+            public static readonly GUIContent normalMap = new GUIContent("Normal Map");
         }
     }
 }

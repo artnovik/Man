@@ -7,17 +7,7 @@ namespace DFVolume
 {
     public class VolumeData : ScriptableObject
     {
-        #region Exposed attributes
-
-        [SerializeField] Texture3D _texture;
-
-        public Texture3D texture {
-            get { return _texture; }
-        }
-
-        #endregion
-
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
 
         #region Editor functions
 
@@ -35,6 +25,17 @@ namespace DFVolume
 
         #endregion
 
-        #endif
+#endif
+
+        #region Exposed attributes
+
+        [SerializeField] private Texture3D _texture;
+
+        public Texture3D texture
+        {
+            get { return _texture; }
+        }
+
+        #endregion
     }
 }

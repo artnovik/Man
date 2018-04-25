@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using System;
-using TDC;
 
 namespace TDC.SaveAndLoad
 {
@@ -10,7 +7,6 @@ namespace TDC.SaveAndLoad
     {
         public void Initialization()
         {
-
         }
 
         #region Core
@@ -21,10 +17,10 @@ namespace TDC.SaveAndLoad
         {
             if (PlayerPrefs.HasKey(key))
             {
-                int getInt = PlayerPrefs.GetInt(key);
+                var getInt = PlayerPrefs.GetInt(key);
 
                 value = PlayerPrefs.GetInt(key);
-                Core.Instance.DebugLog("Get ref prefsInt " + key + " value " + getInt.ToString(), DDebug.TColor.System);
+                Core.Instance.DebugLog("Get ref prefsInt " + key + " value " + getInt, DDebug.TColor.System);
             }
             else
             {
@@ -37,13 +33,14 @@ namespace TDC.SaveAndLoad
         {
             if (PlayerPrefs.HasKey(key))
             {
-                int getInt = PlayerPrefs.GetInt(key);
+                var getInt = PlayerPrefs.GetInt(key);
 
                 if (value != getInt)
                 {
                     PlayerPrefs.SetInt(key, value);
                     PlayerPrefs.Save();
-                    Core.Instance.DebugLog("Set prefsInt " + key + " value " + PlayerPrefs.GetInt(key).ToString(), DDebug.TColor.System);
+                    Core.Instance.DebugLog("Set prefsInt " + key + " value " + PlayerPrefs.GetInt(key),
+                        DDebug.TColor.System);
                 }
             }
             else
@@ -57,16 +54,14 @@ namespace TDC.SaveAndLoad
         {
             if (PlayerPrefs.HasKey(key))
             {
-                int getInt = PlayerPrefs.GetInt(key);
+                var getInt = PlayerPrefs.GetInt(key);
 
-                Core.Instance.DebugLog("Get prefsInt " + key + " value " + getInt.ToString(), DDebug.TColor.System);
+                Core.Instance.DebugLog("Get prefsInt " + key + " value " + getInt, DDebug.TColor.System);
                 return getInt;
             }
-            else
-            {
-                Core.Instance.DebugLog("PlayerPrefs not found key, return 0", DDebug.TColor.Error);
-                return 0;
-            }
+
+            Core.Instance.DebugLog("PlayerPrefs not found key, return 0", DDebug.TColor.Error);
+            return 0;
         }
 
         #endregion
@@ -77,7 +72,7 @@ namespace TDC.SaveAndLoad
         {
             if (PlayerPrefs.HasKey(key))
             {
-                string getString = PlayerPrefs.GetString(key);
+                var getString = PlayerPrefs.GetString(key);
 
                 value = PlayerPrefs.GetString(key);
                 Core.Instance.DebugLog("Get ref prefsString " + key + " value " + getString, DDebug.TColor.System);
@@ -93,13 +88,14 @@ namespace TDC.SaveAndLoad
         {
             if (PlayerPrefs.HasKey(key))
             {
-                string getString = PlayerPrefs.GetString(key);
+                var getString = PlayerPrefs.GetString(key);
 
                 if (value != getString)
                 {
                     PlayerPrefs.SetString(key, value);
                     PlayerPrefs.Save();
-                    Core.Instance.DebugLog("Set prefsString " + key + " value " + PlayerPrefs.GetString(key), DDebug.TColor.System);
+                    Core.Instance.DebugLog("Set prefsString " + key + " value " + PlayerPrefs.GetString(key),
+                        DDebug.TColor.System);
                 }
             }
             else
@@ -113,16 +109,14 @@ namespace TDC.SaveAndLoad
         {
             if (PlayerPrefs.HasKey(key))
             {
-                string getString = PlayerPrefs.GetString(key);
+                var getString = PlayerPrefs.GetString(key);
 
                 Core.Instance.DebugLog("Get prefsString " + key + " value " + getString, DDebug.TColor.System);
                 return getString;
             }
-            else
-            {
-                Core.Instance.DebugLog("PlayerPrefs not found key, return null", DDebug.TColor.Error);
-                return "";
-            }
+
+            Core.Instance.DebugLog("PlayerPrefs not found key, return null", DDebug.TColor.Error);
+            return "";
         }
 
         #endregion
@@ -133,9 +127,9 @@ namespace TDC.SaveAndLoad
         {
             if (PlayerPrefs.HasKey(key))
             {
-                int getInt = PlayerPrefs.GetInt(key);
+                var getInt = PlayerPrefs.GetInt(key);
 
-                if(getInt == 0)
+                if (getInt == 0)
                 {
                     value = false;
                     Core.Instance.DebugLog("Get ref prefsBool " + key + " value false", DDebug.TColor.System);
@@ -165,11 +159,17 @@ namespace TDC.SaveAndLoad
         {
             if (PlayerPrefs.HasKey(key))
             {
-                int getInt = PlayerPrefs.GetInt(key);
+                var getInt = PlayerPrefs.GetInt(key);
                 short parseBool;
 
-                if (!value) { parseBool = 0; }
-                else { parseBool = 1; }
+                if (!value)
+                {
+                    parseBool = 0;
+                }
+                else
+                {
+                    parseBool = 1;
+                }
 
                 if (parseBool != getInt)
                 {
@@ -183,7 +183,7 @@ namespace TDC.SaveAndLoad
                     }
 
                     PlayerPrefs.Save();
-                    Core.Instance.DebugLog("Set prefsBool " + key + " value " + value.ToString(), DDebug.TColor.System);
+                    Core.Instance.DebugLog("Set prefsBool " + key + " value " + value, DDebug.TColor.System);
                 }
             }
             else
@@ -205,29 +205,26 @@ namespace TDC.SaveAndLoad
         {
             if (PlayerPrefs.HasKey(key))
             {
-                int getInt = PlayerPrefs.GetInt(key);
+                var getInt = PlayerPrefs.GetInt(key);
 
-                Core.Instance.DebugLog("Get prefsInt " + key + " value " + getInt.ToString(), DDebug.TColor.System);
+                Core.Instance.DebugLog("Get prefsInt " + key + " value " + getInt, DDebug.TColor.System);
 
                 if (getInt == 0)
                 {
                     return false;
                 }
-                else if (getInt == 1)
+
+                if (getInt == 1)
                 {
                     return true;
                 }
-                else
-                {
-                    Core.Instance.DebugLog("PlayerPrefs not found key, return false", DDebug.TColor.Error);
-                    return false;
-                }
-            }
-            else
-            {
+
                 Core.Instance.DebugLog("PlayerPrefs not found key, return false", DDebug.TColor.Error);
                 return false;
             }
+
+            Core.Instance.DebugLog("PlayerPrefs not found key, return false", DDebug.TColor.Error);
+            return false;
         }
 
         #endregion
@@ -238,10 +235,11 @@ namespace TDC.SaveAndLoad
         {
             if (PlayerPrefs.HasKey(key))
             {
-                string getTime = PlayerPrefs.GetString(key);
-                string[] splitTime = getTime.Split('/',' ', ':');
+                var getTime = PlayerPrefs.GetString(key);
+                var splitTime = getTime.Split('/', ' ', ':');
 
-                DateTime newTime = new DateTime(int.Parse(splitTime[0]), int.Parse(splitTime[2]), int.Parse(splitTime[4]), int.Parse(splitTime[6]), int.Parse(splitTime[8]), int.Parse(splitTime[10]));
+                var newTime = new DateTime(int.Parse(splitTime[0]), int.Parse(splitTime[2]), int.Parse(splitTime[4]),
+                    int.Parse(splitTime[6]), int.Parse(splitTime[8]), int.Parse(splitTime[10]));
 
                 value = newTime;
                 Core.Instance.DebugLog("Get ref prefsTime " + key + " value " + newTime, DDebug.TColor.System);
@@ -254,7 +252,7 @@ namespace TDC.SaveAndLoad
 
         public void PrefsTime(string key, DateTime value)
         {
-            if(PlayerPrefs.HasKey(key))
+            if (PlayerPrefs.HasKey(key))
             {
                 DateTime getTime = DateTime.Parse(PlayerPrefs.GetString(key));
 
@@ -262,7 +260,8 @@ namespace TDC.SaveAndLoad
                 {
                     PlayerPrefs.SetString(key, value.ToString());
                     PlayerPrefs.Save();
-                    Core.Instance.DebugLog("Set prefsTime " + key + " value " + PlayerPrefs.GetString(key), DDebug.TColor.System);
+                    Core.Instance.DebugLog("Set prefsTime " + key + " value " + PlayerPrefs.GetString(key),
+                        DDebug.TColor.System);
                 }
             }
             else
@@ -276,34 +275,30 @@ namespace TDC.SaveAndLoad
         {
             if (PlayerPrefs.HasKey(key))
             {
-                string getTime = PlayerPrefs.GetString(key);
+                var getTime = PlayerPrefs.GetString(key);
                 DateTime newTime = DateTime.Parse(getTime);
 
-                Core.Instance.DebugLog("Get ref prefsTime " + key + " value " + newTime.ToString(), DDebug.TColor.System);
+                Core.Instance.DebugLog("Get ref prefsTime " + key + " value " + newTime, DDebug.TColor.System);
                 return newTime;
             }
-            else
-            {
-                PlayerPrefs.SetString(key, DateTime.Now.ToString());
-                return DateTime.Now;
-            }
+
+            PlayerPrefs.SetString(key, DateTime.Now.ToString());
+            return DateTime.Now;
         }
 
         #endregion
 
         public bool DeleteKey(string key)
         {
-            if(PlayerPrefs.HasKey(key))
+            if (PlayerPrefs.HasKey(key))
             {
                 PlayerPrefs.DeleteKey(key);
                 Core.Instance.DebugLog("Delete prefs " + key, DDebug.TColor.System);
                 return true;
             }
-            else
-            {
-                Core.Instance.DebugLog("Not found prefs " + key, DDebug.TColor.Error);
-                return false;
-            }
+
+            Core.Instance.DebugLog("Not found prefs " + key, DDebug.TColor.Error);
+            return false;
         }
 
         #endregion

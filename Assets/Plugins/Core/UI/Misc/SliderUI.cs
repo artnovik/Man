@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+
 #if TMP
 using TMPro;
 #endif
@@ -18,20 +17,18 @@ namespace TDC.UI
             Percent
         }
 
-        [Header("Data")]
-        public TTypeValue typeValue;
-        [Range(0f, 1f)] public float lerp = 0;
-        public bool showValue = false;
+        [Header("Data")] public TTypeValue typeValue;
+        [Range(0f, 1f)] public float lerp;
+        public bool showValue;
 
         [Header("DataUI")]
-        #if TMP
+#if TMP
         public TextMeshProUGUI txtValue;
         #else
         public Text txtValue;
-        #endif
+#endif
 
-        [Header("LocalData")]
-        private Slider _Slider;
+        [Header("LocalData")] private Slider _Slider;
 
         #endregion
 
@@ -76,7 +73,7 @@ namespace TDC.UI
                         break;
 
                     case TTypeValue.Percent:
-                        SetString(txtValue.gameObject, (_Slider.value * 100f / _Slider.maxValue) + "%");
+                        SetString(txtValue.gameObject, _Slider.value * 100f / _Slider.maxValue + "%");
                         break;
                 }
             }
@@ -86,6 +83,6 @@ namespace TDC.UI
             }
         }
 
-#endregion
+        #endregion
     }
 }

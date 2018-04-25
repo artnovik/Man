@@ -1,7 +1,7 @@
 ﻿//
 // Custom editor for GrassScroller
 //
-using UnityEngine;
+
 using UnityEditor;
 
 namespace Kvant
@@ -10,10 +10,10 @@ namespace Kvant
     [CustomEditor(typeof(GrassScroller))]
     public class GrassScrollerEditor : Editor
     {
-        SerializedProperty _yawAngle;
-        SerializedProperty _speed;
+        private SerializedProperty _speed;
+        private SerializedProperty _yawAngle;
 
-        void OnEnable()
+        private void OnEnable()
         {
             _yawAngle = serializedObject.FindProperty("_yawAngle");
             _speed = serializedObject.FindProperty("_speed");

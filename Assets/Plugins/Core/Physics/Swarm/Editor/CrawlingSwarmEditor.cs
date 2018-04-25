@@ -1,40 +1,34 @@
 // Swarm - Special renderer that draws a swarm of swirling/crawling lines.
 // https://github.com/keijiro/Swarm
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 namespace Swarm
 {
     // Custom inspector for CrawlingSwarm
-    [CustomEditor(typeof(CrawlingSwarm)), CanEditMultipleObjects]
+    [CustomEditor(typeof(CrawlingSwarm))]
+    [CanEditMultipleObjects]
     public class CrawlingSwarmEditor : Editor
     {
-        SerializedProperty _instanceCount;
-        SerializedProperty _template;
-        SerializedProperty _radius;
-        SerializedProperty _trim;
+        private SerializedProperty _gradient;
+        private SerializedProperty _initialSpread;
+        private SerializedProperty _instanceCount;
 
-        SerializedProperty _speed;
-        SerializedProperty _volume;
-        SerializedProperty _initialSpread;
-        SerializedProperty _noiseFrequency;
-        SerializedProperty _noiseSpread;
-        SerializedProperty _noiseMotion;
+        private SerializedProperty _material;
+        private SerializedProperty _noiseFrequency;
+        private SerializedProperty _noiseMotion;
+        private SerializedProperty _noiseSpread;
+        private SerializedProperty _radius;
 
-        SerializedProperty _material;
-        SerializedProperty _gradient;
+        private SerializedProperty _randomSeed;
 
-        SerializedProperty _randomSeed;
+        private SerializedProperty _speed;
+        private SerializedProperty _template;
+        private SerializedProperty _trim;
+        private SerializedProperty _volume;
 
-        static class Labels
-        {
-            public static GUIContent frequency = new GUIContent("Frequency");
-            public static GUIContent spread = new GUIContent("Spread");
-            public static GUIContent motion = new GUIContent("Motion");
-        }
-
-        void OnEnable()
+        private void OnEnable()
         {
             _instanceCount = serializedObject.FindProperty("_instanceCount");
             _template = serializedObject.FindProperty("_template");
@@ -83,7 +77,16 @@ namespace Swarm
             serializedObject.ApplyModifiedProperties();
 
             if (Application.isPlaying && GUILayout.Button("Reset"))
+            {
                 foreach (CrawlingSwarm cs in targets) cs.ResetPositions();
+            }
+        }
+
+        private static class Labels
+        {
+            public static readonly GUIContent frequency = new GUIContent("Frequency");
+            public static readonly GUIContent spread = new GUIContent("Spread");
+            public static readonly GUIContent motion = new GUIContent("Motion");
         }
     }
 }

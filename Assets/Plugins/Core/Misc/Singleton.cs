@@ -14,6 +14,7 @@ namespace TDC
                 {
                     instance = new T();
                 }
+
                 return instance;
             }
         }

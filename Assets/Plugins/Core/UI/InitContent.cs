@@ -1,27 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace TDC.UI
 {
     [AddComponentMenu("TDC/UI/InitContent")]
     public class InitContent : SwapManager
     {
-        [Header("Init")]
-        public GameObject examplePrefab;
+        [Header("Init")] public GameObject examplePrefab;
 
-        [Header("LootBox")]
-        public ToggleManagerUI toolBoxManager;
         public GameObject exampleToolBox;
+
+        [Header("LootBox")] public ToggleManagerUI toolBoxManager;
 
         public override void Initialization()
         {
             base.Initialization();
 
-            if(listContents.Count > 0)
+            if (listContents.Count > 0)
             {
-                for (int i = 0; i < listContents.Count; i++) { InitToolBox(); }
+                for (var i = 0; i < listContents.Count; i++) InitToolBox();
             }
         }
 
@@ -30,7 +26,6 @@ namespace TDC.UI
             base.CoreUpdate();
 
             ToolBoxControl();
-
         }
 
         public GameObject GetLoad()
@@ -38,7 +33,7 @@ namespace TDC.UI
             GameObject newPrefab = Instantiate(examplePrefab, content);
 
             Vector3 fixPosition = newPrefab.transform.localPosition;
-            fixPosition.x = (Screen.width * 1.5f) * (listContents.Count - 1);
+            fixPosition.x = Screen.width * 1.5f * (listContents.Count - 1);
 
             newPrefab.transform.localPosition = fixPosition;
 
@@ -51,12 +46,19 @@ namespace TDC.UI
 
         private void InitToolBox()
         {
-            if (!toolBoxManager) { return; }
-            if (!exampleToolBox) { return; }
+            if (!toolBoxManager)
+            {
+                return;
+            }
+
+            if (!exampleToolBox)
+            {
+                return;
+            }
 
             GameObject newPrefab = Instantiate(exampleToolBox, toolBoxManager.transform);
 
-            ToggleUI dataToggle = newPrefab.GetComponent<ToggleUI>();
+            var dataToggle = newPrefab.GetComponent<ToggleUI>();
 
             if (dataToggle)
             {
@@ -67,8 +69,15 @@ namespace TDC.UI
 
         private void ToolBoxControl()
         {
-            if (!toolBoxManager) { return; }
-            if (step > listContents.Count - 1 || step < 0) { return; }
+            if (!toolBoxManager)
+            {
+                return;
+            }
+
+            if (step > listContents.Count - 1 || step < 0)
+            {
+                return;
+            }
 
             toolBoxManager.Selected(step);
         }

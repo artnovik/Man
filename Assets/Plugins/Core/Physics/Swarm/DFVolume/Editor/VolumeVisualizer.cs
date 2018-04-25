@@ -1,20 +1,19 @@
 ﻿// DFVolume - Distance field volume generator for Unity
 // https://github.com/keijiro/DFVolume
 
-using UnityEngine;
 using UnityEditor;
 
 namespace DFVolume
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(VolumeVisualizer))]
-    class VolumeVisualizerEditor : Editor
+    internal class VolumeVisualizerEditor : Editor
     {
-        SerializedProperty _data;
-        SerializedProperty _mode;
-        SerializedProperty _depth;
+        private SerializedProperty _data;
+        private SerializedProperty _depth;
+        private SerializedProperty _mode;
 
-        void OnEnable()
+        private void OnEnable()
         {
             _data = serializedObject.FindProperty("_data");
             _mode = serializedObject.FindProperty("_mode");

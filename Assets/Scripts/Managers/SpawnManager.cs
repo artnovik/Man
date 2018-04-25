@@ -5,68 +5,20 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public Transform[] spawnPointsTransforms;
-
-    public GameObject enemyZombie;
-
-    [SerializeField]
-    private bool autoSpawner;
+    [SerializeField] private bool autoSpawner;
 
     private uint deadBodyDeleteDuration = 5;
 
-    #region Singleton
-
-    public static SpawnManager Instance;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
-
-    #endregion
-
-    #region AutoSpawner
-
-    private void Start()
-    {
-        if (autoSpawner)
-        {
-            GetStartTransforms(enemyZombie);
-        }
-    }
-
-    private GameObject[] allStartEnemies;
-    private List<Vector3> autoSpawnPositions = new List<Vector3>();
-    private List<Quaternion> autoSpawnRotations = new List<Quaternion>();
-
-    public void GetStartTransforms(GameObject enemyPrefab)
-    {
-        allStartEnemies = GameObject.FindGameObjectsWithTag(enemyPrefab.tag);
-
-        foreach (var enemy in allStartEnemies)
-        {
-            autoSpawnPositions.Add(enemy.transform.position);
-            autoSpawnRotations.Add(enemy.transform.rotation);
-        }
-    }
-
-    public void AutoSpawn(GameObject enemyPrefab)
-    {
-        for (int i = 0; i < allStartEnemies.Length; i++)
-        {
-            Instantiate(enemyPrefab, autoSpawnPositions[i], autoSpawnRotations[i]);
-        }
-    }
-
-    #endregion
+    public GameObject enemyZombie;
+    public Transform[] spawnPointsTransforms;
 
     public void SpawnEnemies(GameObject enemyPrefab, uint count)
     {
-        for (int i = 0; i < count; i++)
-        {
+        for (var i = 0; i < count; i++)
             if (spawnPointsTransforms[i] != null)
+            {
                 Instantiate(enemyPrefab, spawnPointsTransforms[i].position, spawnPointsTransforms[i].rotation);
-        }
+            }
     }
 
     public void SetDeadBodyDeleteDuration(uint durationInSeconds)
@@ -110,7 +62,51 @@ public class SpawnManager : MonoBehaviour
         }
         else
         {
-            SpawnEnemies(enemyPrefab, (uint)spawnPointsTransforms.Length);
+            SpawnEnemies(enemyPrefab, (uint) spawnPointsTransforms.Length);
         }
     }
+
+    #region Singleton
+
+    public static SpawnManager Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    #endregion
+
+    #region AutoSpawner
+
+    private void Start()
+    {
+        if (autoSpawner)
+        {
+            GetStartTransforms(enemyZombie);
+        }
+    }
+
+    private GameObject[] allStartEnemies;
+    private readonly List<Vector3> autoSpawnPositions = new List<Vector3>();
+    private readonly List<Quaternion> autoSpawnRotations = new List<Quaternion>();
+
+    public void GetStartTransforms(GameObject enemyPrefab)
+    {
+        allStartEnemies = GameObject.FindGameObjectsWithTag(enemyPrefab.tag);
+
+        foreach (GameObject enemy in allStartEnemies)
+        {
+            autoSpawnPositions.Add(enemy.transform.position);
+            autoSpawnRotations.Add(enemy.transform.rotation);
+        }
+    }
+
+    public void AutoSpawn(GameObject enemyPrefab)
+    {
+        for (var i = 0; i < allStartEnemies.Length; i++)
+            Instantiate(enemyPrefab, autoSpawnPositions[i], autoSpawnRotations[i]);
+    }
+
+    #endregion
 }

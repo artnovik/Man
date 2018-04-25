@@ -1038,7 +1038,7 @@ GameObject:
   - component: {fileID: 114834372176763480}
   - component: {fileID: 114631954055323010}
   m_Layer: 0
-  m_Name: PlayerEntity
+  m_Name: Player_Data
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1068,7 +1068,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4046183557806302}
   m_Layer: 0
-  m_Name: ParentCamera
+  m_Name: Player_Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1302,7 +1302,7 @@ GameObject:
   - component: {fileID: 114146030649663362}
   - component: {fileID: 54047526821628166}
   m_Layer: 0
-  m_Name: Player_Jack
+  m_Name: Player_Character
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1426,7 +1426,7 @@ GameObject:
   - component: {fileID: 114587143568569328}
   - component: {fileID: 54184145337351002}
   m_Layer: 0
-  m_Name: PlayerView
+  m_Name: Player_View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1800,7 +1800,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1658050725186712}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.8304403e-17, z: -10.877185}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4817662477664072}
@@ -3780,8 +3780,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d9b0e6d4f2e0d042bc5ced64b7283dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footstepsAudioSource: {fileID: 82905781108021640}
   footstepsAudioClip: {fileID: 8300000, guid: f19a5e02168225844bd1c4f8e5496766, type: 3}
+  footstepsAudioSource: {fileID: 82905781108021640}
 --- !u!114 &114173038862203980
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3805,11 +3805,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 680669ea6c933c642828636b8607215a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 95346201888160510}
   health: {fileID: 114876720922075246}
+  targetLocomotion: {fileID: 0}
   typeLocomotion: 0
   typeSpeed: 0
-  targetLocomotion: {fileID: 0}
-  animator: {fileID: 95346201888160510}
 --- !u!114 &114383933205410896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3821,12 +3821,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f12e69e613d9ca74eb9ee9fc3bc41d11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endurance: {fileID: 0}
   agility: {fileID: 0}
+  arcane: {fileID: 0}
+  endurance: {fileID: 0}
+  fire: {fileID: 0}
   stamina: {fileID: 0}
   strength: {fileID: 0}
-  arcane: {fileID: 0}
-  fire: {fileID: 0}
   water: {fileID: 0}
 --- !u!114 &114517313888816572
 MonoBehaviour:
@@ -3879,16 +3879,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraControl: {fileID: 114834372176763480}
-  locomotion: {fileID: 114202594628319402}
-  playerView: {fileID: 114587143568569328}
-  playerTransform: {fileID: 4817662477664072}
   dropItemsPoint: {fileID: 4958657693177474}
-  pickUpRadius: 2
-  isPaused: 0
   inBattle: 0
-  playerHealth: {fileID: 0}
+  isPaused: 0
+  locomotion: {fileID: 114202594628319402}
+  pickUpRadius: 2
   playerCollider: {fileID: 136940142448556320}
+  playerHealth: {fileID: 0}
+  playerTransform: {fileID: 4817662477664072}
   playerUI: {fileID: 0}
+  playerView: {fileID: 114587143568569328}
   movementSpeed: 1.2
   stateLockTarget: 0
   target: {fileID: 0}
@@ -3935,11 +3935,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d26cf123c726354d86c587da65d52b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locomotion: {fileID: 114202594628319402}
   characterStats: {fileID: 114383933205410896}
+  isDead: 0
+  locomotion: {fileID: 114202594628319402}
   maxHealth: 100
   minHealth: 0
-  isDead: 0
   hitTransform: {fileID: 4962435904348192}
 --- !u!114 &114883532410005756
 MonoBehaviour:
@@ -4128,8 +4128,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 4247045237264414}
   m_AABB:
-    m_Center: {x: 0, y: 0.055553664, z: 1.1933985}
-    m_Extent: {x: 0.5976623, y: 0.22804599, z: 0.5310605}
+    m_Center: {x: 0, y: 0.055553667, z: 1.1933999}
+    m_Extent: {x: 0.5976623, y: 0.22804599, z: 0.53106004}
   m_DirtyAABB: 0
 --- !u!137 &137402627228092050
 SkinnedMeshRenderer:

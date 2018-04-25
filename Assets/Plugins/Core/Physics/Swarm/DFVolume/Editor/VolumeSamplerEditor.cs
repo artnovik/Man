@@ -1,22 +1,21 @@
 ﻿// DFVolume - Distance field volume generator for Unity
 // https://github.com/keijiro/DFVolume
 
-using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using UnityEditor;
+using UnityEngine;
 
 namespace DFVolume
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(VolumeSampler))]
-    class VolumeSamplerEditor : Editor
+    internal class VolumeSamplerEditor : Editor
     {
-        SerializedProperty _resolution;
-        SerializedProperty _extent;
+        private SerializedProperty _extent;
+        private SerializedProperty _resolution;
 
-        void OnEnable()
+        private void OnEnable()
         {
             _resolution = serializedObject.FindProperty("_resolution");
             _extent = serializedObject.FindProperty("_extent");
@@ -31,12 +30,15 @@ namespace DFVolume
 
             serializedObject.ApplyModifiedProperties();
 
-            if (GUILayout.Button("Create Volume Data")) CreateVolumeData();
+            if (GUILayout.Button("Create Volume Data"))
+            {
+                CreateVolumeData();
+            }
 
             CheckSkewedTransform();
         }
 
-        void CreateVolumeData()
+        private void CreateVolumeData()
         {
             var output = new List<Object>();
 
@@ -45,7 +47,7 @@ namespace DFVolume
                 var path = "Assets/New Volume Data.asset";
                 path = AssetDatabase.GenerateUniqueAssetPath(path);
 
-                var asset = ScriptableObject.CreateInstance<VolumeData>();
+                var asset = CreateInstance<VolumeData>();
                 asset.Initialize(sampler);
 
                 AssetDatabase.CreateAsset(asset, path);
@@ -58,13 +60,15 @@ namespace DFVolume
             Selection.objects = output.ToArray();
         }
 
-        void CheckSkewedTransform()
+        private void CheckSkewedTransform()
         {
-            if (targets.Any(o => ((Component)o).transform.lossyScale != Vector3.one))
+            if (targets.Any(o => ((Component) o).transform.lossyScale != Vector3.one))
+            {
                 EditorGUILayout.HelpBox(
                     "Using scale in transform may introduce error in output volumes.",
                     MessageType.Warning
                 );
+            }
         }
     }
 }

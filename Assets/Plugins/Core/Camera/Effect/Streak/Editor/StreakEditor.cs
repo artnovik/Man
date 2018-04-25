@@ -1,7 +1,6 @@
 // Kino/Streak - Anamorphic lens flare effect for Unity
 // https://github.com/keijiro/KinoStreak
 
-using UnityEngine;
 using UnityEditor;
 
 namespace TDC.CameraEngine.Effect
@@ -10,12 +9,12 @@ namespace TDC.CameraEngine.Effect
     [CustomEditor(typeof(Streak))]
     public class StreakEditor : Editor
     {
-        SerializedProperty _threshold;
-        SerializedProperty _stretch;
-        SerializedProperty _intensity;
-        SerializedProperty _tint;
+        private SerializedProperty _intensity;
+        private SerializedProperty _stretch;
+        private SerializedProperty _threshold;
+        private SerializedProperty _tint;
 
-        void OnEnable()
+        private void OnEnable()
         {
             _threshold = serializedObject.FindProperty("_threshold");
             _stretch = serializedObject.FindProperty("_stretch");

@@ -1,16 +1,16 @@
-﻿using UnityEngine;
+﻿using System.IO;
 using UnityEditor;
-using System.IO;
+using UnityEngine;
 
 namespace Emgen
 {
     [CustomEditor(typeof(IcosphereMesh))]
     public class IcosphereMeshEditor : Editor
     {
-        SerializedProperty _subdivisionLevel;
-        SerializedProperty _splitVertices;
+        private SerializedProperty _splitVertices;
+        private SerializedProperty _subdivisionLevel;
 
-        void OnEnable()
+        private void OnEnable()
         {
             _subdivisionLevel = serializedObject.FindProperty("_subdivisionLevel");
             _splitVertices = serializedObject.FindProperty("_splitVertices");
@@ -28,8 +28,10 @@ namespace Emgen
             serializedObject.ApplyModifiedProperties();
 
             if (rebuild)
-                foreach (var t in targets)
-                    ((IcosphereMesh)t).RebuildMesh();
+            {
+                foreach (Object t in targets)
+                    ((IcosphereMesh) t).RebuildMesh();
+            }
         }
 
         [MenuItem("Assets/Create/Emgen/Icosphere Mesh")]
@@ -38,13 +40,18 @@ namespace Emgen
             // Make a proper path from the current selection.
             var path = AssetDatabase.GetAssetPath(Selection.activeObject);
             if (string.IsNullOrEmpty(path))
+            {
                 path = "Assets";
+            }
             else if (Path.GetExtension(path) != "")
+            {
                 path = path.Replace(Path.GetFileName(AssetDatabase.GetAssetPath(Selection.activeObject)), "");
+            }
+
             var assetPathName = AssetDatabase.GenerateUniqueAssetPath(path + "/Icosphere.asset");
 
             // Create an IcosphereMesh asset.
-            var asset = ScriptableObject.CreateInstance<IcosphereMesh>();
+            var asset = CreateInstance<IcosphereMesh>();
             AssetDatabase.CreateAsset(asset, assetPathName);
             AssetDatabase.AddObjectToAsset(asset.sharedMesh, asset);
 

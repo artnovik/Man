@@ -1,44 +1,61 @@
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Kvant
 {
     public class WigTemplate : ScriptableObject
     {
+        #region ScriptableObject functions
+
+        private void OnEnable()
+        {
+            if (_mesh == null)
+            {
+                _mesh = new Mesh();
+                _mesh.name = "Wig Template";
+            }
+        }
+
+        #endregion
+
         #region Public properties
 
         /// Number of segments (editable)
-        public int segmentCount {
+        public int segmentCount
+        {
             get { return _segmentCount; }
         }
 
-        [SerializeField] int _segmentCount = 8;
+        [SerializeField] private int _segmentCount = 8;
 
         /// Number of filaments (read only)
-        public int filamentCount {
+        public int filamentCount
+        {
             get { return _foundation.width; }
         }
 
         /// Foundation texture (read only)
-        public Texture2D foundation {
+        public Texture2D foundation
+        {
             get { return _foundation; }
         }
 
-        [SerializeField] Texture2D _foundation;
+        [SerializeField] private Texture2D _foundation;
 
         /// Tmplate mesh (read only)
-        public Mesh mesh {
+        public Mesh mesh
+        {
             get { return _mesh; }
         }
 
-        [SerializeField] Mesh _mesh;
+        [SerializeField] private Mesh _mesh;
 
         #endregion
 
         #region Public methods
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
 
         // Asset initialization method
         public void Initialize(Mesh source)
@@ -59,13 +76,11 @@ namespace Kvant
 
             // Enumerate unique vertices
             for (var i = 0; i < inVertices.Length; i++)
-            {
                 if (!outVertices.Any(_ => _ == inVertices[i]))
                 {
                     outVertices.Add(inVertices[i]);
                     outNormals.Add(inNormals[i]);
                 }
-            }
 
             // Create a texture to store the foundation.
             var tex = new Texture2D(outVertices.Count, 2, TextureFormat.RGBAFloat, false);
@@ -76,8 +91,8 @@ namespace Kvant
             // Store the vertices into the texture.
             for (var i = 0; i < outVertices.Count; i++)
             {
-                var v = outVertices[i];
-                var n = outNormals[i];
+                Vector3 v = outVertices[i];
+                Vector3 n = outNormals[i];
                 tex.SetPixel(i, 0, new Color(v.x, v.y, v.z, 1));
                 tex.SetPixel(i, 1, new Color(n.x, n.y, n.z, 0));
             }
@@ -90,7 +105,7 @@ namespace Kvant
             RebuildMesh();
         }
 
-        #endif
+#endif
 
         // Template mesh rebuild method
         public void RebuildMesh()
@@ -161,8 +176,10 @@ namespace Kvant
                         indices.Add(refi + i3 + 9);
                         indices.Add(refi + i3 + 8);
                     }
+
                     refi += 8;
                 }
+
                 refi += 8;
             }
 
@@ -173,19 +190,6 @@ namespace Kvant
             _mesh.SetIndices(indices.ToArray(), MeshTopology.Triangles, 0);
             _mesh.bounds = new Bounds(Vector3.zero, Vector3.one * 1000);
             _mesh.UploadMeshData(true);
-        }
-
-        #endregion
-
-        #region ScriptableObject functions
-
-        void OnEnable()
-        {
-            if (_mesh == null)
-            {
-                _mesh = new Mesh();
-                _mesh.name = "Wig Template";
-            }
         }
 
         #endregion

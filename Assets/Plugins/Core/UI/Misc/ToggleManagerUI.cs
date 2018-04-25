@@ -1,18 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 namespace TDC.UI
 {
     public class ToggleManagerUI : CoreUI
     {
-        #region Data
-
-        public bool initState = false;
-        public List<ToggleUI> listToggle = new List<ToggleUI>();
-
-        #endregion
-
         #region Unity
 
         private void Start()
@@ -21,8 +12,7 @@ namespace TDC.UI
 
             if (initState)
             {
-                for (int i = 0; i < listToggle.Count; i++)
-                {
+                for (var i = 0; i < listToggle.Count; i++)
                     if (i == 0)
                     {
                         listToggle[i].SwitchState(true);
@@ -31,16 +21,19 @@ namespace TDC.UI
                     {
                         listToggle[i].SwitchState(false);
                     }
-                }
             }
             else
             {
-                for (int i = 0; i < listToggle.Count; i++)
-                {
-                    listToggle[i].SwitchState(false);
-                }
+                for (var i = 0; i < listToggle.Count; i++) listToggle[i].SwitchState(false);
             }
         }
+
+        #endregion
+
+        #region Data
+
+        public bool initState;
+        public List<ToggleUI> listToggle = new List<ToggleUI>();
 
         #endregion
 
@@ -73,10 +66,12 @@ namespace TDC.UI
 
         private void CoreSelected(ToggleUI target)
         {
-            if (listToggle.Count == 0) { return; }
+            if (listToggle.Count == 0)
+            {
+                return;
+            }
 
             foreach (ToggleUI Item in listToggle)
-            {
                 if (Item == target)
                 {
                     target.SwitchState(true);
@@ -85,7 +80,6 @@ namespace TDC.UI
                 {
                     Item.SwitchState(false);
                 }
-            }
         }
 
         #endregion

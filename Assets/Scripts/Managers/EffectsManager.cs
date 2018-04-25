@@ -1,10 +1,30 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EffectsManager : MonoBehaviour
 {
+    [SerializeField] private GameObject bloodEffect;
+
+    private Coroutine effectCoroutine;
+
+    private void ActivateEffect(GameObject effectPrefab, Vector3 position, Quaternion rotation, float duration)
+    {
+        effectCoroutine = StartCoroutine(ActivateEffectRoutine(effectPrefab, position, rotation, duration));
+    }
+
+    private IEnumerator ActivateEffectRoutine(GameObject effectPrefab, Vector3 position, Quaternion rotation,
+        float duration)
+    {
+        GameObject instancedEffect = Instantiate(effectPrefab, position, rotation);
+        yield return new WaitForSeconds(duration);
+        Destroy(instancedEffect);
+    }
+
+    public void ActivateBloodEffect(Transform parentTransform)
+    {
+        ActivateEffect(bloodEffect, parentTransform.position, parentTransform.rotation, 3f);
+    }
+
     #region Singleton
 
     public static EffectsManager Instance;
@@ -15,26 +35,4 @@ public class EffectsManager : MonoBehaviour
     }
 
     #endregion
-
-    [SerializeField]
-    private GameObject bloodEffect;
-
-    private void ActivateEffect(GameObject effectPrefab, Vector3 position, Quaternion rotation, float duration)
-    {
-        effectCoroutine = StartCoroutine(ActivateEffectRoutine(effectPrefab, position, rotation, duration));
-    }
-
-    private Coroutine effectCoroutine;
-
-    private IEnumerator ActivateEffectRoutine(GameObject effectPrefab, Vector3 position, Quaternion rotation, float duration)
-    {
-        var instancedEffect = Instantiate(effectPrefab, position, rotation);
-        yield return new WaitForSeconds(duration);
-        Destroy(instancedEffect);
-    }
-
-    public void ActivateBloodEffect(Transform parentTransform)
-    {
-        ActivateEffect(bloodEffect, parentTransform.position, parentTransform.rotation, 3f);
-    }
 }

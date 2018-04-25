@@ -1,7 +1,7 @@
-using UnityEngine;
-using UnityEditor;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
+using UnityEngine;
 
 namespace Kvant
 {
@@ -10,9 +10,9 @@ namespace Kvant
     {
         #region Editor functions
 
-        SerializedProperty _segmentCount;
+        private SerializedProperty _segmentCount;
 
-        void OnEnable()
+        private void OnEnable()
         {
             _segmentCount = serializedObject.FindProperty("_segmentCount");
         }
@@ -30,25 +30,28 @@ namespace Kvant
 
             // Rebuild the template mesh when the properties are changed.
             if (rebuild)
-                foreach (var t in targets) ((WigTemplate)t).RebuildMesh();
+            {
+                foreach (Object t in targets) ((WigTemplate) t).RebuildMesh();
+            }
         }
 
         #endregion
 
         #region Create menu item functions
 
-        static Object[] SelectedMeshes {
+        private static Object[] SelectedMeshes
+        {
             get { return Selection.GetFiltered(typeof(Mesh), SelectionMode.Deep); }
         }
 
         [MenuItem("Assets/Kvant/Wig/Convert To Template", true)]
-        static bool ValidateConvertToTemplate()
+        private static bool ValidateConvertToTemplate()
         {
             return SelectedMeshes.Length > 0;
         }
 
         [MenuItem("Assets/Kvant/Wig/Convert To Template")]
-        static void ConvertToTemplate()
+        private static void ConvertToTemplate()
         {
             var templates = new List<Object>();
 
@@ -60,7 +63,7 @@ namespace Kvant
                 var assetPath = AssetDatabase.GenerateUniqueAssetPath(dirPath + "/" + filename);
 
                 // Create a template asset.
-                var asset = ScriptableObject.CreateInstance<WigTemplate>();
+                var asset = CreateInstance<WigTemplate>();
                 asset.Initialize(mesh);
                 AssetDatabase.CreateAsset(asset, assetPath);
                 AssetDatabase.AddObjectToAsset(asset.foundation, asset);

@@ -9,17 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b5f569208e99db4ba9af20395badb6b, type: 3}
-  m_Name: Scythe
+  m_Name: Scythe_Big
   m_EditorClassIdentifier: 
-  name: Scythe
-  description: Cruel, large deathbringer.
-  inventorySprite: {fileID: 21300000, guid: f510e922ac39657449d5369dc33f7d26, type: 3}
-  gamePrefab: {fileID: 1859788294356692, guid: ccbea003d5d8488448c5a34dfced17d4, type: 2}
-  minDamage: 36
-  maxDamage: 41
-  staminaConsume: 17
   buyValue: 10
+  DamageType: 0
+  description: Cruel, large deathbringer.
+  gamePrefab: {fileID: 1859788294356692, guid: ccbea003d5d8488448c5a34dfced17d4, type: 2}
+  inventorySprite: {fileID: 21300000, guid: f510e922ac39657449d5369dc33f7d26, type: 3}
+  maxDamage: 41
+  minDamage: 36
+  name: Scythe
+  Range: 2
   sellValue: 3
   Speed: 2
-  Range: 2
-  DamageType: 0
+  staminaConsume: 17

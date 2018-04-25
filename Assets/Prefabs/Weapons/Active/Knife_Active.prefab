@@ -9,74 +9,74 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1825646704247750}
+  m_RootGameObject: {fileID: 1821911972826108}
   m_IsPrefabParent: 1
---- !u!1 &1000633556052880
+--- !u!1 &1321801404555052
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4101328127019984}
-  - component: {fileID: 33165326825820694}
-  - component: {fileID: 23534589677441690}
-  - component: {fileID: 95997675719922008}
+  - component: {fileID: 4548948284759720}
+  - component: {fileID: 33763395497168958}
+  - component: {fileID: 23092806142226944}
+  - component: {fileID: 95373610536988094}
   m_Layer: 0
-  m_Name: saw
+  m_Name: knife_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1825646704247750
+--- !u!1 &1821911972826108
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4849753657844302}
+  - component: {fileID: 4002464645633690}
   m_Layer: 0
-  m_Name: Saw
+  m_Name: Knife_Active
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4101328127019984
+--- !u!4 &4002464645633690
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000633556052880}
-  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: -0.041, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4849753657844302}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
---- !u!4 &4849753657844302
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1825646704247750}
+  m_GameObject: {fileID: 1821911972826108}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4101328127019984}
+  - {fileID: 4548948284759720}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23534589677441690
+--- !u!4 &4548948284759720
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1321801404555052}
+  m_LocalRotation: {x: 0, y: -0, z: 1, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_Children: []
+  m_Father: {fileID: 4002464645633690}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 180, y: -180, z: 0}
+--- !u!23 &23092806142226944
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000633556052880}
+  m_GameObject: {fileID: 1321801404555052}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -105,22 +105,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33165326825820694
+--- !u!33 &33763395497168958
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000633556052880}
-  m_Mesh: {fileID: 4300000, guid: 82d3b283117c86b478ed130dcd2e1aa6, type: 3}
---- !u!95 &95997675719922008
+  m_GameObject: {fileID: 1321801404555052}
+  m_Mesh: {fileID: 4300000, guid: 9194087540427c4498eeb567ebc47c6e, type: 3}
+--- !u!95 &95373610536988094
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000633556052880}
+  m_GameObject: {fileID: 1321801404555052}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 82d3b283117c86b478ed130dcd2e1aa6, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 9194087540427c4498eeb567ebc47c6e, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0

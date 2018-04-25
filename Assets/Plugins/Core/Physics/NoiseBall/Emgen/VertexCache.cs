@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Emgen
 {
@@ -69,14 +69,21 @@ namespace Emgen
         {
             for (var i = 0; i < vertices.Count; i++)
                 if ((vertices[i] - v).sqrMagnitude < 0.001f)
+                {
                     return i;
+                }
+
             return -1;
         }
 
         public int LookUpOrAddVertex(Vector3 v)
         {
             var index = LookUpVertex(v);
-            if (index >= 0) return index;
+            if (index >= 0)
+            {
+                return index;
+            }
+
             vertices.Add(v);
             return vertices.Count - 1;
         }
@@ -87,7 +94,7 @@ namespace Emgen
 
         public IEnumerable<RawTriangle> GetRawTriangleEnumerator()
         {
-            foreach (var t in triangles)
+            foreach (IndexedTriangle t in triangles)
                 yield return new RawTriangle(
                     vertices[t.i1], vertices[t.i2], vertices[t.i3]);
         }
@@ -118,7 +125,7 @@ namespace Emgen
         {
             var indices = new int[6 * triangles.Count];
             var i = 0;
-            foreach (var t in triangles)
+            foreach (IndexedTriangle t in triangles)
             {
                 indices[i++] = t.i1;
                 indices[i++] = t.i2;
@@ -127,6 +134,7 @@ namespace Emgen
                 indices[i++] = t.i3;
                 indices[i++] = t.i1;
             }
+
             return indices;
         }
 
@@ -151,12 +159,13 @@ namespace Emgen
         {
             var indices = new int[3 * triangles.Count];
             var i = 0;
-            foreach (var t in triangles)
+            foreach (IndexedTriangle t in triangles)
             {
                 indices[i++] = t.i1;
                 indices[i++] = t.i2;
                 indices[i++] = t.i3;
             }
+
             return indices;
         }
 
@@ -177,12 +186,13 @@ namespace Emgen
         {
             var vertices = new Vector3[3 * triangles.Count];
             var i = 0;
-            foreach (var t in triangles)
+            foreach (IndexedTriangle t in triangles)
             {
                 vertices[i++] = this.vertices[t.i1];
                 vertices[i++] = this.vertices[t.i2];
                 vertices[i++] = this.vertices[t.i3];
             }
+
             return vertices;
         }
 

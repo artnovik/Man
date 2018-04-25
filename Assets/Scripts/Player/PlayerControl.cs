@@ -1,33 +1,30 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TDC;
-using TDC.InputSystem;
+using UnityEngine;
 
 public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 {
-    [Header("Data")]
-    public CameraControl cameraControl;
-    public Locomotion locomotion;
-    public PlayerView playerView;
-    public Transform playerTransform;
+    [Header("Data")] public CameraControl cameraControl;
+
     public Transform dropItemsPoint;
+    public bool inBattle;
+
+    public bool isPaused;
+    public Locomotion locomotion;
 
     public float pickUpRadius = 2f;
 
-    public bool isPaused;
-    public bool inBattle;
+    [HideInInspector] public Collider playerCollider;
 
-    [Tooltip("Health reference")]
-    [HideInInspector]
+    [Tooltip("Health reference")] [HideInInspector]
     public Health playerHealth;
 
-    [HideInInspector]
-    public Collider playerCollider;
+    public Transform playerTransform;
 
-    [Tooltip("User Interface reference")]
-    [SerializeField]
+    [Tooltip("User Interface reference")] [SerializeField]
     private UIGamePlay playerUI;
+
+    public PlayerView playerView;
 
     #region Unity
 
@@ -37,13 +34,9 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         locomotion.animator.transform.SetParent(null);
         localTransform = transform;
 
-        foreach (var weapon in listWeapons)
-        {
-            foreach (var weaponCollider in weapon.GetComponentsInChildren<Collider>())
-            {
-                weaponCollider.enabled = false;
-            }
-        }
+        foreach (GameObject weapon in listWeapons)
+        foreach (Collider weaponCollider in weapon.GetComponentsInChildren<Collider>())
+            weaponCollider.enabled = false;
 
         GetCurrentWeaponColliders();
 
@@ -71,10 +64,10 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 
     #region Locomotion
 
-    [Header("Locomotion")]
-    [SerializeField]
+    [Header("Locomotion")] [SerializeField]
     private float movementSpeed = 1.2f;
-    public bool stateLockTarget = false;
+
+    public bool stateLockTarget;
     public Transform target;
     public Vector3 movementDirection;
     private Transform localTransform;
@@ -82,7 +75,9 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     private void Locomotion()
     {
         if (playerHealth.isDead)
+        {
             return;
+        }
 
         Vector3 keyboardDirection = Vector3.zero;
 
@@ -92,7 +87,8 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         keyboardDirection += movementDirection;
 
         locomotion.Movement(cameraControl.parentCamera.TransformDirection(keyboardDirection));
-        localTransform.position = Vector3.Lerp(localTransform.position, locomotion.animator.transform.position, movementSpeed);
+        localTransform.position =
+            Vector3.Lerp(localTransform.position, locomotion.animator.transform.position, movementSpeed);
 
         if (!target)
         {
@@ -128,10 +124,11 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
         if (stateLockTarget)
         {
             if (target != null)
+            {
                 locomotion.Rotate((target.position - localTransform.position).normalized);
+            }
 
             foreach (Transform item in playerView.listObject)
-            {
                 if (item && !item.GetComponent<Health>().isDead)
                 {
                     target = item;
@@ -139,7 +136,6 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
                     locomotion.typeSpeed = global::Locomotion.TSpeed.Walk;
                     return;
                 }
-            }
 
             target = null;
             locomotion.typeSpeed = global::Locomotion.TSpeed.Run;
@@ -177,12 +173,12 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 
     #region Weapon
 
-    [Header("Weapons")]
-    public int curIndexWeapon = 0;
+    [Header("Weapons")] public int curIndexWeapon;
+
     public List<GameObject> listWeapons = new List<GameObject>();
     private Weapon currentWeapon;
-    [HideInInspector]
-    public Collider[] currentWeaponColliders;
+
+    [HideInInspector] public Collider[] currentWeaponColliders;
 
     public void NextWeapon()
     {
@@ -198,10 +194,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 
     public void SwitchWeapon(int index)
     {
-        for (int i = 0; i < listWeapons.Count; i++)
-        {
-            listWeapons[i].SetActive(i == index);
-        }
+        for (var i = 0; i < listWeapons.Count; i++) listWeapons[i].SetActive(i == index);
 
         GetCurrentWeaponColliders();
     }
@@ -218,10 +211,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
 
     public void SwitchWeaponColliders()
     {
-        foreach (var weaponCollider in currentWeaponColliders)
-        {
-            weaponCollider.enabled = !weaponCollider.enabled;
-        }
+        foreach (Collider weaponCollider in currentWeaponColliders) weaponCollider.enabled = !weaponCollider.enabled;
     }
 
     #endregion

@@ -1,18 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
 using TDC;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyUI : MonoBehaviourSingleton<EnemyUI>
 {
-    [SerializeField]
-    private Image enemyHealthBarCurrent;
-    [SerializeField]
-    private Image enemyHealthBarEmpty;
+    [SerializeField] private Image enemyHealthBarCurrent;
 
-    [HideInInspector]
-    public Health health;
+    [SerializeField] private Image enemyHealthBarEmpty;
+
+    [HideInInspector] public Health health;
 
     private void Start()
     {
@@ -21,7 +18,7 @@ public class EnemyUI : MonoBehaviourSingleton<EnemyUI>
 
     public void HealthBarValueChange(int currentHealth)
     {
-        enemyHealthBarCurrent.fillAmount = (float)currentHealth / 100;
+        enemyHealthBarCurrent.fillAmount = (float) currentHealth / 100;
     }
 
     public void SetHealthBarStatus(bool brightVisibility)

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace TDC.UI
 {
@@ -9,11 +6,9 @@ namespace TDC.UI
     {
         #region Data
 
-        [Header("Data")]
-        public GameObject active;
+        [Header("Data")] public GameObject active;
 
-        [Header("LocalData")]
-        private ToggleManagerUI _ToggleManagerUI;
+        [Header("LocalData")] private ToggleManagerUI _ToggleManagerUI;
 
         #endregion
 

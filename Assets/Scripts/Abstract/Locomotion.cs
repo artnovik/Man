@@ -1,12 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Locomotion : MonoBehaviour
 {
-    [Tooltip("Health reference")]
-    public Health health;
-
     public enum TLocomotion
     {
         Idle,
@@ -21,14 +16,17 @@ public abstract class Locomotion : MonoBehaviour
         Run
     }
 
-    public TLocomotion typeLocomotion = TLocomotion.Idle;
-    public TSpeed typeSpeed = TSpeed.Walk;
-
-    public Locomotion targetLocomotion;
     public Animator animator;
+
+    [Tooltip("Health reference")] public Health health;
 
     private Transform localTransform;
     private float speedFactor = 1f;
+
+    public Locomotion targetLocomotion;
+
+    public TLocomotion typeLocomotion = TLocomotion.Idle;
+    public TSpeed typeSpeed = TSpeed.Walk;
 
     #region AnimationStates
 
@@ -73,8 +71,10 @@ public abstract class Locomotion : MonoBehaviour
 
         if (inversDirection.magnitude > 0)
         {
-            animator.SetFloat(MOVEMENT_X, Mathf.Lerp(animator.GetFloat(MOVEMENT_X), inversDirection.x * speedFactor, 0.05f));
-            animator.SetFloat(MOVEMENT_Y, Mathf.Lerp(animator.GetFloat(MOVEMENT_Y), inversDirection.z * speedFactor, 0.05f));
+            animator.SetFloat(MOVEMENT_X,
+                Mathf.Lerp(animator.GetFloat(MOVEMENT_X), inversDirection.x * speedFactor, 0.05f));
+            animator.SetFloat(MOVEMENT_Y,
+                Mathf.Lerp(animator.GetFloat(MOVEMENT_Y), inversDirection.z * speedFactor, 0.05f));
         }
 
         animator.SetBool(MOVEMENT_STATE, inversDirection.magnitude > 0);
@@ -82,16 +82,23 @@ public abstract class Locomotion : MonoBehaviour
 
     public void Rotate(Vector3 movDirection)
     {
-        if (typeLocomotion == TLocomotion.Dead) { return; }
+        if (typeLocomotion == TLocomotion.Dead)
+        {
+            return;
+        }
 
-        float lerpFactor = 0.1f;
+        var lerpFactor = 0.1f;
 
-        if (typeLocomotion == TLocomotion.Attack) { lerpFactor /= 2; }
+        if (typeLocomotion == TLocomotion.Attack)
+        {
+            lerpFactor /= 2;
+        }
 
         Vector3 fixDir = movDirection;
         fixDir.y = 0;
 
-        Quaternion fixRotation = Quaternion.Lerp(localTransform.rotation, Quaternion.LookRotation(fixDir, Vector3.up), lerpFactor);
+        Quaternion fixRotation = Quaternion.Lerp(localTransform.rotation, Quaternion.LookRotation(fixDir, Vector3.up),
+            lerpFactor);
         localTransform.rotation = fixRotation;
     }
 
@@ -122,7 +129,6 @@ public abstract class Locomotion : MonoBehaviour
 
     public virtual void Attack()
     {
-
     }
 
     #endregion

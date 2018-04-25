@@ -1078,7 +1078,7 @@ GameObject:
   - component: {fileID: 195425044544071038}
   - component: {fileID: 136571514283690512}
   m_Layer: 0
-  m_Name: EnemyZombie
+  m_Name: Enemy_Zombie
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2244,7 +2244,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1708815765540170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.05, y: -2.4202457e-18, z: 4.11}
+  m_LocalPosition: {x: -14.05, y: 0, z: 4.120001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224926042718919002}
@@ -3256,11 +3256,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9152f771a5bcc1f4fb77e3a3b989973c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locomotion: {fileID: 114488230682809896}
   characterStats: {fileID: 114939547921820984}
+  isDead: 0
+  locomotion: {fileID: 114488230682809896}
   maxHealth: 100
   minHealth: 0
-  isDead: 0
   enemyWeapon: {fileID: 114895080710395028}
 --- !u!114 &114104376914045810
 MonoBehaviour:
@@ -3301,11 +3301,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 195425044544071038}
-  target: {fileID: 0}
-  locomotion: {fileID: 114488230682809896}
-  viewTrigger: {fileID: 114286284656136110}
   enemyUI: {fileID: 114469354785925220}
   isBattle: 0
+  locomotion: {fileID: 114488230682809896}
+  target: {fileID: 0}
+  viewTrigger: {fileID: 114286284656136110}
 --- !u!114 &114238770495529934
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3410,11 +3410,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc7c45bf47855064d9f5e9fd58645a27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 95022380503117368}
   health: {fileID: 114044743799235528}
+  targetLocomotion: {fileID: 0}
   typeLocomotion: 0
   typeSpeed: 0
-  targetLocomotion: {fileID: 0}
-  animator: {fileID: 95022380503117368}
 --- !u!114 &114567141540111030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3442,8 +3442,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d9b0e6d4f2e0d042bc5ced64b7283dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footstepsAudioSource: {fileID: 82737994693660622}
   footstepsAudioClip: {fileID: 8300000, guid: f19a5e02168225844bd1c4f8e5496766, type: 3}
+  footstepsAudioSource: {fileID: 82737994693660622}
 --- !u!114 &114895080710395028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3467,12 +3467,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f12e69e613d9ca74eb9ee9fc3bc41d11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endurance: {fileID: 0}
   agility: {fileID: 0}
+  arcane: {fileID: 0}
+  endurance: {fileID: 0}
+  fire: {fileID: 0}
   stamina: {fileID: 0}
   strength: {fileID: 0}
-  arcane: {fileID: 0}
-  fire: {fileID: 0}
   water: {fileID: 0}
 --- !u!135 &135476421251083016
 SphereCollider:

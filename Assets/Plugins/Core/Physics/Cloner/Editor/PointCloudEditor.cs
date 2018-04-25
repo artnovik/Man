@@ -1,10 +1,10 @@
 // Cloner - An example of use of procedural instancing.
 // https://github.com/keijiro/Cloner
 
-using UnityEngine;
-using UnityEditor;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
+using UnityEngine;
 
 namespace Cloner
 {
@@ -15,7 +15,7 @@ namespace Cloner
 
         public override void OnInspectorGUI()
         {
-            var pointCount = ((PointCloud)target).pointCount;
+            var pointCount = ((PointCloud) target).pointCount;
             EditorGUILayout.LabelField("Point Count", pointCount.ToString());
         }
 
@@ -23,18 +23,19 @@ namespace Cloner
 
         #region Menu item functions
 
-        static Object[] SelectedMeshes {
+        private static Object[] SelectedMeshes
+        {
             get { return Selection.GetFiltered(typeof(Mesh), SelectionMode.Deep); }
         }
 
         [MenuItem("Assets/Cloner/Convert To Point Cloud", true)]
-        static bool ValidateConvertToPointCloud()
+        private static bool ValidateConvertToPointCloud()
         {
             return SelectedMeshes.Length > 0;
         }
 
         [MenuItem("Assets/Cloner/Convert To Point Cloud")]
-        static void ConvertToTemplate()
+        private static void ConvertToTemplate()
         {
             var templates = new List<Object>();
 
@@ -46,7 +47,7 @@ namespace Cloner
                 var assetPath = AssetDatabase.GenerateUniqueAssetPath(dirPath + "/" + filename);
 
                 // Create a point buffer asset.
-                var asset = ScriptableObject.CreateInstance<PointCloud>();
+                var asset = CreateInstance<PointCloud>();
                 asset.InitWithMesh(mesh);
                 AssetDatabase.CreateAsset(asset, assetPath);
 

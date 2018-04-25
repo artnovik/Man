@@ -1,21 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using UnityEngine;
 
 namespace TDC.SaveAndLoad
 {
     public class CoreXml
     {
+        #region Element
+
+        private static void AddAttribute(XmlDocument xmlDoc, XmlNode userNode, string name, string value)
+        {
+            XmlAttribute attribute;
+
+            attribute = xmlDoc.CreateAttribute(name);
+            attribute.Value = value;
+            userNode.Attributes.Append(attribute);
+        }
+
+        #endregion
+
         #region Data
+
         public class DataXml
         {
+            public List<DataXmlAttribute> listAttribute;
             public int line { get; private set; }
             public string name { get; private set; }
             public string text { get; private set; }
-
-            public List<DataXmlAttribute> listAttribute;
 
             public void Initialization(string _name, string _text, List<DataXmlAttribute> _listAttribute = null)
             {
@@ -65,55 +77,67 @@ namespace TDC.SaveAndLoad
 
         private static void Initialization(string path, string fileXmlName)
         {
-            if (!Directory.Exists(path)) { Directory.CreateDirectory(path); }
-            if (!File.Exists(path + delimentIO + fileXmlName)) { File.Create(path + delimentIO + (fileXmlName + xmlFormat)).Close(); }
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            if (!File.Exists(path + delimentIO + fileXmlName))
+            {
+                File.Create(path + delimentIO + fileXmlName + xmlFormat).Close();
+            }
         }
 
         public static void Save(string patch, string fileXmlName, List<DataXml> listData, string title = "Main")
         {
             Initialization(patch, fileXmlName);
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var xmlDoc = new XmlDocument();
             XmlNode rootNode = xmlDoc.CreateElement(title);
             xmlDoc.AppendChild(rootNode);
 
             XmlNode userNode;
 
-            for(int i=0; i<listData.Count; i++)
+            for (var i = 0; i < listData.Count; i++)
             {
                 userNode = xmlDoc.CreateElement(listData[i].name);
                 userNode.InnerText = listData[i].text;
 
                 if (listData[i].listAttribute.Count > 0)
                 {
-                    for (int w = 0; w < listData[i].listAttribute.Count; w++)
-                    {
+                    for (var w = 0; w < listData[i].listAttribute.Count; w++)
                         AddAttribute(xmlDoc, userNode, nameAttribute + w, listData[i].listAttribute[w].value);
-                    }
                 }
 
                 rootNode.AppendChild(userNode);
             }
 
-            xmlDoc.Save(patch + delimentIO + (fileXmlName + xmlFormat));
+            xmlDoc.Save(patch + delimentIO + fileXmlName + xmlFormat);
             //UnityEditor.AssetDatabase.Refresh();
-            Debug.Log("CoreXML: " + "Saved path " + patch + delimentIO + (fileXmlName + xmlFormat));
+            Debug.Log("CoreXML: " + "Saved path " + patch + delimentIO + fileXmlName + xmlFormat);
         }
 
         public static List<DataXml> Load(string path, string fileXmlName)
         {
-            if (!Directory.Exists(path)) { return null; }
-            if (!File.Exists(path + delimentIO + fileXmlName + xmlFormat)) { return null; }
+            if (!Directory.Exists(path))
+            {
+                return null;
+            }
 
-            XmlTextReader xmlReader = new XmlTextReader(path + delimentIO + fileXmlName + xmlFormat);
+            if (!File.Exists(path + delimentIO + fileXmlName + xmlFormat))
+            {
+                return null;
+            }
 
-            List<DataXml> listDataXml = new List<DataXml>();
+            var xmlReader = new XmlTextReader(path + delimentIO + fileXmlName + xmlFormat);
+
+            var listDataXml = new List<DataXml>();
 
             DataXml data = null;
 
             while (xmlReader.Read())
             {
-                if(xmlReader.NodeType == XmlNodeType.Element)
+                if (xmlReader.NodeType == XmlNodeType.Element)
                 {
                     data = new DataXml();
                     data.listAttribute = new List<DataXmlAttribute>();
@@ -121,14 +145,21 @@ namespace TDC.SaveAndLoad
 
                 if (data != null)
                 {
-                    if (xmlReader.LocalName != "") { data.SetName(xmlReader.LocalName); }
-                    if (xmlReader.Value != "") { data.SetText(xmlReader.Value); }
+                    if (xmlReader.LocalName != "")
+                    {
+                        data.SetName(xmlReader.LocalName);
+                    }
+
+                    if (xmlReader.Value != "")
+                    {
+                        data.SetText(xmlReader.Value);
+                    }
 
                     if (xmlReader.AttributeCount > 0)
                     {
-                        for (int i = 0; i < xmlReader.AttributeCount; i++)
+                        for (var i = 0; i < xmlReader.AttributeCount; i++)
                         {
-                            DataXmlAttribute dataAttribute = new DataXmlAttribute();
+                            var dataAttribute = new DataXmlAttribute();
                             dataAttribute.Initialization(nameAttribute + i, xmlReader.GetAttribute(i));
 
                             data.listAttribute.Add(dataAttribute);
@@ -144,19 +175,6 @@ namespace TDC.SaveAndLoad
             }
 
             return listDataXml;
-        }
-
-        #endregion
-
-        #region Element
-
-        private static void AddAttribute(XmlDocument xmlDoc, XmlNode userNode, string name, string value)
-        {
-            XmlAttribute attribute;
-
-            attribute = xmlDoc.CreateAttribute(name);
-            attribute.Value = value;
-            userNode.Attributes.Append(attribute);
         }
 
         #endregion

@@ -1,28 +1,11 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Emgen;
+using UnityEngine;
 
 namespace NoiseBall
 {
     public class NoiseBallMesh : ScriptableObject
     {
-        #region Public Properties
-
-        [SerializeField, Range(0, 5)]
-        int _subdivisionLevel = 1;
-
-        public int subdivisionLevel {
-            get { return _subdivisionLevel; }
-        }
-
-        [SerializeField, HideInInspector]
-        Mesh _mesh;
-
-        public Mesh sharedMesh {
-            get { return _mesh; }
-        }
-
-        #endregion
-
         #region Public Methods
 
         public void RebuildMesh()
@@ -35,21 +18,21 @@ namespace NoiseBall
 
             _mesh.Clear();
 
-            var builder = new Emgen.IcosphereBuilder();
+            var builder = new IcosphereBuilder();
             for (var i = 0; i < _subdivisionLevel; i++)
                 builder.Subdivide();
 
-            var vcache = builder.vertexCache;
+            VertexCache vcache = builder.vertexCache;
             var vcount = 3 * vcache.triangles.Count;
             var varray1 = new List<Vector3>(vcount); // vertex itself
             var varray2 = new List<Vector3>(vcount); // consecutive vertex
             var varray3 = new List<Vector3>(vcount); // another consecutive vertex
 
-            foreach (var t in vcache.triangles)
+            foreach (VertexCache.IndexedTriangle t in vcache.triangles)
             {
-                var v1 = vcache.vertices[t.i1];
-                var v2 = vcache.vertices[t.i2];
-                var v3 = vcache.vertices[t.i3];
+                Vector3 v1 = vcache.vertices[t.i1];
+                Vector3 v2 = vcache.vertices[t.i2];
+                Vector3 v3 = vcache.vertices[t.i3];
 
                 varray1.Add(v1);
                 varray2.Add(v2);
@@ -99,13 +82,31 @@ namespace NoiseBall
 
         #region ScriptableObject Functions
 
-        void OnEnable()
+        private void OnEnable()
         {
             if (_mesh == null)
             {
                 _mesh = new Mesh();
                 _mesh.name = "NoiseBall";
             }
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        [SerializeField] [Range(0, 5)] private int _subdivisionLevel = 1;
+
+        public int subdivisionLevel
+        {
+            get { return _subdivisionLevel; }
+        }
+
+        [SerializeField] [HideInInspector] private Mesh _mesh;
+
+        public Mesh sharedMesh
+        {
+            get { return _mesh; }
         }
 
         #endregion

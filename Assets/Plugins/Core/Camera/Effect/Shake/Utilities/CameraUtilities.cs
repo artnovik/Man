@@ -5,7 +5,7 @@ namespace TDC.CameraEngine.Effect
     public class CameraUtilities
     {
         /// <summary>
-        /// Smoothes a Vector3 that represents euler angles.
+        ///     Smoothes a Vector3 that represents euler angles.
         /// </summary>
         /// <param name="current">The current Vector3 value.</param>
         /// <param name="target">The target Vector3 value.</param>
@@ -24,7 +24,7 @@ namespace TDC.CameraEngine.Effect
         }
 
         /// <summary>
-        /// Multiplies each element in Vector3 v by the corresponding element of w.
+        ///     Multiplies each element in Vector3 v by the corresponding element of w.
         /// </summary>
         public static Vector3 MultiplyVectors(Vector3 v, Vector3 w)
         {

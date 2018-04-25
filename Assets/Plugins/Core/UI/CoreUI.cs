@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 #if TMP
@@ -25,10 +23,6 @@ namespace TDC.UI
             {
                 txt.text = text;
             }
-            else
-            {
-                return;
-            }
         }
 
         protected void SetTimeString(GameObject objTxt, int _seconds)
@@ -41,7 +35,7 @@ namespace TDC.UI
 
             if (txt)
             {
-                int minute = _seconds / 60;
+                var minute = _seconds / 60;
                 float seconds = _seconds % 60;
 
                 string txtMin = null;
@@ -66,20 +60,12 @@ namespace TDC.UI
                 }
 
 
-                string result = txtMin + ":" + txtSec;
+                var result = txtMin + ":" + txtSec;
 
-                if(txt.text != result)
+                if (txt.text != result)
                 {
                     txt.text = txtMin + ":" + txtSec;
                 }
-                else
-                {
-                    return;
-                }
-            }
-            else
-            {
-                return;
             }
         }
 
@@ -89,10 +75,6 @@ namespace TDC.UI
             {
                 Img.sprite = Sprt;
             }
-            else
-            {
-                return;
-            }
         }
 
         protected void SetSlider(Slider _Slider, float Value)
@@ -101,17 +83,13 @@ namespace TDC.UI
             {
                 _Slider.value = Value;
             }
-            else
-            {
-                return;
-            }
         }
 
         protected virtual void Sound()
         {
         }
 
-#region Static
+        #region Static
 
         public static void SetActive(GameObject Obj, bool State)
         {
@@ -119,14 +97,10 @@ namespace TDC.UI
             {
                 Obj.SetActive(State);
             }
-            else
-            {
-                return;
-            }
         }
 
-#endregion
+        #endregion
 
-#endregion
+        #endregion
     }
 }
