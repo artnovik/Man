@@ -101,7 +101,7 @@ public class UIGamePlay : MonoBehaviour
 
     #region PlayerBars
 
-    public void HealthBarValueChange(int currentHealth)
+    public void HealthBarValueChange(uint currentHealth)
     {
         playerHealthBarCurrent.fillAmount = (float) currentHealth / 100;
     }
@@ -216,24 +216,27 @@ public class UIGamePlay : MonoBehaviour
     public void PauseResume()
     {
         var pause = PlayerControl.Instance.isPaused;
+        ControlElementsVisibility(pause);
+        pauseMenu.SetActive(!pause);
 
         if (!pause) // If Game is resumed now (pause == false) and we pause it
         {
-            pauseMenu.SetActive(!pause);
             AudioManager.Instance.WindowAppearSound();
-            foreach (GameObject controlElementGO in controlGroup) controlElementGO.SetActive(pause);
             StartBlinkingPauseText();
             Time.timeScale = 0f;
             PlayerControl.Instance.isPaused = true;
         }
         else // If Game is paused now (pause == true) and we resume it
         {
-            pauseMenu.SetActive(!pause);
-            foreach (GameObject controlElementGO in controlGroup) controlElementGO.SetActive(pause);
             StopBlinkingPauseText();
             Time.timeScale = 1f;
             PlayerControl.Instance.isPaused = false;
         }
+    }
+
+    public void ControlElementsVisibility(bool value)
+    {
+        foreach (GameObject controlElementGO in controlGroup) controlElementGO.SetActive(value);
     }
 
     #region BlinkingTextRoutine
@@ -308,11 +311,11 @@ public class UIGamePlay : MonoBehaviour
 
     public void InitializeCheatsMenu()
     {
-        GOD_MODE_Toggle.isOn = Cheats.Instance.GOD_MODE;
-        FPS_SHOW_Toggle.isOn = Cheats.Instance.FPS_SHOW;
-        LIFESTEAL_Toggle.isOn = Cheats.Instance.LIFESTEAL;
+        GOD_MODE_Toggle.isOn = CheatManager.Instance.GOD_MODE;
+        FPS_SHOW_Toggle.isOn = CheatManager.Instance.FPS_SHOW;
+        LIFESTEAL_Toggle.isOn = CheatManager.Instance.LIFESTEAL;
 
-        FPS_Text_GO.SetActive(Cheats.Instance.FPS_SHOW);
+        FPS_Text_GO.SetActive(CheatManager.Instance.FPS_SHOW);
     }
 
     public void SetCheatValue(bool value)
@@ -321,16 +324,16 @@ public class UIGamePlay : MonoBehaviour
 
         if (clickedCheatToggle == GOD_MODE_Toggle.gameObject)
         {
-            Cheats.Instance.SetGOD_MODE(value);
+            CheatManager.Instance.SetGOD_MODE(value);
         }
         else if (clickedCheatToggle == FPS_SHOW_Toggle.gameObject)
         {
-            Cheats.Instance.SetFPS_SHOW(value);
-            FPS_Text_GO.SetActive(Cheats.Instance.FPS_SHOW);
+            CheatManager.Instance.SetFPS_SHOW(value);
+            FPS_Text_GO.SetActive(CheatManager.Instance.FPS_SHOW);
         }
         else if (clickedCheatToggle == LIFESTEAL_Toggle.gameObject)
         {
-            Cheats.Instance.SetLIFESTEAL(value);
+            CheatManager.Instance.SetLIFESTEAL(value);
         }
     }
 

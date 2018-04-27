@@ -16,7 +16,7 @@ public class EnemyUI : MonoBehaviourSingleton<EnemyUI>
         health = GetComponent<Health>();
     }
 
-    public void HealthBarValueChange(int currentHealth)
+    public void HealthBarValueChange(uint currentHealth)
     {
         enemyHealthBarCurrent.fillAmount = (float) currentHealth / 100;
     }

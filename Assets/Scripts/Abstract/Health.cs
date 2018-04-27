@@ -8,11 +8,11 @@ public abstract class Health : MonoBehaviour
 
     [Tooltip("Locomotion reference")] public Locomotion locomotion;
 
-    [Header("Health Manager")] public int maxHealth;
+    [Header("Health Manager")] public uint maxHealth;
 
-    public int minHealth;
+    public uint minHealth;
 
-    public int currentHealth { get; private set; }
+    public uint currentHealth { get; private set; }
 
     #region HealthManager
 
@@ -23,7 +23,7 @@ public abstract class Health : MonoBehaviour
         characterStats = GetComponent<CharacterStats>();
     }
 
-    public virtual void Heal(int healValue)
+    public virtual void Heal(uint healValue)
     {
         if (isDead)
         {
@@ -37,7 +37,7 @@ public abstract class Health : MonoBehaviour
         }
     }
 
-    public virtual void Damage(int damageValue)
+    public virtual void Damage(uint damageValue)
     {
         if (isDead)
         {

@@ -41,7 +41,7 @@ public class InventoryUI : MonoBehaviour
         slot.Select();
     }
 
-    public void FillInfoWindow(Sprite sprite, string name, int minDamage, int maxDamage,
+    public void FillInfoWindow(Sprite sprite, string name, uint minDamage, uint maxDamage,
         Weapon.DamageTypeEnum damageType, Weapon.SpeedEnum speed, Weapon.RangeEnum range,
         string description)
     {

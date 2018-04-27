@@ -17,7 +17,7 @@ public class HealthEnemy : Health
         playerCollider = PlayerControl.Instance.playerCollider;
     }
 
-    public override void Heal(int healValue)
+    public override void Heal(uint healValue)
     {
         base.Heal(healValue);
 
@@ -25,16 +25,16 @@ public class HealthEnemy : Health
         GetComponent<EnemyUI>().HealthBarValueChange(currentHealth);
     }
 
-    public override void Damage(int damageValue)
+    public override void Damage(uint damageValue)
     {
         base.Damage(damageValue);
 
         // Custom implementation
         GetComponent<EnemyUI>().HealthBarValueChange(currentHealth);
 
-        if (Cheats.Instance.LIFESTEAL)
+        if (CheatManager.Instance.LIFESTEAL)
         {
-            PlayerControl.Instance.playerHealth.Heal((int) (damageValue * 0.5));
+            PlayerControl.Instance.playerHealth.Heal((uint) (damageValue * 0.5));
         }
     }
 
@@ -59,11 +59,7 @@ public class HealthEnemy : Health
         DisableCollidersBetweenEnemyAndPlayer(2f);
         DestroyComponents();
 
-        GameObject droppedWeapon = Instantiate(enemyWeapon.gamePrefab, enemyWeapon.transform.position,
-            enemyWeapon.transform.rotation,
-            null);
-        CollectiblesManager.Instance.SetParentAsCollectible(droppedWeapon);
-        Destroy(enemyWeapon.gameObject);
+        
 
         GetComponent<EnemyUI>().DestroyEnemyUI(SpawnManager.Instance.GetDeadBodyDeleteDuration());
         DestroyBody(SpawnManager.Instance.GetDeadBodyDeleteDuration());

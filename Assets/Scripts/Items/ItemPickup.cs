@@ -18,7 +18,8 @@ public class ItemPickup : Interactable
         }
 
         // Add to Inventory
-        weaponStats = GetComponent<WeaponOld>().weaponStats;
+        
+        //weaponStats = GetComponent<Weapon>().weaponStats;
         Inventory.Instance.Add(weaponStats);
         Destroy(gameObject);
     }

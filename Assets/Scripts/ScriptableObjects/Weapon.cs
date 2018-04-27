@@ -27,19 +27,19 @@ public class Weapon : Item
 
     public DamageTypeEnum DamageType;
 
-    public int maxDamage;
+    public uint maxDamage;
 
-    public int minDamage;
+    public uint minDamage;
 
     public RangeEnum Range;
 
     public SpeedEnum Speed;
 
-    public int staminaConsume;
+    public uint staminaConsume;
 
-    public int GetDamage()
+    public uint GetDamage()
     {
-        return Random.Range(minDamage, maxDamage);
+        return (uint) Random.Range(minDamage, maxDamage);
     }
 
     public string GetName()

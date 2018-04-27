@@ -5,13 +5,13 @@ public class InventorySlot : MonoBehaviour
 {
     public Image icon;
     public Button removeButton;
-    private Weapon weaponStats;
+    private Weapon weapon;
 
     public void AddItem(Weapon newWeapon)
     {
-        weaponStats = newWeapon;
+        weapon = newWeapon;
 
-        icon.sprite = weaponStats.inventorySprite;
+        icon.sprite = weapon.inventorySprite;
         icon.enabled = true;
         removeButton.interactable = true;
     }
@@ -19,7 +19,7 @@ public class InventorySlot : MonoBehaviour
 
     public void ClearSlot()
     {
-        weaponStats = null;
+        weapon = null;
 
         icon.sprite = null;
         icon.enabled = false;
@@ -28,20 +28,16 @@ public class InventorySlot : MonoBehaviour
 
     public void OnRemoveButtonClick()
     {
-        GameObject droppedWeapon = Instantiate(weaponStats.gamePrefab, PlayerControl.Instance.dropItemsPoint.position,
-            PlayerControl.Instance.dropItemsPoint.rotation);
-        CollectiblesManager.Instance.SetParentAsCollectible(droppedWeapon);
-
-        Inventory.Instance.Remove(weaponStats);
+        Inventory.Instance.Remove(weapon);
     }
 
     public void Select()
     {
-        if (weaponStats != null)
+        if (weapon != null)
         {
-            InventoryUI.Instance.FillInfoWindow(weaponStats.inventorySprite, weaponStats.name, weaponStats.minDamage,
-                weaponStats.maxDamage, weaponStats.DamageType, weaponStats.Speed, weaponStats.Range,
-                weaponStats.description);
+            InventoryUI.Instance.FillInfoWindow(weapon.inventorySprite, weapon.name, weapon.minDamage,
+                weapon.maxDamage, weapon.DamageType, weapon.Speed, weapon.Range,
+                weapon.description);
         }
         else
         {

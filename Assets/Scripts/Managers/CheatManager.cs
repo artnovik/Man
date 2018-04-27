@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Cheats : MonoBehaviour
+public class CheatManager : MonoBehaviour
 {
     public float DEAD_BODIES_DURATION;
     public bool FPS_SHOW;
@@ -38,7 +38,7 @@ public class Cheats : MonoBehaviour
 
     #region Singleton
 
-    public static Cheats Instance;
+    public static CheatManager Instance;
 
     private void Awake()
     {

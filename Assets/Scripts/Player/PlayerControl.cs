@@ -176,7 +176,7 @@ public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
     [Header("Weapons")] public int curIndexWeapon;
 
     public List<GameObject> listWeapons = new List<GameObject>();
-    private WeaponOld currentWeapon;
+    private Weapon currentWeapon;
 
     [HideInInspector] public Collider[] currentWeaponColliders;
 

@@ -10,11 +10,11 @@ public class LocomotionPlayer : Locomotion
     }
 
     // ToDo Squad menu
-    private void OnMouseDown()
+    /*private void OnMouseDown()
     {
         if (gameObject.CompareTag("Player"))
         {
             Debug.Log(gameObject.name);
         }
-    }
+    }*/
 }
