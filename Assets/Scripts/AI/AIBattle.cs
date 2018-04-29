@@ -19,7 +19,7 @@ public class AIBattle : MonoBehaviour
     private void Start()
     {
         locomotion = GetComponent<Locomotion>();
-        locomotion.animator.SetBool("Enemy", true);
+        locomotion.animator.SetBool("EnemyZombie", true);
         SetRagdoll(false);
         enemyUI = GetComponent<EnemyUI>();
     }
@@ -30,7 +30,7 @@ public class AIBattle : MonoBehaviour
 
         if (target && !target.gameObject.GetComponent<Health>().isDead)
         {
-            PlayerControl.Instance.inBattle = true;
+            PlayerData.Instance.inBattle = true;
             chasedRecently = true;
 
             enemyUI.SetHealthBarStatus(true);
@@ -42,7 +42,7 @@ public class AIBattle : MonoBehaviour
         {
             if (chasedRecently)
             {
-                PlayerControl.Instance.inBattle = false;
+                PlayerData.Instance.inBattle = false;
                 chasedRecently = false;
             }
 

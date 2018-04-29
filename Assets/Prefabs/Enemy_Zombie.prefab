@@ -1079,7 +1079,7 @@ GameObject:
   - component: {fileID: 136571514283690512}
   m_Layer: 0
   m_Name: Enemy_Zombie
-  m_TagString: Enemy
+  m_TagString: EnemyZombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3261,7 +3261,7 @@ MonoBehaviour:
   locomotion: {fileID: 114488230682809896}
   maxHealth: 100
   minHealth: 0
-  enemyWeapon: {fileID: 114895080710395028}
+  enemyWeapon: {fileID: 0}
 --- !u!114 &114104376914045810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3455,7 +3455,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf7922c9796079741a4509714ba74d3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponStats: {fileID: 11400000, guid: 08e931f4d3fb40741b1691b9c1be5386, type: 2}
 --- !u!114 &114939547921820984
 MonoBehaviour:
   m_ObjectHideFlags: 1
