@@ -5,5 +5,13 @@ public class Container : MonoBehaviour
 {
     private uint containerCapacity = 10; // Value for all containers in game (should be good)
 
-    private List<Item> itemsContainer = new List<Item>();
+    public List<Item> containerItems = new List<Item>();
+
+    public void FillContainer(List<Item> itemsList)
+    {
+        if (itemsList != null)
+        {
+            containerItems.AddRange(itemsList);
+        }
+    }
 }

@@ -10,9 +10,9 @@ public class Inventory : MonoBehaviour
     public OnItemChanged onItemChangedCallback;
     public List<Item> items = new List<Item>();
 
-    public void Add(Weapon weapon)
+    public void Add(Item item)
     {
-        items.Add(weapon);
+        items.Add(item);
 
         if (onItemChangedCallback != null)
         {

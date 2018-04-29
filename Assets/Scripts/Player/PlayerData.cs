@@ -26,6 +26,8 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
 
     public PlayerView playerView;
 
+    [HideInInspector] public uint gold;
+
     #region Unity
 
     private void Start()

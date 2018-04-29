@@ -1,6 +1,6 @@
 public class ItemPickup : Interactable
 {
-    public Weapon weaponStats;
+    public Item item;
 
     public override void Interact()
     {
@@ -19,8 +19,7 @@ public class ItemPickup : Interactable
 
         // Add to Inventory
         
-        //weaponStats = GetComponent<Weapon>().weaponStats;
-        Inventory.Instance.Add(weaponStats);
+        Inventory.Instance.Add(item);
         Destroy(gameObject);
     }
 }

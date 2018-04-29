@@ -1424,7 +1424,7 @@ GameObject:
   - component: {fileID: 4403796388958970}
   - component: {fileID: 135027629296255748}
   - component: {fileID: 114587143568569328}
-  - component: {fileID: 54184145337351002}
+  - component: {fileID: 54098211001364408}
   m_Layer: 0
   m_Name: Player_View
   m_TagString: Untagged
@@ -3522,7 +3522,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!54 &54184145337351002
+--- !u!54 &54098211001364408
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -3768,7 +3768,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf7922c9796079741a4509714ba74d3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponStats: {fileID: 11400000, guid: 710eb93626f79ae41bdb798829bd63ec, type: 2}
 --- !u!114 &114146030649663362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3793,7 +3792,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf7922c9796079741a4509714ba74d3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponStats: {fileID: 11400000, guid: 08e931f4d3fb40741b1691b9c1be5386, type: 2}
 --- !u!114 &114202594628319402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3839,7 +3837,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf7922c9796079741a4509714ba74d3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponStats: {fileID: 11400000, guid: 9b90694c0ca5d444da8377d4e9a07354, type: 2}
 --- !u!114 &114587143568569328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3852,7 +3849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listTag:
-  - Enemy
+  - EnemyZombie
   listObject: []
 --- !u!114 &114631954055323010
 MonoBehaviour:
@@ -3866,7 +3863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryCapacity: 27
-  weapons: []
+  items: []
 --- !u!114 &114724867351227820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3889,6 +3886,7 @@ MonoBehaviour:
   playerTransform: {fileID: 4817662477664072}
   playerUI: {fileID: 0}
   playerView: {fileID: 114587143568569328}
+  gold: 0
   movementSpeed: 1.2
   stateLockTarget: 0
   target: {fileID: 0}
@@ -3952,7 +3950,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf7922c9796079741a4509714ba74d3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponStats: {fileID: 11400000, guid: 7dd4a9dfc17a021438595d2f293d2563, type: 2}
 --- !u!124 &124598157937027974
 Behaviour:
   m_ObjectHideFlags: 1

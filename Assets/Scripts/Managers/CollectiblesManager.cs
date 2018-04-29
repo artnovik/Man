@@ -3,7 +3,7 @@
 public class CollectiblesManager : MonoBehaviour
 {
     [SerializeField] private GameObject collectiblesParentGO;
-    private Transform collectiblesParentTransform;
+    public Transform collectiblesParentTransform;
 
     public void SetParentAsCollectible(GameObject objectToSet)
     {

@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class HealthEnemy : Health
 {
-    // ToDo Move into EnemyContainer (Inventory)
     public Weapon enemyWeapon;
+    public Transform containerPlaceTransform;
     private Collider playerCollider;
+
+    [SerializeField] private ContainerTypeEnum.Enum enemyType;
 
     #region HealthManager
 
@@ -57,9 +59,7 @@ public class HealthEnemy : Health
         // Custom implementation
         GetComponent<AIBattle>().SetRagdoll(true);
         DisableCollidersBetweenEnemyAndPlayer(2f);
-        DestroyComponents();
-
-        
+        //DestroyComponents();
 
         GetComponent<EnemyUI>().DestroyEnemyUI(SpawnManager.Instance.GetDeadBodyDeleteDuration());
         DestroyBody(SpawnManager.Instance.GetDeadBodyDeleteDuration());
@@ -100,13 +100,14 @@ public class HealthEnemy : Health
         }
 
         // ToDo nice corpse disappearing animation, with blood puddle for X seconds
-        GenerateContainer();
 
+        ContainerGenerator.Instance.GenerateContainer(containerPlaceTransform, enemyType);
         Destroy(gameObject);
     }
 
-    private static void GenerateContainer()
+    private void OnMouseDown()
     {
+        Death();
     }
 
     #endregion
