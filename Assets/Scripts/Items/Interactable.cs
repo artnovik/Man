@@ -15,6 +15,8 @@ public class Interactable : MonoBehaviour
         var distanceBetweenPlayerAndObject = Vector3.Distance(gameObject.transform.position,
             PlayerData.Instance.playerTransform.position);
 
+        //UIGamePlay.Instance.PickUpVisibility(distanceBetweenPlayerAndObject <= radius);
+
         if (distanceBetweenPlayerAndObject <= radius)
         {
             Interact();
@@ -23,6 +25,6 @@ public class Interactable : MonoBehaviour
 
     public virtual void Interact()
     {
-        // Debug.Log("Interacting with: " + transform.name);
+        //Debug.Log(string.Format("Interacting with: {0}", transform.name));
     }
 }

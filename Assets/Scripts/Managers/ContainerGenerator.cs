@@ -32,11 +32,9 @@ public class ContainerGenerator : MonoBehaviour
         {
             case ContainerTypeEnum.Enum.Zombie:
                 return LootGenerator.Instance.GenerateZombieItems();
-                break;
             default:
                 Debug.Log("Check parameters");
                 return null;
-                break;
         }
     }
 }

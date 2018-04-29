@@ -59,7 +59,7 @@ public class HealthEnemy : Health
         // Custom implementation
         GetComponent<AIBattle>().SetRagdoll(true);
         DisableCollidersBetweenEnemyAndPlayer(2f);
-        //DestroyComponents();
+        DestroyComponents();
 
         GetComponent<EnemyUI>().DestroyEnemyUI(SpawnManager.Instance.GetDeadBodyDeleteDuration());
         DestroyBody(SpawnManager.Instance.GetDeadBodyDeleteDuration());

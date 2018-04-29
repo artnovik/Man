@@ -3,6 +3,21 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
+    #region Singleton
+
+    public static InventoryUI Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+
+        inventory = Inventory.Instance;
+        inventory.onItemChangedCallback += UpdateInventoryUI;
+        slots = itemsContainer.GetComponentsInChildren<InventorySlot>();
+    }
+
+    #endregion
+
     [SerializeField] private Text infoItemDamage;
     [SerializeField] private Text infoItemDescription;
     [SerializeField] private Text infoItemName;
@@ -56,19 +71,4 @@ public class InventoryUI : MonoBehaviour
         infoItemTypes.text = string.Empty;
         infoItemDescription.text = string.Empty;
     }
-
-    #region Singleton
-
-    public static InventoryUI Instance;
-
-    private void Awake()
-    {
-        Instance = this;
-
-        inventory = Inventory.Instance;
-        inventory.onItemChangedCallback += UpdateInventoryUI;
-        slots = itemsContainer.GetComponentsInChildren<InventorySlot>();
-    }
-
-    #endregion
 }

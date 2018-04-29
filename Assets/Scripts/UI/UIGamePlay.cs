@@ -10,6 +10,8 @@ public class UIGamePlay : MonoBehaviour
 
     [SerializeField] private Image blockImage;
 
+    [SerializeField] private Button pickUpButton;
+
     [SerializeField] private GameObject[] controlGroup;
 
     [Header("ControlUI")] [SerializeField] private Image eyeLockTargetImage;
@@ -142,6 +144,16 @@ public class UIGamePlay : MonoBehaviour
         PlayerData.Instance.NextWeapon();
         AudioManager.Instance.WeaponChangeSound();
         numberWeapon.text = (PlayerData.Instance.curIndexWeapon + 1).ToString();
+    }
+
+    public void PickUp()
+    {
+        Debug.Log("PickUp!");
+    }
+
+    public void PickUpVisibility(bool value)
+    {
+        pickUpButton.gameObject.SetActive(value);
     }
 
     #endregion
@@ -367,6 +379,33 @@ public class UIGamePlay : MonoBehaviour
     {
         screenEffectCoroutine =
             StartCoroutine(ScreenEffectRoutine(playerHitScreenEffectImage, playerHitScreenEffectDuration));
+    }
+
+    #endregion
+
+    #region ContainerUI
+
+    [Header("ContainerUI_Control")] [SerializeField]
+    private GameObject containerGO;
+
+    public void ContainerOpen()
+    {
+        if (!containerGO.activeSelf)
+        {
+            ControlElementsVisibility(false);
+            containerGO.SetActive(true);
+            AudioManager.Instance.WindowAppearSound();
+            Time.timeScale = 0f;
+            PlayerData.Instance.isPaused = true;
+        }
+    }
+
+    public void ContainerClose()
+    {
+        Time.timeScale = 1f;
+        PlayerData.Instance.isPaused = false;
+        ControlElementsVisibility(true);
+        containerGO.SetActive(false);
     }
 
     #endregion

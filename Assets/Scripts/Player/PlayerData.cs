@@ -76,7 +76,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
 
     private void Locomotion()
     {
-        if (playerHealth.isDead)
+        if (playerHealth.isDead || isPaused)
         {
             return;
         }

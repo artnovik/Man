@@ -27,17 +27,13 @@ public class LootGenerator : MonoBehaviour
             case ContainerTypeEnum.Enum.Zombie:
                 gold.count = (uint) Random.Range(3, 6);
                 return gold;
-                break;
             case ContainerTypeEnum.Enum.Chest:
                 return null;
-                break;
             case ContainerTypeEnum.Enum.Chester:
                 return null;
-                break;
             default:
                 Debug.Log("Check parameters");
                 return null;
-                break;
         }
     }
 
@@ -54,18 +50,14 @@ public class LootGenerator : MonoBehaviour
             case 1:
                 weapon = ItemsCollection.Instance.knife;
                 return weapon;
-                break;
             case 2:
                 weapon = ItemsCollection.Instance.saw;
                 return weapon;
-                break;
             case 3:
                 weapon = ItemsCollection.Instance.scythe_big;
                 return weapon;
-                break;
             default:
                 return weapon;
-                break;
         }
     }
 
@@ -77,18 +69,14 @@ public class LootGenerator : MonoBehaviour
             case 1:
                 weapon = ItemsCollection.Instance.knife;
                 return weapon;
-                break;
             case 2:
                 weapon = ItemsCollection.Instance.saw;
                 return weapon;
-                break;
             case 3:
                 weapon = ItemsCollection.Instance.scythe_big;
                 return weapon;
-                break;
             default:
                 return weapon;
-                break;
         }
     }
 
