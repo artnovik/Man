@@ -19,7 +19,7 @@ public class HealthPlayer : Health
 
     public override void Damage(uint damageValue)
     {
-        if (!PlayerControl.Instance.isBlock && !CheatManager.Instance.GOD_MODE)
+        if (!PlayerData.Instance.isBlock && !CheatManager.Instance.GOD_MODE)
         {
             base.Damage(damageValue);
 

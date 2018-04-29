@@ -14,7 +14,7 @@ public class HealthEnemy : Health
         base.Start();
 
         // Custom implementation
-        playerCollider = PlayerControl.Instance.playerCollider;
+        playerCollider = PlayerData.Instance.playerCollider;
     }
 
     public override void Heal(uint healValue)
@@ -34,16 +34,16 @@ public class HealthEnemy : Health
 
         if (CheatManager.Instance.LIFESTEAL)
         {
-            PlayerControl.Instance.playerHealth.Heal((uint) (damageValue * 0.5));
+            PlayerData.Instance.playerHealth.Heal((uint) (damageValue * 0.5));
         }
     }
 
     private void OnTriggerEnter(Collider collider)
     {
-        foreach (GameObject weapon in PlayerControl.Instance.listWeapons)
+        foreach (GameObject weapon in PlayerData.Instance.listWeapons)
             if (collider.gameObject == weapon && !isDead)
             {
-                var takenDamage = PlayerControl.Instance.GetCurrentWeapon().GetDamage();
+                var takenDamage = PlayerData.Instance.GetCurrentWeapon().GetDamage();
                 Damage(takenDamage);
 
                 EffectsManager.Instance.ActivateBloodEffect(collider.transform);

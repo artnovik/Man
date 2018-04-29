@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using TDC;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviourSingleton<PlayerControl>
+public class PlayerData : MonoBehaviourSingleton<PlayerData>
 {
     [Header("Data")] public CameraControl cameraControl;
 

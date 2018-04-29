@@ -11,7 +11,7 @@ public class ItemPickup : Interactable
 
     private void PickUp()
     {
-        if (Inventory.Instance.weapons.Count >= Inventory.Instance.inventoryCapacity)
+        if (Inventory.Instance.items.Count >= Inventory.Instance.inventoryCapacity)
         {
             UIGamePlay.Instance.DisplayMessage("Inventory is full.", Colors.redMessage, 2f, false);
             return;

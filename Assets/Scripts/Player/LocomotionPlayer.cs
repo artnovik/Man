@@ -6,7 +6,7 @@ public class LocomotionPlayer : Locomotion
     {
         base.Attack();
 
-        PlayerControl.Instance.SwitchWeaponColliders();
+        PlayerData.Instance.SwitchWeaponColliders();
     }
 
     // ToDo Squad menu

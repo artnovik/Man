@@ -8,11 +8,11 @@ public class Inventory : MonoBehaviour
     [HideInInspector] public int inventoryCapacity = 27;
 
     public OnItemChanged onItemChangedCallback;
-    public List<Weapon> weapons = new List<Weapon>();
+    public List<Item> items = new List<Item>();
 
     public void Add(Weapon weapon)
     {
-        weapons.Add(weapon);
+        items.Add(weapon);
 
         if (onItemChangedCallback != null)
         {
@@ -20,16 +20,15 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void Remove(Weapon weapon)
+    public void Remove(Item item)
     {
-        weapons.Remove(weapon);
+        items.Remove(item);
 
         if (onItemChangedCallback != null)
         {
             onItemChangedCallback.Invoke();
         }
     }
-    // ToDo For "Items"
 
     #region Singleton
 

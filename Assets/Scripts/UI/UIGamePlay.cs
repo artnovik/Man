@@ -60,7 +60,7 @@ public class UIGamePlay : MonoBehaviour
 
     private void Start()
     {
-        numberWeapon.text = (PlayerControl.Instance.curIndexWeapon + 1).ToString();
+        numberWeapon.text = (PlayerData.Instance.curIndexWeapon + 1).ToString();
         InitializeCheatsMenu();
         playerHitScreenEffectImage.gameObject.SetActive(false);
         screenEffectsGO.SetActive(false);
@@ -81,7 +81,7 @@ public class UIGamePlay : MonoBehaviour
         localLocomotionDir.x = targetLocomotion.localPosition.x;
         localLocomotionDir.z = targetLocomotion.localPosition.y;
 
-        PlayerControl.Instance.movementDirection = localLocomotionDir.normalized;
+        PlayerData.Instance.movementDirection = localLocomotionDir.normalized;
     }
 
     public void Camera()
@@ -93,8 +93,8 @@ public class UIGamePlay : MonoBehaviour
         invisibleCameraDir.y = targetInvisibleCamera.localPosition.y;
 
 
-        PlayerControl.Instance.cameraControl.rotateDirection += visibleCameraDir.normalized;
-        PlayerControl.Instance.cameraControl.rotateDirection += invisibleCameraDir.normalized;
+        PlayerData.Instance.cameraControl.rotateDirection += visibleCameraDir.normalized;
+        PlayerData.Instance.cameraControl.rotateDirection += invisibleCameraDir.normalized;
     }
 
     #endregion
@@ -118,12 +118,12 @@ public class UIGamePlay : MonoBehaviour
 
     public void Attack()
     {
-        PlayerControl.Instance.locomotion.AttackControl();
+        PlayerData.Instance.locomotion.AttackControl();
     }
 
     public void Block(bool pointerDownValue)
     {
-        PlayerControl.Instance.Block(pointerDownValue);
+        PlayerData.Instance.Block(pointerDownValue);
         blockImage.color = pointerDownValue ? Colors.playerActiveUI : Colors.playerDefaultUI;
         attackButton.interactable = !pointerDownValue;
         switchWeaponButton.interactable = !pointerDownValue;
@@ -132,16 +132,16 @@ public class UIGamePlay : MonoBehaviour
 
     public void LockTarget()
     {
-        PlayerControl.Instance.LockTarget();
+        PlayerData.Instance.LockTarget();
         eyeLockTargetImage.color =
-            PlayerControl.Instance.stateLockTarget ? Colors.playerActiveUI : Colors.playerDefaultUI;
+            PlayerData.Instance.stateLockTarget ? Colors.playerActiveUI : Colors.playerDefaultUI;
     }
 
     public void SwitchWeapon()
     {
-        PlayerControl.Instance.NextWeapon();
+        PlayerData.Instance.NextWeapon();
         AudioManager.Instance.WeaponChangeSound();
-        numberWeapon.text = (PlayerControl.Instance.curIndexWeapon + 1).ToString();
+        numberWeapon.text = (PlayerData.Instance.curIndexWeapon + 1).ToString();
     }
 
     #endregion
@@ -215,7 +215,7 @@ public class UIGamePlay : MonoBehaviour
 
     public void PauseResume()
     {
-        var pause = PlayerControl.Instance.isPaused;
+        var pause = PlayerData.Instance.isPaused;
         ControlElementsVisibility(pause);
         pauseMenu.SetActive(!pause);
 
@@ -224,13 +224,13 @@ public class UIGamePlay : MonoBehaviour
             AudioManager.Instance.WindowAppearSound();
             StartBlinkingPauseText();
             Time.timeScale = 0f;
-            PlayerControl.Instance.isPaused = true;
+            PlayerData.Instance.isPaused = true;
         }
         else // If Game is paused now (pause == true) and we resume it
         {
             StopBlinkingPauseText();
             Time.timeScale = 1f;
-            PlayerControl.Instance.isPaused = false;
+            PlayerData.Instance.isPaused = false;
         }
     }
 

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - WeaponInPlayerHands
+  - EnemyZombie
   layers:
   - Default
   - TransparentFX

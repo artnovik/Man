@@ -4,13 +4,9 @@ using UnityEngine.UI;
 public class InventoryUI : MonoBehaviour
 {
     [SerializeField] private Text infoItemDamage;
-
     [SerializeField] private Text infoItemDescription;
-
     [SerializeField] private Text infoItemName;
-
     [SerializeField] private Image infoItemSprite;
-
     [SerializeField] private Text infoItemTypes;
 
     private Inventory inventory;
@@ -22,14 +18,14 @@ public class InventoryUI : MonoBehaviour
         // ToDO Update MoneyCount
 
         for (var i = 0; i < slots.Length; i++)
-            if (i < inventory.weapons.Count)
+            if (i < inventory.items.Count)
             {
-                slots[i].AddItem(inventory.weapons[i]);
+                slots[i].AddItem(inventory.items[i]);
             }
             else
             {
                 slots[i].ClearSlot();
-                if (inventory.weapons.Count == 0)
+                if (inventory.items.Count == 0)
                 {
                     ClearInfoWindow();
                 }

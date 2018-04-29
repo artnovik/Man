@@ -4,40 +4,37 @@ using UnityEngine.UI;
 public class InventorySlot : MonoBehaviour
 {
     public Image icon;
-    public Button removeButton;
-    private Weapon weapon;
+    private Item item;
 
-    public void AddItem(Weapon newWeapon)
+    public void AddItem(Item newItem)
     {
-        weapon = newWeapon;
+        item = newItem;
 
-        icon.sprite = weapon.inventorySprite;
+        icon.sprite = item.inventorySprite;
         icon.enabled = true;
-        removeButton.interactable = true;
     }
 
 
     public void ClearSlot()
     {
-        weapon = null;
+        item = null;
 
         icon.sprite = null;
         icon.enabled = false;
-        removeButton.interactable = false;
     }
 
     public void OnRemoveButtonClick()
     {
-        Inventory.Instance.Remove(weapon);
+        Inventory.Instance.Remove(item);
     }
 
     public void Select()
     {
-        if (weapon != null)
+        if (item != null)
         {
-            InventoryUI.Instance.FillInfoWindow(weapon.inventorySprite, weapon.name, weapon.minDamage,
-                weapon.maxDamage, weapon.DamageType, weapon.Speed, weapon.Range,
-                weapon.description);
+            /*InventoryUI.Instance.FillInfoWindow(item.inventorySprite, item.name, item.minDamage,
+                item.maxDamage, item.DamageType, item.Speed, item.Range,
+                item.description);*/
         }
         else
         {

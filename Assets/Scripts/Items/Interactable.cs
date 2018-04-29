@@ -13,7 +13,7 @@ public class Interactable : MonoBehaviour
     private void OnMouseDown()
     {
         var distanceBetweenPlayerAndObject = Vector3.Distance(gameObject.transform.position,
-            PlayerControl.Instance.playerTransform.position);
+            PlayerData.Instance.playerTransform.position);
 
         if (distanceBetweenPlayerAndObject <= radius)
         {
