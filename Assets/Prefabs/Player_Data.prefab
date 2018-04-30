@@ -3886,7 +3886,6 @@ MonoBehaviour:
   playerTransform: {fileID: 4817662477664072}
   playerUI: {fileID: 0}
   playerView: {fileID: 114587143568569328}
-  gold: 0
   movementSpeed: 1.2
   stateLockTarget: 0
   target: {fileID: 0}

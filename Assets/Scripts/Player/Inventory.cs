@@ -10,6 +10,33 @@ public class Inventory : MonoBehaviour
     public OnItemChanged onItemChangedCallback;
     public List<Item> items = new List<Item>();
 
+    private uint gold;
+
+    public void AddGold(uint count)
+    {
+        gold += count;
+        
+        if (onItemChangedCallback != null)
+        {
+            onItemChangedCallback.Invoke();
+        }
+    }
+
+    public void RemoveGold(uint count)
+    {
+        gold -= count;
+        
+        if (onItemChangedCallback != null)
+        {
+            onItemChangedCallback.Invoke();
+        }
+    }
+
+    public uint GetGold()
+    {
+        return gold;
+    }
+
     public void Add(Item item)
     {
         items.Add(item);

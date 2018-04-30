@@ -17,8 +17,12 @@ public class ContainerTypeEnum : MonoBehaviour
 
     public enum Enum
     {
-        Chest = 0,
-        Zombie = 1,
-        Chester = 2
+        CommonChest = 0,
+        UncommonChest = 1,
+        RareChest = 2,
+        MythicalChest = 3,
+        LegendaryChest = 4,
+        Zombie = 5,
+        Chester = 6
     }
 }

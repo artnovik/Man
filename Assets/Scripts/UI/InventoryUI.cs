@@ -24,13 +24,15 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Image infoItemSprite;
     [SerializeField] private Text infoItemTypes;
 
+    [SerializeField] private Text goldCount;
+
     private Inventory inventory;
     public Transform itemsContainer;
     private InventorySlot[] slots;
 
     private void UpdateInventoryUI()
     {
-        // ToDO Update MoneyCount
+        goldCount.text = Inventory.Instance.GetGold().ToString();
 
         for (var i = 0; i < slots.Length; i++)
             if (i < inventory.items.Count)

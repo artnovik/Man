@@ -17,20 +17,30 @@ public class LootGenerator : MonoBehaviour
 
     #endregion
 
-    public Item GenerateGold(ContainerTypeEnum.Enum containerType)
+    public Gold GenerateGold(ContainerTypeEnum.Enum containerType)
     {
-        var gold = ScriptableObject.CreateInstance<Gold>();
-        gold = ItemsCollection.Instance.gold;
+        var gold = Instantiate(ItemsCollection.Instance.gold);
 
         switch (containerType)
         {
+            // Enemies
             case ContainerTypeEnum.Enum.Zombie:
-                gold.count = (uint) Random.Range(3, 6);
+                gold.SetCount(3, 6);
                 return gold;
-            case ContainerTypeEnum.Enum.Chest:
-                return null;
             case ContainerTypeEnum.Enum.Chester:
-                return null;
+                return gold;
+
+            // Chests
+            case ContainerTypeEnum.Enum.CommonChest:
+                return gold;
+            case ContainerTypeEnum.Enum.UncommonChest:
+                return gold;
+            case ContainerTypeEnum.Enum.RareChest:
+                return gold;
+            case ContainerTypeEnum.Enum.MythicalChest:
+                return gold;
+            case ContainerTypeEnum.Enum.LegendaryChest:
+                return gold;
             default:
                 Debug.Log("Check parameters");
                 return null;
@@ -43,12 +53,10 @@ public class LootGenerator : MonoBehaviour
         int maxSeed = 3;
 
         int randSeed = Random.Range(minSeed, maxSeed);
-
-        var weapon = ScriptableObject.CreateInstance<Weapon>();
         switch (randSeed)
         {
             case 1:
-                weapon = ItemsCollection.Instance.knife;
+                var weapon = ItemsCollection.Instance.knife;
                 return weapon;
             case 2:
                 weapon = ItemsCollection.Instance.saw;
@@ -57,7 +65,7 @@ public class LootGenerator : MonoBehaviour
                 weapon = ItemsCollection.Instance.scythe_big;
                 return weapon;
             default:
-                return weapon;
+                return null;
         }
     }
 

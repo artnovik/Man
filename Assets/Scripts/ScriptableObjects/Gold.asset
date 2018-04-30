@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: Gold
   m_EditorClassIdentifier: 
   name: Gold
-  inventorySprite: {fileID: 21300000, guid: ceef7a3293bbe124888cf2c11f33cd91, type: 3}
+  inventorySprite: {fileID: 21300000, guid: a4b0604c66023b74dbc8deeb71c97f22, type: 3}
   description: Most powerful thing in the world.
   buyValue: 1
   sellValue: 1
   ItemType: 2
-  count: 4
+  count: 1

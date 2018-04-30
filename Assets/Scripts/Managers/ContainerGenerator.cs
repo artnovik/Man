@@ -15,11 +15,12 @@ public class ContainerGenerator : MonoBehaviour
     #endregion
 
     [SerializeField] private GameObject containerPrefab;
+    [SerializeField] public Transform containersParentTransform;
 
-    public void GenerateContainer(Transform transform, ContainerTypeEnum.Enum containerType)
+    public void GenerateContainer(Transform containerTransform, ContainerTypeEnum.Enum containerType)
     {
-        var generatedContainer = Instantiate(containerPrefab, transform.position, containerPrefab.transform.rotation,
-            CollectiblesManager.Instance.collectiblesParentTransform);
+        var generatedContainer = Instantiate(containerPrefab, containerTransform.position,
+            containerPrefab.transform.rotation, containersParentTransform);
 
         var generatedList = CreateItemsListInContainer(containerType);
 

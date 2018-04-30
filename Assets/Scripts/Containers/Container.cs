@@ -21,6 +21,17 @@ public class Container : Interactable
 
         // Custom Implementation
         UIGamePlay.Instance.ContainerOpen();
+        ContainerUI.Instance.AssignContainer(this);
         ContainerUI.Instance.UpdateContainerUI(containerItems);
+    }
+
+    public void RemoveItem(Item itemToRemove)
+    {
+        containerItems.Remove(itemToRemove);
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
     }
 }

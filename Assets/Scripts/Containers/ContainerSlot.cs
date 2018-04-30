@@ -4,7 +4,9 @@ using UnityEngine.UI;
 public class ContainerSlot : MonoBehaviour
 {
     public Image icon;
-    private Item item;
+    public Button slotButton;
+    public Item item;
+    public Text countText;
 
     public void AddItem(Item newItem)
     {
@@ -18,6 +20,7 @@ public class ContainerSlot : MonoBehaviour
     public void ClearSlot()
     {
         item = null;
+        countText.text = null;
 
         icon.sprite = null;
         icon.enabled = false;
@@ -27,14 +30,13 @@ public class ContainerSlot : MonoBehaviour
     {
         if (item != null)
         {
-            /*InventoryUI.Instance.FillInfoWindow(item.inventorySprite, item.name, item.minDamage,
-                item.maxDamage, item.DamageType, item.Speed, item.Range,
-                item.description);*/
             ContainerUI.Instance.currentClickedItem = item;
+            ContainerUI.Instance.MakeSlotActive(this);
         }
         else
         {
-            //InventoryUI.Instance.ClearInfoWindow();
+            ContainerUI.Instance.currentClickedItem = null;
+            ContainerUI.Instance.MakeAllSlotsInactive();
         }
     }
 }

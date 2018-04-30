@@ -3292,7 +3292,7 @@ MonoBehaviour:
   minHealth: 0
   enemyWeapon: {fileID: 0}
   containerPlaceTransform: {fileID: 4081421246173280}
-  enemyType: 1
+  enemyType: 5
 --- !u!114 &114104376914045810
 MonoBehaviour:
   m_ObjectHideFlags: 1

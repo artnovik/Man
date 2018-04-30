@@ -16,6 +16,21 @@ public class Item : ScriptableObject
     }
 
     public ItemTypeEnum ItemType;
+    
+    public virtual uint GetCount()
+    {
+        return 1;
+    }
+
+    public virtual void SetCount(uint minValue, uint maxValue)
+    {
+        
+    }
+    
+    public virtual void SetCount(uint concreteValue)
+    {
+        
+    }
 
     //public GameObject gamePrefab;
 }
