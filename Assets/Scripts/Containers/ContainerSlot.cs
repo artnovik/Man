@@ -30,7 +30,14 @@ public class ContainerSlot : MonoBehaviour
     {
         if (item != null)
         {
-            ContainerUI.Instance.currentClickedItem = item;
+            for (int i = 0; i < ContainerUI.Instance.currentContainer.containerItems.Count; i++)
+            {
+                if (item == ContainerUI.Instance.currentContainer.containerItems[i])
+                {
+                    ContainerUI.Instance.currentClickedItem = ContainerUI.Instance.currentContainer.containerItems[i];
+                }
+            }
+
             ContainerUI.Instance.MakeSlotActive(this);
         }
         else

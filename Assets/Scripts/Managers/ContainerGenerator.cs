@@ -17,25 +17,21 @@ public class ContainerGenerator : MonoBehaviour
     [SerializeField] private GameObject containerPrefab;
     [SerializeField] public Transform containersParentTransform;
 
-    public void GenerateContainer(Transform containerTransform, ContainerTypeEnum.Enum containerType)
+    public void GenerateContainerObject(Transform containerSourceTransform, ContainerTypeEnum.Enum containerType)
     {
-        var generatedContainer = Instantiate(containerPrefab, containerTransform.position,
+        GameObject containerGO = Instantiate(containerPrefab,
+            new Vector3(containerSourceTransform.position.x,
+                containerPrefab.transform.position.y, // Same position, but fixed by Y axis
+                containerSourceTransform.position.z),
             containerPrefab.transform.rotation, containersParentTransform);
 
-        var generatedList = CreateItemsListInContainer(containerType);
-
-        generatedContainer.GetComponent<Container>().FillContainer(generatedList);
+        // Filling with items
+        FillContainer(containerGO.GetComponent<Container>(), containerType);
     }
 
-    private List<Item> CreateItemsListInContainer(ContainerTypeEnum.Enum containerType)
+    public void FillContainer(Container containerToBeFilled, ContainerTypeEnum.Enum containerType)
     {
-        switch (containerType)
-        {
-            case ContainerTypeEnum.Enum.Zombie:
-                return LootGenerator.Instance.GenerateZombieItems();
-            default:
-                Debug.Log("Check parameters");
-                return null;
-        }
+        var generatedItemsList = LootGenerator.Instance.GenerateItems(containerType);
+        containerToBeFilled.containerItems.AddRange(generatedItemsList);
     }
 }

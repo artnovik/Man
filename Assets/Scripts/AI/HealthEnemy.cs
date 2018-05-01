@@ -101,7 +101,7 @@ public class HealthEnemy : Health
 
         // ToDo nice corpse disappearing animation, with blood puddle for X seconds
 
-        ContainerGenerator.Instance.GenerateContainer(containerPlaceTransform, enemyType);
+        ContainerGenerator.Instance.GenerateContainerObject(containerPlaceTransform, enemyType);
         Destroy(gameObject);
     }
 

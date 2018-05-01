@@ -7,14 +7,6 @@ public class Container : Interactable
 
     public List<Item> containerItems = new List<Item>();
 
-    public void FillContainer(List<Item> itemsList)
-    {
-        if (itemsList != null)
-        {
-            containerItems.AddRange(itemsList);
-        }
-    }
-
     public override void Interact()
     {
         base.Interact();

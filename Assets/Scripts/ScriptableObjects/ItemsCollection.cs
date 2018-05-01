@@ -20,4 +20,9 @@ public class ItemsCollection : MonoBehaviour
     public Weapon saw;
     public Weapon scythe_big;
     public Consumable potion;
+
+    public Weapon GetWeapon(Weapon weapon)
+    {
+        return weapon;
+    }
 }

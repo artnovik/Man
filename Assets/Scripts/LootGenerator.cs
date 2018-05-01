@@ -17,7 +17,47 @@ public class LootGenerator : MonoBehaviour
 
     #endregion
 
-    public Gold GenerateGold(ContainerTypeEnum.Enum containerType)
+    public List<Item> GenerateItems(ContainerTypeEnum.Enum containerType)
+    {
+        switch (containerType)
+        {
+            case ContainerTypeEnum.Enum.Zombie:
+                return GenerateZombieItems();
+            case ContainerTypeEnum.Enum.CommonChest:
+                return null;
+                break;
+            case ContainerTypeEnum.Enum.UncommonChest:
+                return null;
+                break;
+            case ContainerTypeEnum.Enum.RareChest:
+                return null;
+                break;
+            case ContainerTypeEnum.Enum.MythicalChest:
+                return null;
+                break;
+            case ContainerTypeEnum.Enum.LegendaryChest:
+                return null;
+                break;
+            case ContainerTypeEnum.Enum.Chester:
+                return null;
+                break;
+            default:
+                Debug.Log("Check parameters");
+                return null;
+        }
+    }
+
+    private List<Item> GenerateZombieItems()
+    {
+        var zombieItemsList = new List<Item>();
+        zombieItemsList.Add(GenerateGold(ContainerTypeEnum.Enum.Zombie));
+        //zombieItemsList.Add(GenerateSimpleWeapon());
+        zombieItemsList.Add(GenerateSimpleWeapon(ItemsCollection.Instance.scythe_big));
+
+        return zombieItemsList;
+    }
+
+    private Gold GenerateGold(ContainerTypeEnum.Enum containerType)
     {
         var gold = Instantiate(ItemsCollection.Instance.gold);
 
@@ -47,12 +87,12 @@ public class LootGenerator : MonoBehaviour
         }
     }
 
-    public Item GenerateSimpleWeapon()
+    private Item GenerateSimpleWeapon()
     {
         int minSeed = 1;
         int maxSeed = 3;
-
         int randSeed = Random.Range(minSeed, maxSeed);
+
         switch (randSeed)
         {
             case 1:
@@ -69,31 +109,8 @@ public class LootGenerator : MonoBehaviour
         }
     }
 
-    public Item GenerateSimpleWeapon(int seed)
+    private Item GenerateSimpleWeapon(Weapon weapon)
     {
-        var weapon = ScriptableObject.CreateInstance<Weapon>();
-        switch (seed)
-        {
-            case 1:
-                weapon = ItemsCollection.Instance.knife;
-                return weapon;
-            case 2:
-                weapon = ItemsCollection.Instance.saw;
-                return weapon;
-            case 3:
-                weapon = ItemsCollection.Instance.scythe_big;
-                return weapon;
-            default:
-                return weapon;
-        }
-    }
-
-    public List<Item> GenerateZombieItems()
-    {
-        var zombieItemsList = new List<Item>();
-        zombieItemsList.Add(GenerateGold(ContainerTypeEnum.Enum.Zombie));
-        zombieItemsList.Add(GenerateSimpleWeapon());
-
-        return zombieItemsList;
+        return weapon = ItemsCollection.Instance.GetWeapon(weapon);
     }
 }

@@ -23,12 +23,19 @@ public class ContainerUI : MonoBehaviour
     [SerializeField] private Button takeButton;
     [SerializeField] private Button takeAllButton;
 
+    [Header("InfoWindow")] [SerializeField]
+    private Text itemNameInfo;
+
+    [SerializeField] private Image itemIconInfo;
+
+    [SerializeField] private Text itemDescriptionInfo;
+
     [SerializeField] private RectTransform slotsContainer;
     public ContainerSlot[] slots;
 
     public Item currentClickedItem;
 
-    [SerializeField] private Container currentContainer;
+    public Container currentContainer;
 
     public void AssignContainer(Container container)
     {
@@ -63,8 +70,9 @@ public class ContainerUI : MonoBehaviour
         {
             slot.slotButton.GetComponent<Image>().color = Colors.playerDefaultUI;
             slot.countText.color = Color.black;
-            ActivateItemInfo(false);
         }
+
+        ActivateItemInfo(false);
     }
 
     private void ActivateItemInfo(bool value)
@@ -73,13 +81,26 @@ public class ContainerUI : MonoBehaviour
 
         if (value)
         {
-            /*FillInfoWindow(item.inventorySprite, item.name, item.minDamage,
-                item.maxDamage, item.DamageType, item.Speed, item.Range,
-                item.description);*/
+            FillInfoWindow(currentClickedItem.inventorySprite, currentClickedItem.name, currentClickedItem.description);
         }
         else
         {
+            ClearInfoWindow();
         }
+    }
+
+    private void FillInfoWindow(Sprite itemSprite, string itemName, string itemDescription)
+    {
+        itemIconInfo.sprite = itemSprite;
+        itemNameInfo.text = itemName;
+        itemDescriptionInfo.text = itemDescription;
+    }
+
+    private void ClearInfoWindow()
+    {
+        itemIconInfo.sprite = null;
+        itemNameInfo.text = null;
+        itemDescriptionInfo.text = null;
     }
 
     public void TakeItem()
@@ -105,18 +126,21 @@ public class ContainerUI : MonoBehaviour
 
         MakeAllSlotsInactive();
 
-        if (currentContainer.containerItems.Count == 0)
-        {
-            currentContainer.Destroy();
-            UIGamePlay.Instance.ContainerClose();
-        }
+        CheckIfContainerEmpty();
     }
 
     public void TakeAllItems()
     {
         for (int i = 0; i < currentContainer.containerItems.Count; i++)
         {
-            Inventory.Instance.Add(currentContainer.containerItems[i]);
+            if (currentContainer.containerItems[i] is Gold)
+            {
+                Inventory.Instance.AddGold(currentContainer.containerItems[i].GetCount());
+            }
+            else
+            {
+                Inventory.Instance.Add(currentContainer.containerItems[i]);
+            }
         }
 
         currentContainer.containerItems.Clear();
@@ -126,7 +150,15 @@ public class ContainerUI : MonoBehaviour
             slot.ClearSlot();
         }
 
-        currentContainer.Destroy();
-        UIGamePlay.Instance.ContainerClose();
+        CheckIfContainerEmpty();
+    }
+
+    private void CheckIfContainerEmpty()
+    {
+        if (currentContainer.containerItems.Count < 1)
+        {
+            currentContainer.Destroy();
+            UIGamePlay.Instance.ContainerClose();
+        }
     }
 }
