@@ -23,8 +23,8 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    public virtual void Interact()
+    protected virtual void Interact()
     {
-        //Debug.Log(string.Format("Interacting with: {0}", transform.name));
+        //This meant to be overridden
     }
 }

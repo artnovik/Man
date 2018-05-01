@@ -25,22 +25,16 @@ public class LootGenerator : MonoBehaviour
                 return GenerateZombieItems();
             case ContainerTypeEnum.Enum.CommonChest:
                 return null;
-                break;
             case ContainerTypeEnum.Enum.UncommonChest:
                 return null;
-                break;
             case ContainerTypeEnum.Enum.RareChest:
                 return null;
-                break;
             case ContainerTypeEnum.Enum.MythicalChest:
                 return null;
-                break;
             case ContainerTypeEnum.Enum.LegendaryChest:
                 return null;
-                break;
             case ContainerTypeEnum.Enum.Chester:
                 return null;
-                break;
             default:
                 Debug.Log("Check parameters");
                 return null;
@@ -51,8 +45,7 @@ public class LootGenerator : MonoBehaviour
     {
         var zombieItemsList = new List<Item>();
         zombieItemsList.Add(GenerateGold(ContainerTypeEnum.Enum.Zombie));
-        //zombieItemsList.Add(GenerateSimpleWeapon());
-        zombieItemsList.Add(GenerateSimpleWeapon(ItemsCollection.Instance.scythe_big));
+        zombieItemsList.Add(GenerateSimpleWeapon());
 
         return zombieItemsList;
     }
@@ -109,7 +102,7 @@ public class LootGenerator : MonoBehaviour
         }
     }
 
-    private Item GenerateSimpleWeapon(Weapon weapon)
+    private Item GenerateWeapon(Weapon weapon)
     {
         return weapon = ItemsCollection.Instance.GetWeapon(weapon);
     }

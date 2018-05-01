@@ -47,7 +47,7 @@ public class ContainerUI : MonoBehaviour
         for (var i = 0; i < containerItems.Count; i++)
         {
             slots[i].AddItem(containerItems[i]);
-            if (containerItems[i] is Gold)
+            if (containerItems[i] is Gold || containerItems[i] is Consumable)
                 slots[i].countText.text = containerItems[i].GetCount().ToString();
             // No more than 10
         }
@@ -105,6 +105,12 @@ public class ContainerUI : MonoBehaviour
 
     public void TakeItem()
     {
+        if (Inventory.Instance.items.Count >= Inventory.Instance.inventoryCapacity)
+        {
+            UIGamePlay.Instance.DisplayMessage("Inventory is full.", Colors.redMessage, 2f, false);
+            return;
+        }
+
         if (currentClickedItem is Gold)
         {
             Inventory.Instance.AddGold(currentClickedItem.GetCount());

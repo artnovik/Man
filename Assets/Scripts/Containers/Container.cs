@@ -7,7 +7,7 @@ public class Container : Interactable
 
     public List<Item> containerItems = new List<Item>();
 
-    public override void Interact()
+    protected override void Interact()
     {
         base.Interact();
 
