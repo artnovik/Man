@@ -799,7 +799,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4046848190126504}
   - component: {fileID: 65563327112466262}
-  - component: {fileID: 114895080710395028}
+  - component: {fileID: 114091146308696338}
   m_Layer: 0
   m_Name: Knife
   m_TagString: WeaponInPlayerHands
@@ -2273,7 +2273,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1708815765540170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.05, y: 0, z: 4.120001}
+  m_LocalPosition: {x: -14, y: 0, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224926042718919002}
@@ -3290,9 +3290,21 @@ MonoBehaviour:
   locomotion: {fileID: 114488230682809896}
   maxHealth: 100
   minHealth: 0
-  enemyWeapon: {fileID: 0}
+  weaponObject: {fileID: 114091146308696338}
   containerPlaceTransform: {fileID: 4081421246173280}
   enemyType: 5
+--- !u!114 &114091146308696338
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1477506164314504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9a2b1e6c89af2438874408f4aada90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 08e931f4d3fb40741b1691b9c1be5386, type: 2}
 --- !u!114 &114104376914045810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3475,17 +3487,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstepsAudioClip: {fileID: 8300000, guid: f19a5e02168225844bd1c4f8e5496766, type: 3}
   footstepsAudioSource: {fileID: 82737994693660622}
---- !u!114 &114895080710395028
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1477506164314504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf7922c9796079741a4509714ba74d3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114939547921820984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4269,7 +4270,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.09820823, y: 0.000034965575, z: -0.0017972382}
+  m_ConnectedAnchor: {x: 0.09820823, y: 0.000034965575, z: -0.0017974767}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -4313,7 +4314,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.33728743, y: 0.18429978, z: -0.03617604}
+  m_ConnectedAnchor: {x: -0.33728743, y: 0.18429978, z: -0.03617628}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -4357,7 +4358,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.33739427, y: -0.18424223, z: -0.036194753}
+  m_ConnectedAnchor: {x: -0.33739427, y: -0.18424223, z: -0.036194514}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:

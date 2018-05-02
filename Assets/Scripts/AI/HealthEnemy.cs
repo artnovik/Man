@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class HealthEnemy : Health
 {
-    public Weapon enemyWeapon;
+    public WeaponObject weaponObject;
     public Transform containerPlaceTransform;
     private Collider playerCollider;
 
@@ -19,7 +19,7 @@ public class HealthEnemy : Health
         playerCollider = PlayerData.Instance.playerCollider;
     }
 
-    public override void Heal(uint healValue)
+    public override void Heal(int healValue)
     {
         base.Heal(healValue);
 
@@ -27,7 +27,7 @@ public class HealthEnemy : Health
         GetComponent<EnemyUI>().HealthBarValueChange(currentHealth);
     }
 
-    public override void Damage(uint damageValue)
+    public override void Damage(int damageValue)
     {
         base.Damage(damageValue);
 
@@ -36,7 +36,7 @@ public class HealthEnemy : Health
 
         if (CheatManager.Instance.LIFESTEAL)
         {
-            PlayerData.Instance.playerHealth.Heal((uint) (damageValue * 0.5));
+            PlayerData.Instance.playerHealth.Heal((int) (damageValue * 0.5));
         }
     }
 
@@ -45,7 +45,7 @@ public class HealthEnemy : Health
         foreach (GameObject weapon in PlayerData.Instance.listWeapons)
             if (collider.gameObject == weapon && !isDead)
             {
-                var takenDamage = PlayerData.Instance.GetCurrentWeapon().GetDamage();
+                var takenDamage = PlayerData.Instance.GetCurrentWeapon().weaponData.GetDamage();
                 Damage(takenDamage);
 
                 EffectsManager.Instance.ActivateBloodEffect(collider.transform);

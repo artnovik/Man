@@ -176,7 +176,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
     [Header("Weapons")] public int curIndexWeapon;
 
     public List<GameObject> listWeapons = new List<GameObject>();
-    private Weapon currentWeapon;
+    private WeaponObject currentWeapon;
 
     [HideInInspector] public Collider[] currentWeaponColliders;
 
@@ -199,9 +199,9 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         GetCurrentWeaponColliders();
     }
 
-    public Weapon GetCurrentWeapon()
+    public WeaponObject GetCurrentWeapon()
     {
-        return currentWeapon = listWeapons[curIndexWeapon].GetComponent<Weapon>();
+        return currentWeapon = listWeapons[curIndexWeapon].GetComponent<WeaponObject>();
     }
 
     private Collider[] GetCurrentWeaponColliders()

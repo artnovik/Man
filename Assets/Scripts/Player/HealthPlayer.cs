@@ -9,7 +9,7 @@ public class HealthPlayer : Health
         base.Start();
     }
 
-    public override void Heal(uint healValue)
+    public override void Heal(int healValue)
     {
         base.Heal(healValue);
 
@@ -17,7 +17,7 @@ public class HealthPlayer : Health
         UIGamePlay.Instance.HealthBarValueChange(currentHealth);
     }
 
-    public override void Damage(uint damageValue)
+    public override void Damage(int damageValue)
     {
         if (!PlayerData.Instance.isBlock && !CheatManager.Instance.GOD_MODE)
         {

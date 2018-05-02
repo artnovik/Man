@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class Health : MonoBehaviour
@@ -8,11 +9,11 @@ public abstract class Health : MonoBehaviour
 
     [Tooltip("Locomotion reference")] public Locomotion locomotion;
 
-    [Header("Health Manager")] public uint maxHealth;
+    [Header("Health Manager")] public int maxHealth;
 
-    public uint minHealth;
+    public int minHealth;
 
-    public uint currentHealth { get; private set; }
+    public int currentHealth { get; private set; }
 
     #region HealthManager
 
@@ -23,9 +24,9 @@ public abstract class Health : MonoBehaviour
         characterStats = GetComponent<CharacterStats>();
     }
 
-    public virtual void Heal(uint healValue)
+    public virtual void Heal(int healValue)
     {
-        if (isDead)
+        if (isDead && healValue < 0)
         {
             return;
         }
@@ -37,7 +38,7 @@ public abstract class Health : MonoBehaviour
         }
     }
 
-    public virtual void Damage(uint damageValue)
+    public virtual void Damage(int damageValue)
     {
         if (isDead)
         {

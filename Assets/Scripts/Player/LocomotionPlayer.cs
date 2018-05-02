@@ -6,6 +6,7 @@ public class LocomotionPlayer : Locomotion
     {
         base.Attack();
 
+        // When Player attacks
         PlayerData.Instance.SwitchWeaponColliders();
     }
 

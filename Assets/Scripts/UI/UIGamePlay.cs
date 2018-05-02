@@ -103,7 +103,7 @@ public class UIGamePlay : MonoBehaviour
 
     #region PlayerBars
 
-    public void HealthBarValueChange(uint currentHealth)
+    public void HealthBarValueChange(int currentHealth)
     {
         playerHealthBarCurrent.fillAmount = (float) currentHealth / 100;
     }

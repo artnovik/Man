@@ -129,6 +129,7 @@ public abstract class Locomotion : MonoBehaviour
 
     public virtual void Attack()
     {
+        // This meant to be overridden
     }
 
     #endregion

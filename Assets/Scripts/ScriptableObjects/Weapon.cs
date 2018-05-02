@@ -37,9 +37,9 @@ public class Weapon : Item
 
     public uint staminaConsume;
 
-    public uint GetDamage()
+    public int GetDamage()
     {
-        return (uint) Random.Range(minDamage, maxDamage);
+        return (int) Random.Range(minDamage, maxDamage);
     }
 
     public string GetName()

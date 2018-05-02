@@ -339,7 +339,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4410477772275220}
   - component: {fileID: 65281991902957448}
-  - component: {fileID: 114883532410005756}
+  - component: {fileID: 114420383828104284}
   m_Layer: 0
   m_Name: Scythe
   m_TagString: WeaponInPlayerHands
@@ -911,7 +911,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4467657420773382}
   - component: {fileID: 65572932289928900}
-  - component: {fileID: 114517313888816572}
+  - component: {fileID: 114159276724043926}
   m_Layer: 0
   m_Name: SmallScythe
   m_TagString: WeaponInPlayerHands
@@ -1143,7 +1143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4437326184579564}
   - component: {fileID: 65415963048203916}
-  - component: {fileID: 114173038862203980}
+  - component: {fileID: 114639437364046904}
   m_Layer: 0
   m_Name: Knife
   m_TagString: WeaponInPlayerHands
@@ -1700,7 +1700,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4927781381070796}
   - component: {fileID: 65798140889022800}
-  - component: {fileID: 114097155654739400}
+  - component: {fileID: 114585304531954478}
   m_Layer: 0
   m_Name: Saw
   m_TagString: WeaponInPlayerHands
@@ -3757,17 +3757,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114097155654739400
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1982010047296934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf7922c9796079741a4509714ba74d3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114146030649663362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3781,17 +3770,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstepsAudioClip: {fileID: 8300000, guid: f19a5e02168225844bd1c4f8e5496766, type: 3}
   footstepsAudioSource: {fileID: 82905781108021640}
---- !u!114 &114173038862203980
+--- !u!114 &114159276724043926
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1737280626240596}
+  m_GameObject: {fileID: 1601528930609020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf7922c9796079741a4509714ba74d3f, type: 3}
+  m_Script: {fileID: 11500000, guid: ee9a2b1e6c89af2438874408f4aada90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 9b90694c0ca5d444da8377d4e9a07354, type: 2}
 --- !u!114 &114202594628319402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3826,17 +3816,30 @@ MonoBehaviour:
   stamina: {fileID: 0}
   strength: {fileID: 0}
   water: {fileID: 0}
---- !u!114 &114517313888816572
+--- !u!114 &114420383828104284
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1601528930609020}
+  m_GameObject: {fileID: 1235602614466690}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf7922c9796079741a4509714ba74d3f, type: 3}
+  m_Script: {fileID: 11500000, guid: ee9a2b1e6c89af2438874408f4aada90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 7dd4a9dfc17a021438595d2f293d2563, type: 2}
+--- !u!114 &114585304531954478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1982010047296934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9a2b1e6c89af2438874408f4aada90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 710eb93626f79ae41bdb798829bd63ec, type: 2}
 --- !u!114 &114587143568569328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3864,6 +3867,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryCapacity: 27
   items: []
+--- !u!114 &114639437364046904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1737280626240596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9a2b1e6c89af2438874408f4aada90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 08e931f4d3fb40741b1691b9c1be5386, type: 2}
 --- !u!114 &114724867351227820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3938,17 +3953,6 @@ MonoBehaviour:
   maxHealth: 100
   minHealth: 0
   hitTransform: {fileID: 4962435904348192}
---- !u!114 &114883532410005756
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1235602614466690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf7922c9796079741a4509714ba74d3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!124 &124598157937027974
 Behaviour:
   m_ObjectHideFlags: 1
