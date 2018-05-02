@@ -61,6 +61,12 @@ public class HealthEnemy : Health
         DisableCollidersBetweenEnemyAndPlayer(2f);
         DestroyComponents();
 
+        // ToDo Make this better
+        weaponObject.gameObject.transform.SetParent(null);
+        weaponObject.gameObject.AddComponent<Rigidbody>();
+        weaponObject.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+        // ToDo end
+
         GetComponent<EnemyUI>().DestroyEnemyUI(SpawnManager.Instance.GetDeadBodyDeleteDuration());
         DestroyBody(SpawnManager.Instance.GetDeadBodyDeleteDuration());
     }
@@ -101,6 +107,8 @@ public class HealthEnemy : Health
 
         // ToDo nice corpse disappearing animation, with blood puddle for X seconds
 
+        // ToDo Temp
+        Destroy(weaponObject.gameObject);
         ContainerGenerator.Instance.GenerateContainerObject(containerPlaceTransform, enemyType);
         Destroy(gameObject);
     }
