@@ -3,6 +3,7 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     [SerializeField] protected float radius = 3f;
+    protected bool canInteract = true;
 
     private void OnDrawGizmosSelected()
     {

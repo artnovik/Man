@@ -33,5 +33,6 @@ public class ContainerGenerator : MonoBehaviour
     {
         var generatedItemsList = LootGenerator.Instance.GenerateItems(containerType);
         containerToBeFilled.containerItems.AddRange(generatedItemsList);
+        containerToBeFilled.containerType = containerType;
     }
 }

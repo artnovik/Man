@@ -5,25 +5,65 @@ public class Container : Interactable
 {
     private uint containerCapacity = 10; // Value for all containers in game (should be good)
 
+    public ContainerTypeEnum.Enum containerType;
+
     public List<Item> containerItems = new List<Item>();
 
     protected override void Interact()
     {
+        if (!canInteract)
+            return;
+
         base.Interact();
 
         // Custom Implementation
         UIGamePlay.Instance.ContainerOpen();
-        ContainerUI.Instance.AssignContainer(this);
-        ContainerUI.Instance.UpdateContainerUI(containerItems);
+        ContainerUI.Instance.InitializeContainerUI(this);
     }
 
-    public void RemoveItem(Item itemToRemove)
+    public void MoveAllItemsToInventory()
     {
-        containerItems.Remove(itemToRemove);
+        foreach (Item item in containerItems)
+        {
+            MoveItemToInventory(item);
+        }
     }
 
-    public void Destroy()
+    public void MoveItemToInventory(Item item)
     {
-        Destroy(gameObject);
+        if (item is Gold)
+        {
+            Inventory.Instance.AddGold(item.GetCount());
+        }
+        else
+        {
+            if (Inventory.Instance.IsFull())
+            {
+                return;
+            }
+
+            Inventory.Instance.AddItem(item);
+        }
+
+        containerItems.Remove(item);
+        ContainerUI.Instance.ItemTaken();             // Move this
+        ContainerUI.Instance.UpdateContainerSlots(); // to here
+        CheckIfContainerEmpty();
+    }
+
+    private void CheckIfContainerEmpty()
+    {
+        if (containerItems.Count < 1)
+        {
+            canInteract = false;
+
+            // ToDO Make this better
+            if (containerType == ContainerTypeEnum.Enum.Zombie || containerType == ContainerTypeEnum.Enum.Chester)
+            {
+                Destroy(gameObject);
+            }
+
+            UIGamePlay.Instance.ContainerClose();
+        }
     }
 }

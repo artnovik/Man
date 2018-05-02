@@ -3,23 +3,29 @@ using UnityEngine.UI;
 
 public class ContainerSlot : MonoBehaviour
 {
+    public Item slotItem;
+
     public Image icon;
     public Button slotButton;
-    public Item item;
     public Text countText;
 
-    public void AddItem(Item newItem)
+    public void FillSlot(Item newItem)
     {
-        item = newItem;
+        slotItem = newItem;
 
-        icon.sprite = item.inventorySprite;
+        if (newItem.GetCount() > 1)
+        {
+            countText.text = newItem.GetCount().ToString();
+        }
+
+        icon.sprite = slotItem.inventorySprite;
         icon.enabled = true;
     }
 
 
     public void ClearSlot()
     {
-        item = null;
+        slotItem = null;
         countText.text = null;
 
         icon.sprite = null;
@@ -28,16 +34,9 @@ public class ContainerSlot : MonoBehaviour
 
     public void Select()
     {
-        if (item != null)
+        if (slotItem != null)
         {
-            for (int i = 0; i < ContainerUI.Instance.currentContainer.containerItems.Count; i++)
-            {
-                if (item == ContainerUI.Instance.currentContainer.containerItems[i])
-                {
-                    ContainerUI.Instance.currentClickedItem = ContainerUI.Instance.currentContainer.containerItems[i];
-                }
-            }
-
+            ContainerUI.Instance.currentClickedItem = slotItem;
             ContainerUI.Instance.MakeSlotActive(this);
         }
         else

@@ -3,60 +3,6 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public delegate void OnItemChanged();
-
-    [HideInInspector] public int inventoryCapacity = 27;
-
-    public OnItemChanged onItemChangedCallback;
-    public List<Item> items = new List<Item>();
-
-    private uint gold;
-
-    public void AddGold(uint count)
-    {
-        gold += count;
-        
-        if (onItemChangedCallback != null)
-        {
-            onItemChangedCallback.Invoke();
-        }
-    }
-
-    public void RemoveGold(uint count)
-    {
-        gold -= count;
-        
-        if (onItemChangedCallback != null)
-        {
-            onItemChangedCallback.Invoke();
-        }
-    }
-
-    public uint GetGold()
-    {
-        return gold;
-    }
-
-    public void Add(Item item)
-    {
-        items.Add(item);
-
-        if (onItemChangedCallback != null)
-        {
-            onItemChangedCallback.Invoke();
-        }
-    }
-
-    public void Remove(Item item)
-    {
-        items.Remove(item);
-
-        if (onItemChangedCallback != null)
-        {
-            onItemChangedCallback.Invoke();
-        }
-    }
-
     #region Singleton
 
     public static Inventory Instance;
@@ -67,4 +13,59 @@ public class Inventory : MonoBehaviour
     }
 
     #endregion
+
+    public delegate void OnItemChanged();
+
+    public int inventoryCapacity = 0;
+
+    public OnItemChanged onItemChangedCallback;
+    public List<Item> items = new List<Item>();
+
+    private uint gold;
+
+    public void AddGold(uint count)
+    {
+        gold += count;
+
+        onItemChangedCallback?.Invoke();
+    }
+
+    public void RemoveGold(uint count)
+    {
+        gold -= count;
+
+        onItemChangedCallback?.Invoke();
+    }
+
+    public uint GetGold()
+    {
+        return gold;
+    }
+
+    public void AddItem(Item item)
+    {
+        items.Add(item);
+
+        onItemChangedCallback?.Invoke();
+    }
+
+    public void RemoveItem(Item item)
+    {
+        items.Remove(item);
+
+        onItemChangedCallback?.Invoke();
+    }
+
+    public bool IsFull()
+    {
+        if (items.Count >= inventoryCapacity)
+        {
+            UIGamePlay.Instance.DisplayMessage("Inventory is full.", Colors.redMessage, 2f, false);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

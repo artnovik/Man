@@ -23,15 +23,15 @@ public class LootGenerator : MonoBehaviour
         {
             case ContainerTypeEnum.Enum.Zombie:
                 return GenerateZombieItems();
-            case ContainerTypeEnum.Enum.CommonChest:
+            case ContainerTypeEnum.Enum.Common_Chest:
                 return null;
-            case ContainerTypeEnum.Enum.UncommonChest:
+            case ContainerTypeEnum.Enum.Uncommon_Chest:
                 return null;
-            case ContainerTypeEnum.Enum.RareChest:
+            case ContainerTypeEnum.Enum.Rare_Chest:
                 return null;
-            case ContainerTypeEnum.Enum.MythicalChest:
+            case ContainerTypeEnum.Enum.Mythical_Chest:
                 return null;
-            case ContainerTypeEnum.Enum.LegendaryChest:
+            case ContainerTypeEnum.Enum.Legendary_Chest:
                 return null;
             case ContainerTypeEnum.Enum.Chester:
                 return null;
@@ -64,15 +64,15 @@ public class LootGenerator : MonoBehaviour
                 return gold;
 
             // Chests
-            case ContainerTypeEnum.Enum.CommonChest:
+            case ContainerTypeEnum.Enum.Common_Chest:
                 return gold;
-            case ContainerTypeEnum.Enum.UncommonChest:
+            case ContainerTypeEnum.Enum.Uncommon_Chest:
                 return gold;
-            case ContainerTypeEnum.Enum.RareChest:
+            case ContainerTypeEnum.Enum.Rare_Chest:
                 return gold;
-            case ContainerTypeEnum.Enum.MythicalChest:
+            case ContainerTypeEnum.Enum.Mythical_Chest:
                 return gold;
-            case ContainerTypeEnum.Enum.LegendaryChest:
+            case ContainerTypeEnum.Enum.Legendary_Chest:
                 return gold;
             default:
                 Debug.Log("Check parameters");

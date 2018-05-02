@@ -209,7 +209,7 @@ public class UIGamePlay : MonoBehaviour
             blinkMessageCoroutine = StartCoroutine(Blink(messageText, false));
         }
 
-        yield return new WaitForSeconds(duration);
+        yield return WaitForRealSeconds(duration);
         if (blinking)
         {
             StopCoroutine(blinkMessageCoroutine);

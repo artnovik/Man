@@ -19,7 +19,7 @@ public class ItemPickup : Interactable
 
         // Add to Inventory
         
-        Inventory.Instance.Add(item);
+        Inventory.Instance.AddItem(item);
         Destroy(gameObject);
     }
 }

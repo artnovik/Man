@@ -52,10 +52,10 @@ public abstract class Health : MonoBehaviour
             Death();
         }
 
-        Debug.Log(string.Format("{0} took {1} damage. Current HP: {2}", gameObject.name, damageValue, currentHealth));
+        Debug.Log($"{gameObject.name} took {damageValue} damage. Current HP: {currentHealth}");
         if (isDead)
         {
-            Debug.Log(string.Format("{0} died.", gameObject.name));
+            Debug.Log($"{gameObject.name} died.");
         }
     }
 

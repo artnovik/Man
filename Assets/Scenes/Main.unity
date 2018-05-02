@@ -1548,9 +1548,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec967cf0f595b954cbadcc75380172e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotItem: {fileID: 0}
   icon: {fileID: 1907208172}
   slotButton: {fileID: 530697547}
-  item: {fileID: 0}
   countText: {fileID: 199477314}
 --- !u!1001 &181397082
 Prefab:
@@ -2900,7 +2900,7 @@ GameObject:
   - component: {fileID: 333028852}
   - component: {fileID: 333028855}
   m_Layer: 5
-  m_Name: Container_Slots_Area
+  m_Name: Container_Slots_Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3606,9 +3606,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec967cf0f595b954cbadcc75380172e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotItem: {fileID: 0}
   icon: {fileID: 56249974}
   slotButton: {fileID: 310382805}
-  item: {fileID: 0}
   countText: {fileID: 521429125}
 --- !u!1001 &411957550
 Prefab:
@@ -4151,9 +4151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec967cf0f595b954cbadcc75380172e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotItem: {fileID: 0}
   icon: {fileID: 2054865759}
   slotButton: {fileID: 1001636878}
-  item: {fileID: 0}
   countText: {fileID: 1054477031}
 --- !u!1 &521429123
 GameObject:
@@ -4919,6 +4919,11 @@ Prefab:
       propertyPath: playerUI
       value: 
       objectReference: {fileID: 493744988}
+    - target: {fileID: 114631954055323010, guid: 616e569156912564fb32e8174448cf64,
+        type: 2}
+      propertyPath: inventoryCapacity
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 616e569156912564fb32e8174448cf64, type: 2}
   m_IsPrefabParent: 0
@@ -5398,7 +5403,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1909205529}
-        m_MethodName: TakeItem
+        m_MethodName: TakeItemClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6267,7 +6272,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1909205529}
-        m_MethodName: TakeAllItems
+        m_MethodName: TakeAllItemsClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7939,7 +7944,7 @@ RectTransform:
   - {fileID: 1923416704}
   - {fileID: 1527422168}
   m_Father: {fileID: 1809053807}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -8373,7 +8378,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
   m_Children: []
   m_Father: {fileID: 1809053807}
-  m_RootOrder: 14
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9004,9 +9009,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec967cf0f595b954cbadcc75380172e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotItem: {fileID: 0}
   icon: {fileID: 1975298266}
   slotButton: {fileID: 1730684982}
-  item: {fileID: 0}
   countText: {fileID: 616852444}
 --- !u!1 &1059617861
 GameObject:
@@ -9128,9 +9133,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec967cf0f595b954cbadcc75380172e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotItem: {fileID: 0}
   icon: {fileID: 1562702342}
   slotButton: {fileID: 2014502410}
-  item: {fileID: 0}
   countText: {fileID: 1911076689}
 --- !u!1 &1065908498
 GameObject:
@@ -9492,9 +9497,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec967cf0f595b954cbadcc75380172e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotItem: {fileID: 0}
   icon: {fileID: 1875242564}
   slotButton: {fileID: 67630103}
-  item: {fileID: 0}
   countText: {fileID: 563205885}
 --- !u!1 &1093278669
 GameObject:
@@ -10261,9 +10266,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec967cf0f595b954cbadcc75380172e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotItem: {fileID: 0}
   icon: {fileID: 1059617863}
   slotButton: {fileID: 1571668573}
-  item: {fileID: 0}
   countText: {fileID: 163909812}
 --- !u!4 &1195358466 stripped
 Transform:
@@ -12704,9 +12709,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec967cf0f595b954cbadcc75380172e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotItem: {fileID: 0}
   icon: {fileID: 879709871}
   slotButton: {fileID: 572077587}
-  item: {fileID: 0}
   countText: {fileID: 613141603}
 --- !u!1 &1527422167
 GameObject:
@@ -14379,7 +14384,7 @@ RectTransform:
   - {fileID: 1733882953}
   - {fileID: 846648652}
   m_Father: {fileID: 1809053807}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -14927,9 +14932,9 @@ RectTransform:
   - {fileID: 111287670}
   - {fileID: 580110959}
   - {fileID: 1909205528}
-  - {fileID: 979263723}
   - {fileID: 1691834173}
   - {fileID: 915422387}
+  - {fileID: 979263723}
   - {fileID: 1149420263}
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -15646,6 +15651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 3
+  containerType: 0
   containerItems:
   - {fileID: 11400000, guid: 36a44598bf5b66e42953a15e8f685962, type: 2}
   - {fileID: 11400000, guid: 08e931f4d3fb40741b1691b9c1be5386, type: 2}
@@ -17082,9 +17088,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec967cf0f595b954cbadcc75380172e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotItem: {fileID: 0}
   icon: {fileID: 950340145}
   slotButton: {fileID: 970319537}
-  item: {fileID: 0}
   countText: {fileID: 1617325036}
 --- !u!1 &2014502408
 GameObject:
@@ -18135,9 +18141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec967cf0f595b954cbadcc75380172e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotItem: {fileID: 0}
   icon: {fileID: 686694065}
   slotButton: {fileID: 237103632}
-  item: {fileID: 0}
   countText: {fileID: 948210449}
 --- !u!1 &2096075442
 GameObject:
