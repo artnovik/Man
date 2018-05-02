@@ -3,19 +3,19 @@
 [CreateAssetMenu(fileName = "Gold", menuName = "Gold")]
 public class Gold : Item
 {
-    public uint count;
+    public int count;
 
-    public override uint GetCount()
+    public override int GetCount()
     {
         return count;
     }
 
-    public override void SetCount(uint minValue, uint maxValue)
+    public override void SetCount(int minValue, int maxValue)
     {
-        count = (uint) Random.Range(minValue, maxValue);
+        count = Random.Range(minValue, maxValue);
     }
 
-    public override void SetCount(uint concreteValue)
+    public override void SetCount(int concreteValue)
     {
         count = concreteValue;
     }

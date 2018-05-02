@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,21 +45,21 @@ public class ContainerUI : MonoBehaviour
         nameText.text = container.containerType.ToString();
         currentContainer = container;
         MakeAllSlotsInactive();
-        UpdateContainerSlots();
+        UpdateContainerSlots(container);
     }
 
-    public void UpdateContainerSlots()
+    public void UpdateContainerSlots(Container container)
     {
-        for (var i = 0; i < currentContainer.containerItems.Count; i++)
+        for (int i = 0; i < slots.Length; i++)
         {
-            slots[i].ClearSlot();
-            slots[i].FillSlot(currentContainer.containerItems[i]);
-
-            // Make this better
-            /*if (currentContainer.containerItems[i] is Gold || currentContainer.containerItems[i] is Consumable)
+            if (i < container.containerItems.Count)
             {
-                slots[i].countText.text = currentContainer.containerItems[i].GetCount().ToString();
-            }*/
+                slots[i].FillSlot(currentContainer.containerItems[i]);
+            }
+            else
+            {
+                slots[i].ClearSlot();
+            }
         }
     }
 
@@ -69,6 +70,29 @@ public class ContainerUI : MonoBehaviour
         clickedSlot.countText.color = Color.white;
 
         ActivateItemInfo(true);
+    }
+
+    public void SelectPreviousSlot()
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].slotItem == currentClickedItem)
+            {
+                slots[i].ClearSlot();
+                MakeAllSlotsInactive();
+
+                if (i > 0)
+                {
+                    slots[i - 1].Select();
+                }
+            }
+        }
+    }
+
+    public void SelectFirstSlot()
+    {
+        // TODO FIX THIS PLZ
+            slots[0].Select();
     }
 
     public void MakeAllSlotsInactive()
@@ -110,9 +134,9 @@ public class ContainerUI : MonoBehaviour
         itemDescriptionInfo.text = null;
     }
 
-    public void ItemTaken()
+    private void ClearActiveSlot()
     {
-        foreach (var slot in slots)
+        foreach (ContainerSlot slot in slots)
         {
             if (currentClickedItem == slot.slotItem)
             {
@@ -122,64 +146,14 @@ public class ContainerUI : MonoBehaviour
 
         MakeAllSlotsInactive();
     }
-    
+
     public void TakeItemClick()
     {
         currentContainer.MoveItemToInventory(currentClickedItem);
-
-        /*if (Inventory.Instance.items.Count >= Inventory.Instance.inventoryCapacity)
-        {
-            UIGamePlay.Instance.DisplayMessage("Inventory is full.", Colors.redMessage, 2f, false);
-            return;
-        }
-
-        if (currentClickedItem is Gold)
-        {
-            Inventory.Instance.AddGold(currentClickedItem.GetCount());
-        }
-        else
-        {
-            Inventory.Instance.items.Add(currentClickedItem);
-        }
-
-        currentContainer.RemoveItem(currentClickedItem);
-
-        foreach (var slot in slots)
-        {
-            if (currentClickedItem == slot.item)
-            {
-                slot.ClearSlot();
-            }
-        }
-
-        MakeAllSlotsInactive();*/
-
-        //CheckIfContainerEmpty();
     }
 
     public void TakeAllItemsClick()
     {
         currentContainer.MoveAllItemsToInventory();
-
-        /*for (int i = 0; i < currentContainer.containerItems.Count; i++)
-        {
-            if (currentContainer.containerItems[i] is Gold)
-            {
-                Inventory.Instance.AddGold(currentContainer.containerItems[i].GetCount());
-            }
-            else
-            {
-                Inventory.Instance.Add(currentContainer.containerItems[i]);
-            }
-        }
-
-        currentContainer.containerItems.Clear();
-
-        foreach (var slot in slots)
-        {
-            slot.ClearSlot();
-        }*/
-
-        //CheckIfContainerEmpty();
     }
 }

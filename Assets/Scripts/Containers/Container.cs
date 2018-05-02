@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Container : Interactable
@@ -23,7 +24,7 @@ public class Container : Interactable
 
     public void MoveAllItemsToInventory()
     {
-        foreach (Item item in containerItems)
+        foreach (Item item in containerItems.ToList())
         {
             MoveItemToInventory(item);
         }
@@ -45,9 +46,10 @@ public class Container : Interactable
             Inventory.Instance.AddItem(item);
         }
 
+        ContainerUI.Instance.SelectPreviousSlot(); // IF we click not on 1st item
         containerItems.Remove(item);
-        ContainerUI.Instance.ItemTaken();             // Move this
-        ContainerUI.Instance.UpdateContainerSlots(); // to here
+        ContainerUI.Instance.UpdateContainerSlots(this);
+        //ContainerUI.Instance.SelectFirstSlot(); // IF we click on 1st item
         CheckIfContainerEmpty();
     }
 

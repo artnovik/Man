@@ -16,28 +16,37 @@ public class Inventory : MonoBehaviour
 
     public delegate void OnItemChanged();
 
-    public int inventoryCapacity = 0;
+    public int inventoryCapacity = 27;
 
     public OnItemChanged onItemChangedCallback;
     public List<Item> items = new List<Item>();
 
-    private uint gold;
+    private int gold;
 
-    public void AddGold(uint count)
+    public void AddGold(int count)
     {
         gold += count;
 
         onItemChangedCallback?.Invoke();
     }
 
-    public void RemoveGold(uint count)
+    public void RemoveGold(int count)
     {
-        gold -= count;
+        int goldValueAfterRemove = gold - count;
 
-        onItemChangedCallback?.Invoke();
+        if (goldValueAfterRemove < 0)
+        {
+            UIGamePlay.Instance.DisplayMessage("Not enough gold", Colors.redMessage, 2f, false);
+            return;
+        }
+        else
+        {
+            gold = goldValueAfterRemove;
+            onItemChangedCallback?.Invoke();
+        }
     }
 
-    public uint GetGold()
+    public int GetGoldCount()
     {
         return gold;
     }

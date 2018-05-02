@@ -30,11 +30,14 @@ public class InventoryUI : MonoBehaviour
     public Transform itemsContainer;
     private InventorySlot[] slots;
 
+    public InventorySlot CurrentSelectedSlot;
+
     private void UpdateInventoryUI()
     {
-        goldCount.text = Inventory.Instance.GetGold().ToString();
+        goldCount.text = Inventory.Instance.GetGoldCount().ToString();
 
         for (var i = 0; i < slots.Length; i++)
+        {
             if (i < inventory.items.Count)
             {
                 slots[i].AddItem(inventory.items[i]);
@@ -42,16 +45,26 @@ public class InventoryUI : MonoBehaviour
             else
             {
                 slots[i].ClearSlot();
-                if (inventory.items.Count == 0)
-                {
-                    ClearInfoWindow();
-                }
+                /*if (inventory.items.Count == 0)
+                {*/
+                ClearInfoWindow();
+                //}
             }
+        }
     }
 
     public void SelectItem(InventorySlot slot)
     {
         slot.Select();
+    }
+
+    public void UseItem()
+    {
+    }
+
+    public void DropItem()
+    {
+        Inventory.Instance.RemoveItem(CurrentSelectedSlot.slotItem);
     }
 
     public void FillInfoWindow(Sprite sprite, string name, uint minDamage, uint maxDamage,

@@ -5,9 +5,9 @@ public class Item : ScriptableObject
     public new string name;
     public Sprite inventorySprite;
     public string description;
-    public uint buyValue;
-    public uint sellValue;
-    
+    public int buyValue;
+    public int sellValue;
+
     public enum ItemTypeEnum
     {
         Weapon = 0,
@@ -16,20 +16,20 @@ public class Item : ScriptableObject
     }
 
     public ItemTypeEnum ItemType;
-    
-    public virtual uint GetCount()
+
+    public virtual int GetCount()
     {
         return 1;
     }
 
-    public virtual void SetCount(uint minValue, uint maxValue)
+    public virtual void SetCount(int minValue, int maxValue)
     {
-        
+        // This meant to be overridden.
     }
-    
-    public virtual void SetCount(uint concreteValue)
+
+    public virtual void SetCount(int concreteValue)
     {
-        
+        // This meant to be overridden.
     }
 
     //public GameObject gamePrefab;

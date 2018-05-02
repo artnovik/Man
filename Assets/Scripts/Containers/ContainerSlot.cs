@@ -13,7 +13,7 @@ public class ContainerSlot : MonoBehaviour
     {
         slotItem = newItem;
 
-        if (newItem.GetCount() > 1)
+        if (newItem.GetCount() > 1) // Not bad, but need to be done better.
         {
             countText.text = newItem.GetCount().ToString();
         }
@@ -21,7 +21,6 @@ public class ContainerSlot : MonoBehaviour
         icon.sprite = slotItem.inventorySprite;
         icon.enabled = true;
     }
-
 
     public void ClearSlot()
     {

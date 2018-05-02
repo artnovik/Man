@@ -4,20 +4,20 @@ using UnityEngine.UI;
 public class InventorySlot : MonoBehaviour
 {
     public Image icon;
-    private Item item;
+    public Item slotItem;
 
     public void AddItem(Item newItem)
     {
-        item = newItem;
+        slotItem = newItem;
 
-        icon.sprite = item.inventorySprite;
+        icon.sprite = slotItem.inventorySprite;
         icon.enabled = true;
     }
 
 
     public void ClearSlot()
     {
-        item = null;
+        slotItem = null;
 
         icon.sprite = null;
         icon.enabled = false;
@@ -25,16 +25,26 @@ public class InventorySlot : MonoBehaviour
 
     public void OnRemoveButtonClick()
     {
-        Inventory.Instance.RemoveItem(item);
+        Inventory.Instance.RemoveItem(slotItem);
     }
 
     public void Select()
     {
-        if (item != null)
+        if (slotItem != null)
         {
             /*InventoryUI.Instance.FillInfoWindow(item.inventorySprite, item.name, item.minDamage,
                 item.maxDamage, item.DamageType, item.Speed, item.Range,
                 item.description);*/
+
+            InventoryUI.Instance.CurrentSelectedSlot = this;
+
+            var weapon = slotItem as Weapon;
+            if (weapon != null)
+            {
+                InventoryUI.Instance.FillInfoWindow(weapon.inventorySprite, weapon.name, weapon.minDamage,
+                    weapon.maxDamage, weapon.DamageType, weapon.Speed, weapon.Range,
+                    weapon.description);
+            }
         }
         else
         {
