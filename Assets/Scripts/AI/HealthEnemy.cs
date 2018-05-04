@@ -113,11 +113,11 @@ public class HealthEnemy : Health
         Destroy(gameObject);
     }
 
-    // For faster debugging
-    /*private void OnMouseDown()
+    // ToDO For For Debug purposes
+    private void OnMouseDown()
     {
         Death();
-    }*/
+    }
 
     #endregion
 }

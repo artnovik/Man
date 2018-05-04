@@ -28,4 +28,9 @@ public class Interactable : MonoBehaviour
     {
         //This meant to be overridden
     }
+    
+    protected void SwitchInteractableState()
+    {
+        canInteract = !canInteract;
+    }
 }

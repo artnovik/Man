@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Channels;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,6 +47,7 @@ public class ContainerUI : MonoBehaviour
         currentContainer = container;
         MakeAllSlotsInactive();
         UpdateContainerSlots(container);
+        SelectFirstSlot();
     }
 
     public void UpdateContainerSlots(Container container)
@@ -72,27 +74,42 @@ public class ContainerUI : MonoBehaviour
         ActivateItemInfo(true);
     }
 
-    public void SelectPreviousSlot()
+    private void SelectFirstSlot()
     {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (slots[i].slotItem == currentClickedItem)
-            {
-                slots[i].ClearSlot();
-                MakeAllSlotsInactive();
+        slots[0].Select();
+    }
 
-                if (i > 0)
+    public void SelectNextSlot(bool isFirstSlotActive)
+    {
+        if (isFirstSlotActive)
+        {
+            foreach (ContainerSlot slot in slots)
+            {
+                if (slot.slotButton.GetComponent<Image>().color == Colors.playerActiveUI)
                 {
-                    slots[i - 1].Select();
+                    return;
+                }
+            }
+
+            SelectFirstSlot();
+            return;
+        }
+        else
+        {
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (slots[i].slotItem == currentClickedItem)
+                {
+                    slots[i].ClearSlot();
+                    MakeAllSlotsInactive();
+
+                    if (i > 0)
+                    {
+                        slots[i - 1].Select();
+                    }
                 }
             }
         }
-    }
-
-    public void SelectFirstSlot()
-    {
-        // TODO FIX THIS PLZ
-            slots[0].Select();
     }
 
     public void MakeAllSlotsInactive()
@@ -155,5 +172,14 @@ public class ContainerUI : MonoBehaviour
     public void TakeAllItemsClick()
     {
         currentContainer.MoveAllItemsToInventory();
+    }
+
+    public void CloseContainerClick()
+    {
+        UIGamePlay.Instance.ContainerClose();
+        if (currentContainer.IsChest())
+        {
+            currentContainer.GetComponent<ChestAnimation>().CloseChestAnimation();
+        }
     }
 }

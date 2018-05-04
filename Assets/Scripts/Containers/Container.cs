@@ -18,6 +18,27 @@ public class Container : Interactable
         base.Interact();
 
         // Custom Implementation
+        // ToDo Handle this
+        if (IsChest())
+        {
+            GetComponent<ChestAnimation>().OpenChestAnimation();
+            return;
+        }
+
+        OpenContainer();
+    }
+
+    public bool IsChest()
+    {
+        return containerType == ContainerTypeEnum.Enum.Common_Chest ||
+               containerType == ContainerTypeEnum.Enum.Uncommon_Chest ||
+               containerType == ContainerTypeEnum.Enum.Rare_Chest ||
+               containerType == ContainerTypeEnum.Enum.Mythical_Chest ||
+               containerType == ContainerTypeEnum.Enum.Legendary_Chest;
+    }
+
+    public void OpenContainer()
+    {
         UIGamePlay.Instance.ContainerOpen();
         ContainerUI.Instance.InitializeContainerUI(this);
     }
@@ -46,10 +67,10 @@ public class Container : Interactable
             Inventory.Instance.AddItem(item);
         }
 
-        ContainerUI.Instance.SelectPreviousSlot(); // IF we click not on 1st item
+        ContainerUI.Instance.SelectNextSlot(false); // If any but first slot was active 
         containerItems.Remove(item);
         ContainerUI.Instance.UpdateContainerSlots(this);
-        //ContainerUI.Instance.SelectFirstSlot(); // IF we click on 1st item
+        ContainerUI.Instance.SelectNextSlot(true); // If first slot was active 
         CheckIfContainerEmpty();
     }
 
@@ -57,7 +78,7 @@ public class Container : Interactable
     {
         if (containerItems.Count < 1)
         {
-            canInteract = false;
+            SwitchInteractableState();
 
             // ToDO Make this better
             if (containerType == ContainerTypeEnum.Enum.Zombie || containerType == ContainerTypeEnum.Enum.Chester)
@@ -66,6 +87,18 @@ public class Container : Interactable
             }
 
             UIGamePlay.Instance.ContainerClose();
+
+            if (IsChest())
+            {
+                GetComponent<ChestAnimation>().EmptyChestAnimation();
+            }
         }
+    }
+
+    public void ChestDestroy()
+    {
+        Destroy(GetComponent<Container>());
+        Destroy(GetComponent<ChestAnimation>());
+        Destroy(GetComponent<Animator>());
     }
 }
