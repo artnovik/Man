@@ -115,10 +115,10 @@ public class HealthEnemy : Health
     }
 
     // ToDO For For Debug purposes
-    private void OnMouseDown()
+    /*private void OnMouseDown()
     {
         Death();
-    }
+    }*/
 
     #endregion
 }
