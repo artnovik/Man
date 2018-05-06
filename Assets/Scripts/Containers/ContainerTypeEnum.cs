@@ -2,19 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ContainerTypeEnum : MonoBehaviour
+public class ContainerTypeEnum
 {
-    #region Singleton
-
-    public static ContainerTypeEnum Instance;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
-
-    #endregion
-
     public enum Enum
     {
         Common_Chest = 0,

@@ -43,7 +43,7 @@ public class ContainerUI : MonoBehaviour
 
     public void InitializeContainerUI(Container container)
     {
-        nameText.text = container.containerType.ToString();
+        nameText.text = container.containerType.ToString().Replace("_", " ");
         currentContainer = container;
         MakeAllSlotsInactive();
         UpdateContainerSlots(container);
@@ -92,7 +92,6 @@ public class ContainerUI : MonoBehaviour
             }
 
             SelectFirstSlot();
-            return;
         }
         else
         {
@@ -177,9 +176,11 @@ public class ContainerUI : MonoBehaviour
     public void CloseContainerClick()
     {
         UIGamePlay.Instance.ContainerClose();
-        if (currentContainer.IsChest())
+
+        var chest = currentContainer as ContainerChest;
+        if (chest != null)
         {
-            currentContainer.GetComponent<ChestAnimation>().CloseChestAnimation();
+            chest.CloseChest();
         }
     }
 }

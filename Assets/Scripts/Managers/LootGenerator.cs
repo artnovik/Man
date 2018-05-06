@@ -24,7 +24,7 @@ public class LootGenerator : MonoBehaviour
             case ContainerTypeEnum.Enum.Zombie:
                 return GenerateZombieItems();
             case ContainerTypeEnum.Enum.Common_Chest:
-                return null;
+                return GenerateCommonChestItems();
             case ContainerTypeEnum.Enum.Uncommon_Chest:
                 return null;
             case ContainerTypeEnum.Enum.Rare_Chest:
@@ -41,18 +41,28 @@ public class LootGenerator : MonoBehaviour
         }
     }
 
+    private List<Item> GenerateCommonChestItems()
+    {
+        var chestItemsList = new List<Item>();
+
+        chestItemsList.Add(GenerateGold(ContainerTypeEnum.Enum.Common_Chest));
+        chestItemsList.AddRange(RandomizeItems(3, 5));
+
+        return chestItemsList;
+    }
+
     private List<Item> GenerateZombieItems()
     {
         var zombieItemsList = new List<Item>();
         zombieItemsList.Add(GenerateGold(ContainerTypeEnum.Enum.Zombie));
-        zombieItemsList.Add(GenerateSimpleWeapon());
+        zombieItemsList.Add(GenerateRandomWeapon());
 
         return zombieItemsList;
     }
 
     private Gold GenerateGold(ContainerTypeEnum.Enum containerType)
     {
-        var gold = Instantiate(ItemsCollection.Instance.gold);
+        Gold gold = Instantiate(ItemsCollection.Instance.gold);
 
         switch (containerType)
         {
@@ -65,6 +75,7 @@ public class LootGenerator : MonoBehaviour
 
             // Chests
             case ContainerTypeEnum.Enum.Common_Chest:
+                gold.SetCount(7, 18);
                 return gold;
             case ContainerTypeEnum.Enum.Uncommon_Chest:
                 return gold;
@@ -80,7 +91,7 @@ public class LootGenerator : MonoBehaviour
         }
     }
 
-    private Item GenerateSimpleWeapon()
+    private Item GenerateRandomWeapon()
     {
         int minSeed = 1;
         int maxSeed = 3;
@@ -105,5 +116,19 @@ public class LootGenerator : MonoBehaviour
     private Item GenerateWeapon(Weapon weapon)
     {
         return weapon = ItemsCollection.Instance.GetWeapon(weapon);
+    }
+
+    // ToDo Improve
+    private List<Item> RandomizeItems(uint minCount, uint maxCount)
+    {
+        var generatedItems = new List<Item>();
+        var count = Random.Range(minCount, maxCount);
+
+        for (int i = 0; i < count; i++)
+        {
+            generatedItems.Add(GenerateRandomWeapon());
+        }
+
+        return generatedItems;
     }
 }

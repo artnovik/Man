@@ -4,40 +4,28 @@ using UnityEngine;
 
 public class ChestAnimation : MonoBehaviour
 {
-    /*[SerializeField] private Animation openAnimation;
-    [SerializeField] private Animation closeAnimation;
-    [SerializeField] private Animation emptyAnimation;
+    private Animator chestAnimator;
+
+    private void Awake()
+    {
+        chestAnimator = GetComponent<Animator>();
+    }
 
     public void OpenChestAnimation()
     {
-        openAnimation.Play();
+        //chestAnimator.enabled = true;
+        chestAnimator.Play("Chest_Open");
     }
 
     public void CloseChestAnimation()
     {
-        closeAnimation.Play();
+        //chestAnimator.enabled = true;
+        chestAnimator.Play("Chest_Close");
     }
 
     public void EmptyChestAnimation()
     {
-        emptyAnimation.Play();
-    }*/
-
-    public void OpenChestAnimation()
-    {
-        GetComponent<Animator>().enabled = true;
-        GetComponent<Animator>().Play("Chest_Open");
-    }
-
-    public void CloseChestAnimation()
-    {
-        GetComponent<Animator>().enabled = true;
-        GetComponent<Animator>().Play("Chest_Close");
-    }
-
-    public void EmptyChestAnimation()
-    {
-        GetComponent<Animator>().enabled = true;
-        GetComponent<Animator>().Play("Chest_Empty");
+        //chestAnimator.enabled = true;
+        chestAnimator.Play("Chest_Empty");
     }
 }

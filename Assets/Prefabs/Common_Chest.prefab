@@ -119,8 +119,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4748907462504496}
   - component: {fileID: 65377705746236764}
-  - component: {fileID: 114032566678741318}
   - component: {fileID: 95525284190410546}
+  - component: {fileID: 114279572431406446}
   - component: {fileID: 114447147290155144}
   m_Layer: 0
   m_Name: Common_Chest
@@ -949,7 +949,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1399722805340738}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 5a09889ca6302b04482e985da95db836, type: 2}
   m_CullingMode: 0
@@ -960,7 +960,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114032566678741318
+--- !u!114 &114279572431406446
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -968,17 +968,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1399722805340738}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 311523baddab3104ebc6170b0e491999, type: 3}
+  m_Script: {fileID: 11500000, guid: 704380820a823a943a16f6e35282878b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 3
   containerType: 0
-  containerItems:
-  - {fileID: 11400000, guid: 36a44598bf5b66e42953a15e8f685962, type: 2}
-  - {fileID: 11400000, guid: 08e931f4d3fb40741b1691b9c1be5386, type: 2}
-  - {fileID: 11400000, guid: 710eb93626f79ae41bdb798829bd63ec, type: 2}
-  - {fileID: 11400000, guid: 7dd4a9dfc17a021438595d2f293d2563, type: 2}
-  - {fileID: 11400000, guid: 9b90694c0ca5d444da8377d4e9a07354, type: 2}
+  containerItems: []
+  chestAnim: {fileID: 0}
 --- !u!114 &114447147290155144
 MonoBehaviour:
   m_ObjectHideFlags: 1
