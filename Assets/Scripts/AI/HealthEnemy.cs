@@ -109,7 +109,8 @@ public class HealthEnemy : Health
 
         // ToDo Temp
         Destroy(weaponObject.gameObject);
-        ContainerGenerator.Instance.GenerateContainerObject(containerPlaceTransform, enemyType);
+        ContainerGenerator.Instance.GenerateAndFillContainer(ContainerGenerator.Instance.containerCorpsePrefab,
+            containerPlaceTransform, enemyType);
         Destroy(gameObject);
     }
 

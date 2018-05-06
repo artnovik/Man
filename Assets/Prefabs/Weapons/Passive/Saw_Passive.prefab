@@ -37,10 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4240551772322296}
   - component: {fileID: 65010490026032760}
-  - component: {fileID: 114057606148568438}
   - component: {fileID: 54263307468132966}
-  - component: {fileID: 114492293352728890}
-  - component: {fileID: 114016900424885616}
   m_Layer: 0
   m_Name: Saw_Passive
   m_TagString: WeaponInPlayerHands
@@ -88,6 +85,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 7f3cefad3a46b0a4fac6a8c5c3129cee, type: 2}
   m_StaticBatchInfo:
@@ -143,40 +141,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.36, y: 0.86, z: 0.04}
   m_Center: {x: -0.11, y: 0.29, z: 0.0000010386952}
---- !u!114 &114016900424885616
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1504315475700426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6db314b195a035b4aa93bfa00ff91b3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 2
-  weaponStats: {fileID: 0}
---- !u!114 &114057606148568438
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1504315475700426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf7922c9796079741a4509714ba74d3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponStats: {fileID: 11400000, guid: 710eb93626f79ae41bdb798829bd63ec, type: 2}
---- !u!114 &114492293352728890
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1504315475700426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f472af8f2dd5c7a45882520305b0094f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 2

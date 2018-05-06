@@ -26,11 +26,15 @@ public class InventoryUI : MonoBehaviour
 
     [SerializeField] private Text goldCount;
 
+    [SerializeField] private Button useButton;
+    [SerializeField] private Button dropButton;
+    [SerializeField] private Button destroyButton;
+
     private Inventory inventory;
     public Transform itemsContainer;
     private InventorySlot[] slots;
 
-    public InventorySlot CurrentSelectedSlot;
+    public InventorySlot currentSelectedSlot;
 
     private void UpdateInventoryUI()
     {
@@ -45,12 +49,11 @@ public class InventoryUI : MonoBehaviour
             else
             {
                 slots[i].ClearSlot();
-                /*if (inventory.items.Count == 0)
-                {*/
-                ClearInfoWindow();
-                //}
             }
         }
+
+        MakeAllSlotsInactive();
+        SelectFirstSlot();
     }
 
     public void SelectItem(InventorySlot slot)
@@ -60,14 +63,100 @@ public class InventoryUI : MonoBehaviour
 
     public void UseItem()
     {
+        UIGamePlay.Instance.DisplayMessage("Coming soon...", Colors.greenMessage, 2f, false);
     }
 
     public void DropItem()
     {
-        Inventory.Instance.RemoveItem(CurrentSelectedSlot.slotItem);
+        Inventory.Instance.AddToDropList(currentSelectedSlot.slotItem);
     }
 
-    public void FillInfoWindow(Sprite sprite, string name, uint minDamage, uint maxDamage,
+    public void DestroyItem()
+    {
+        // TODO Make by index
+        Inventory.Instance.DestroyItem(currentSelectedSlot.slotItem);
+    }
+
+    private void SelectFirstSlot()
+    {
+        slots[0].Select();
+    }
+
+    public void SelectNextSlot(bool isFirstSlotActive)
+    {
+        if (isFirstSlotActive)
+        {
+            foreach (InventorySlot slot in slots)
+            {
+                if (slot.slotButton.GetComponent<Image>().color == Colors.playerActiveUI)
+                {
+                    return;
+                }
+            }
+
+            SelectFirstSlot();
+        }
+        else
+        {
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (slots[i] == currentSelectedSlot)
+                {
+                    slots[i].ClearSlot();
+                    MakeAllSlotsInactive();
+
+                    if (i > 0)
+                    {
+                        slots[i - 1].Select();
+                    }
+                }
+            }
+        }
+    }
+
+    public void MakeSlotActive(InventorySlot clickedSlot)
+    {
+        MakeAllSlotsInactive();
+        clickedSlot.slotButton.GetComponent<Image>().color = Colors.playerActiveUI;
+        clickedSlot.countText.color = Color.white;
+
+        ActivateItemInfo(true);
+    }
+
+    public void MakeAllSlotsInactive()
+    {
+        foreach (InventorySlot slot in slots)
+        {
+            slot.slotButton.GetComponent<Image>().color = Colors.playerDefaultUI;
+            slot.countText.color = Color.black;
+        }
+
+        ActivateItemInfo(false);
+    }
+
+    private void ActivateItemInfo(bool value)
+    {
+        useButton.gameObject.SetActive(value);
+        dropButton.gameObject.SetActive(value);
+        destroyButton.gameObject.SetActive(value);
+
+        if (value)
+        {
+            var weapon = currentSelectedSlot.slotItem as Weapon;
+            if (weapon != null)
+            {
+                FillInfoWindow(weapon.inventorySprite, weapon.name, weapon.minDamage,
+                    weapon.maxDamage, weapon.DamageType, weapon.Speed, weapon.Range,
+                    weapon.description);
+            }
+        }
+        else
+        {
+            ClearInfoWindow();
+        }
+    }
+
+    private void FillInfoWindow(Sprite sprite, string name, uint minDamage, uint maxDamage,
         Weapon.DamageTypeEnum damageType, Weapon.SpeedEnum speed, Weapon.RangeEnum range,
         string description)
     {
@@ -85,5 +174,11 @@ public class InventoryUI : MonoBehaviour
         infoItemDamage.text = string.Empty;
         infoItemTypes.text = string.Empty;
         infoItemDescription.text = string.Empty;
+    }
+
+    public void InventoryCloseClick()
+    {
+        inventory.GenerateIfDrop();
+        UIGamePlay.Instance.InventoryClose();
     }
 }

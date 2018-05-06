@@ -37,10 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4074918933283172}
   - component: {fileID: 65420180336646160}
-  - component: {fileID: 114176549485203958}
   - component: {fileID: 54396279577694678}
-  - component: {fileID: 114961671341709058}
-  - component: {fileID: 114064106429004812}
   m_Layer: 0
   m_Name: Scythe_Big_Passive
   m_TagString: WeaponInPlayerHands
@@ -88,6 +85,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 7f3cefad3a46b0a4fac6a8c5c3129cee, type: 2}
   m_StaticBatchInfo:
@@ -143,40 +141,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.84, y: 1.5, z: 0.04}
   m_Center: {x: 0.26, y: -0.19, z: 0.0000010386952}
---- !u!114 &114064106429004812
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1859788294356692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6db314b195a035b4aa93bfa00ff91b3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 2
-  weaponStats: {fileID: 0}
---- !u!114 &114176549485203958
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1859788294356692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf7922c9796079741a4509714ba74d3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponStats: {fileID: 11400000, guid: 7dd4a9dfc17a021438595d2f293d2563, type: 2}
---- !u!114 &114961671341709058
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1859788294356692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f472af8f2dd5c7a45882520305b0094f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 2

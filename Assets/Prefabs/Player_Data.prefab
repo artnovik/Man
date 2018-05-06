@@ -3891,6 +3891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryCapacity: 27
   items: []
+  droppedItems: []
 --- !u!114 &114639437364046904
 MonoBehaviour:
   m_ObjectHideFlags: 1

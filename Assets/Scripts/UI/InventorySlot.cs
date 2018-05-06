@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class InventorySlot : MonoBehaviour
 {
     public Image icon;
+    public Button slotButton;
+    public Text countText;
     public Item slotItem;
 
     public void AddItem(Item newItem)
@@ -14,7 +16,6 @@ public class InventorySlot : MonoBehaviour
         icon.enabled = true;
     }
 
-
     public void ClearSlot()
     {
         slotItem = null;
@@ -23,32 +24,17 @@ public class InventorySlot : MonoBehaviour
         icon.enabled = false;
     }
 
-    public void OnRemoveButtonClick()
-    {
-        Inventory.Instance.RemoveItem(slotItem);
-    }
-
+    // Modify for all selectable Items
     public void Select()
     {
         if (slotItem != null)
         {
-            /*InventoryUI.Instance.FillInfoWindow(item.inventorySprite, item.name, item.minDamage,
-                item.maxDamage, item.DamageType, item.Speed, item.Range,
-                item.description);*/
-
-            InventoryUI.Instance.CurrentSelectedSlot = this;
-
-            var weapon = slotItem as Weapon;
-            if (weapon != null)
-            {
-                InventoryUI.Instance.FillInfoWindow(weapon.inventorySprite, weapon.name, weapon.minDamage,
-                    weapon.maxDamage, weapon.DamageType, weapon.Speed, weapon.Range,
-                    weapon.description);
-            }
+            InventoryUI.Instance.currentSelectedSlot = this;
+            InventoryUI.Instance.MakeSlotActive(this);
         }
         else
         {
-            InventoryUI.Instance.ClearInfoWindow();
+            InventoryUI.Instance.MakeAllSlotsInactive();
         }
     }
 }

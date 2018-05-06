@@ -37,7 +37,6 @@ public class Inventory : MonoBehaviour
         if (goldValueAfterRemove < 0)
         {
             UIGamePlay.Instance.DisplayMessage("Not enough gold", Colors.redMessage, 2f, false);
-            return;
         }
         else
         {
@@ -58,7 +57,37 @@ public class Inventory : MonoBehaviour
         onItemChangedCallback?.Invoke();
     }
 
-    public void RemoveItem(Item item)
+    // ToDo All this by Index
+
+    public List<Item> droppedItems = new List<Item>();
+
+    public void AddToDropList(Item item)
+    {
+        if (droppedItems.Count == 10)
+        {
+            UIGamePlay.Instance.DisplayMessage("You can drop only 10 items at once", Colors.redMessage, 2f, false);
+            return;
+        }
+
+        droppedItems.Add(item);
+        items.Remove(item);
+
+        // ToDo TEMP CONVINIENCE
+        InventoryUI.Instance.SelectNextSlot(true);
+        onItemChangedCallback?.Invoke();
+    }
+
+    public void GenerateIfDrop()
+    {
+        if (droppedItems.Count > 0)
+        {
+            ContainerGenerator.Instance.GenerateAndFillContainer(ContainerGenerator.Instance.containerJunkPrefab,
+                PlayerData.Instance.transform, ContainerTypeEnum.Enum.Junk, droppedItems);
+            droppedItems.Clear();
+        }
+    }
+
+    public void DestroyItem(Item item)
     {
         items.Remove(item);
 
