@@ -95,7 +95,7 @@ public class LootGenerator : MonoBehaviour
     {
         int minSeed = 1;
         int maxSeed = 3;
-        int randSeed = Random.Range(minSeed, maxSeed);
+        int randSeed = Random.Range(minSeed, maxSeed+1);
 
         switch (randSeed)
         {
@@ -122,7 +122,7 @@ public class LootGenerator : MonoBehaviour
     private List<Item> RandomizeItems(uint minCount, uint maxCount)
     {
         var generatedItems = new List<Item>();
-        var count = Random.Range(minCount, maxCount);
+        var count = Random.Range(minCount, maxCount+1);
 
         for (int i = 0; i < count; i++)
         {

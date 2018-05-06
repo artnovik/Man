@@ -12,7 +12,7 @@ public class Gold : Item
 
     public override void SetCount(int minValue, int maxValue)
     {
-        count = Random.Range(minValue, maxValue);
+        count = Random.Range(minValue, maxValue+1);
     }
 
     public override void SetCount(int concreteValue)

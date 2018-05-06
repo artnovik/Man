@@ -18,17 +18,17 @@ public abstract class Container : Interactable
 
     public void MoveAllItemsToInventory()
     {
-        foreach (Item item in containerItems.ToList())
+        for (int i = containerItems.Count - 1; i > -1; i--)
         {
-            MoveItemToInventory(item);
+            MoveItemToInventory(i);
         }
     }
 
-    public void MoveItemToInventory(Item item)
+    public void MoveItemToInventory(int itemIndex)
     {
-        if (item is Gold)
+        if (containerItems[itemIndex] is Gold)
         {
-            Inventory.Instance.AddGold(item.GetCount());
+            Inventory.Instance.AddGold(containerItems[itemIndex].GetCount());
         }
         else
         {
@@ -37,11 +37,11 @@ public abstract class Container : Interactable
                 return;
             }
 
-            Inventory.Instance.AddItem(item);
+            Inventory.Instance.AddItem(containerItems[itemIndex]);
         }
 
         ContainerUI.Instance.SelectNextSlot(false); // If any but first slot was active 
-        containerItems.Remove(item);
+        containerItems.RemoveAt(itemIndex);
         ContainerUI.Instance.UpdateContainerSlots(this);
         ContainerUI.Instance.SelectNextSlot(true); // If first slot was active 
         IfContainerEmpty();

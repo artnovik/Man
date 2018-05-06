@@ -39,7 +39,7 @@ public class Weapon : Item
 
     public int GetDamage()
     {
-        return (int) Random.Range(minDamage, maxDamage);
+        return (int) Random.Range(minDamage, maxDamage+1);
     }
 
     public string GetName()

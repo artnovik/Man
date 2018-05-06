@@ -35,12 +35,12 @@ public class ContainerSlot : MonoBehaviour
     {
         if (slotItem != null)
         {
-            ContainerUI.Instance.currentClickedItem = slotItem;
+            ContainerUI.Instance.currentSelectedSlot = this;
             ContainerUI.Instance.MakeSlotActive(this);
         }
         else
         {
-            ContainerUI.Instance.currentClickedItem = null;
+            ContainerUI.Instance.currentSelectedSlot = null;
             ContainerUI.Instance.MakeAllSlotsInactive();
         }
     }

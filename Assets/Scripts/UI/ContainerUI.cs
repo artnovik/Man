@@ -36,8 +36,7 @@ public class ContainerUI : MonoBehaviour
 
     [SerializeField] private RectTransform slotsContainer;
     public ContainerSlot[] slots;
-
-    public Item currentClickedItem;
+    public ContainerSlot currentSelectedSlot;
 
     public Container currentContainer;
 
@@ -97,7 +96,7 @@ public class ContainerUI : MonoBehaviour
         {
             for (int i = 0; i < slots.Length; i++)
             {
-                if (slots[i].slotItem == currentClickedItem)
+                if (slots[i] == currentSelectedSlot)
                 {
                     slots[i].ClearSlot();
                     MakeAllSlotsInactive();
@@ -128,7 +127,8 @@ public class ContainerUI : MonoBehaviour
 
         if (value)
         {
-            FillInfoWindow(currentClickedItem.inventorySprite, currentClickedItem.name, currentClickedItem.description);
+            FillInfoWindow(currentSelectedSlot.slotItem.inventorySprite, currentSelectedSlot.slotItem.name,
+                currentSelectedSlot.slotItem.description);
         }
         else
         {
@@ -154,7 +154,7 @@ public class ContainerUI : MonoBehaviour
     {
         foreach (ContainerSlot slot in slots)
         {
-            if (currentClickedItem == slot.slotItem)
+            if (currentSelectedSlot.slotItem == slot.slotItem)
             {
                 slot.ClearSlot();
             }
@@ -165,7 +165,16 @@ public class ContainerUI : MonoBehaviour
 
     public void TakeItemClick()
     {
-        currentContainer.MoveItemToInventory(currentClickedItem);
+        int slotIndex = 0;
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (currentSelectedSlot == slots[i])
+            {
+                slotIndex = i;
+            }
+        }
+
+        currentContainer.MoveItemToInventory(slotIndex);
     }
 
     public void TakeAllItemsClick()
