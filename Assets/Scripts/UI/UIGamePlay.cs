@@ -318,6 +318,7 @@ public class UIGamePlay : MonoBehaviour
 
     [SerializeField] private Toggle FPS_SHOW_Toggle;
     [SerializeField] private Toggle LIFESTEAL_Toggle;
+    [SerializeField] private Toggle FAST_TESTING_Toggle;
 
     [SerializeField] private GameObject FPS_Text_GO;
 
@@ -326,6 +327,7 @@ public class UIGamePlay : MonoBehaviour
         GOD_MODE_Toggle.isOn = CheatManager.Instance.GOD_MODE;
         FPS_SHOW_Toggle.isOn = CheatManager.Instance.FPS_SHOW;
         LIFESTEAL_Toggle.isOn = CheatManager.Instance.LIFESTEAL;
+        FAST_TESTING_Toggle.isOn = CheatManager.Instance.FAST_TESTING;
 
         FPS_Text_GO.SetActive(CheatManager.Instance.FPS_SHOW);
     }
@@ -346,6 +348,10 @@ public class UIGamePlay : MonoBehaviour
         else if (clickedCheatToggle == LIFESTEAL_Toggle.gameObject)
         {
             CheatManager.Instance.SetLIFESTEAL(value);
+        }
+        else if (clickedCheatToggle == FAST_TESTING_Toggle.gameObject)
+        {
+            CheatManager.Instance.SetFAST_TESTING(value);
         }
     }
 

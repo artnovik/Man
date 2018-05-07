@@ -115,10 +115,11 @@ public class HealthEnemy : Health
     }
 
     // ToDO For For Debug purposes
-    /*private void OnMouseDown()
+    private void OnMouseDown()
     {
-        Death();
-    }*/
+        if (CheatManager.Instance.FAST_TESTING)
+            Death();
+    }
 
     #endregion
 }

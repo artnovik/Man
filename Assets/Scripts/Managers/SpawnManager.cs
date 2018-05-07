@@ -7,7 +7,7 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private bool autoSpawner;
 
-    private uint deadBodyDeleteDuration = 5; // ToDO For For Debug purposes. Standard value: 5
+    private uint deadBodyDeleteDuration = 0; // ToDO For For Debug purposes. Standard value: 5
 
     public GameObject enemyZombie;
     public Transform[] spawnPointsTransforms;
@@ -93,6 +93,8 @@ public class SpawnManager : MonoBehaviour
 
     public void GetStartTransforms(GameObject enemyPrefab)
     {
+        SetDeadBodyDeleteDuration(CheatManager.Instance.FAST_TESTING ? (uint) 0 : (uint) 5);
+
         allStartEnemies = GameObject.FindGameObjectsWithTag(enemyPrefab.tag);
 
         foreach (GameObject enemy in allStartEnemies)
