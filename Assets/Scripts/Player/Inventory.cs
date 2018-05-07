@@ -57,6 +57,11 @@ public class Inventory : MonoBehaviour
         onItemChangedCallback?.Invoke();
     }
 
+    public void Equip(Weapon weaponToEquip)
+    {
+        
+    }
+
     // ToDo All this by Index
 
     public List<Item> droppedItems = new List<Item>();

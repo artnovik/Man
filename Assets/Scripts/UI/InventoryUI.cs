@@ -52,7 +52,6 @@ public class InventoryUI : MonoBehaviour
             }
         }
 
-        MakeAllSlotsInactive();
         SelectFirstSlot();
     }
 
@@ -145,7 +144,7 @@ public class InventoryUI : MonoBehaviour
             var weapon = currentSelectedSlot.slotItem as Weapon;
             if (weapon != null)
             {
-                FillInfoWindow(weapon.inventorySprite, weapon.name, weapon.minDamage,
+                FillInfoWindowWithWEapon(weapon.inventorySprite, weapon.name, weapon.minDamage,
                     weapon.maxDamage, weapon.DamageType, weapon.Speed, weapon.Range,
                     weapon.description);
             }
@@ -156,7 +155,7 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    private void FillInfoWindow(Sprite sprite, string name, uint minDamage, uint maxDamage,
+    private void FillInfoWindowWithWEapon(Sprite sprite, string name, uint minDamage, uint maxDamage,
         Weapon.DamageTypeEnum damageType, Weapon.SpeedEnum speed, Weapon.RangeEnum range,
         string description)
     {
@@ -165,6 +164,8 @@ public class InventoryUI : MonoBehaviour
         infoItemDamage.text = "<color=#AA3232FF>" + minDamage + " - " + maxDamage + "</color> DMG (" + damageType + ")";
         infoItemTypes.text = speed + " speed, " + range + " range";
         infoItemDescription.text = description;
+
+        useButton.GetComponentInChildren<Text>().text = "Equip";
     }
 
     public void ClearInfoWindow()
@@ -174,6 +175,8 @@ public class InventoryUI : MonoBehaviour
         infoItemDamage.text = string.Empty;
         infoItemTypes.text = string.Empty;
         infoItemDescription.text = string.Empty;
+
+        useButton.GetComponentInChildren<Text>().text = "Use";
     }
 
     public void InventoryCloseClick()

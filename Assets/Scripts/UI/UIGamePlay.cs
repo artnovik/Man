@@ -167,7 +167,6 @@ public class UIGamePlay : MonoBehaviour
     public void InventoryOpen()
     {
         inventoryMenu.SetActive(!inventoryMenu.activeSelf);
-        InventoryUI.Instance.ClearInfoWindow();
         Time.timeScale = 0;
     }
 
