@@ -32,6 +32,7 @@ public class InventoryUI : MonoBehaviour
     private void UpdateInventoryUI()
     {
         goldCountText.text = Inventory.Instance.GetGoldCount().ToString();
+        SelectNextSlot(false);
 
         for (var i = 0; i < slots.Length; i++)
         {
@@ -44,12 +45,13 @@ public class InventoryUI : MonoBehaviour
                 slots[i].ClearSlot();
             }
         }
+
+        SelectNextSlot(true);
     }
 
-    public void InitializeUI()
+    private void OnEnable()
     {
         UpdateInventoryUI();
-        SelectFirstSlot();
         StopWeaponEquipment();
     }
 
@@ -134,9 +136,8 @@ public class InventoryUI : MonoBehaviour
     {
         hintSelectEquipText.gameObject.SetActive(true);
         backgroundOnEquipImage.gameObject.SetActive(true);
-        cachedWeaponToEquip = currentSelectedSlot.slotItem as Weapon;
+        cachedWeaponToEquip = slots[GetCurrentSlotIndex()].slotItem as Weapon;
         inventory.equipMode = true;
-        inventory.EquipWeapon(cachedWeaponToEquip);
         equipAnimator.Play("Glow");
     }
 
@@ -156,7 +157,12 @@ public class InventoryUI : MonoBehaviour
         {
             clickedButtonGO.transform.GetChild(0).GetComponent<Image>().sprite = cachedWeaponToEquip.inventorySprite;
             clickedButtonGO.transform.GetChild(0).GetComponent<Image>().color = Colors.playerDefaultUI;
+            Inventory.Instance.EquipWeapon(GetCurrentSlotIndex());
             StopWeaponEquipment();
+        }
+        else
+        {
+            // ToDo Fill for general usage
         }
     }
 
@@ -178,7 +184,7 @@ public class InventoryUI : MonoBehaviour
 
         if (value)
         {
-            var weapon = currentSelectedSlot.slotItem as Weapon;
+            var weapon = slots[GetCurrentSlotIndex()].slotItem as Weapon;
             if (weapon != null)
             {
                 FillInfoWindowWithWEapon(weapon.inventorySprite, weapon.name, weapon.minDamage,
@@ -229,11 +235,11 @@ public class InventoryUI : MonoBehaviour
     {
         if (currentSelectedSlot != null)
         {
-            if (currentSelectedSlot.slotItem is Weapon)
+            if (slots[GetCurrentSlotIndex()].slotItem is Weapon)
             {
                 StartWeaponEquipment();
             }
-            else if (currentSelectedSlot.slotItem is Consumable)
+            else if (slots[GetCurrentSlotIndex()].slotItem is Consumable)
             {
                 // ToDo Potion Equip mode
             }
@@ -244,16 +250,15 @@ public class InventoryUI : MonoBehaviour
     {
         if (currentSelectedSlot != null)
         {
-            Inventory.Instance.AddToDropList(currentSelectedSlot.slotItem);
+            Inventory.Instance.AddToDropList(GetCurrentSlotIndex());
         }
     }
 
     public void DestroyItem()
     {
-        // TODO Make by index
         if (currentSelectedSlot != null)
         {
-            Inventory.Instance.DestroyItem(currentSelectedSlot.slotItem);
+            Inventory.Instance.DestroyItem(GetCurrentSlotIndex());
         }
     }
 
@@ -261,6 +266,20 @@ public class InventoryUI : MonoBehaviour
     {
         inventory.GenerateIfDrop();
         UIGamePlay.Instance.InventoryClose();
+    }
+
+    private int GetCurrentSlotIndex()
+    {
+        int slotIndex = 0;
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (currentSelectedSlot == slots[i])
+            {
+                slotIndex = i;
+            }
+        }
+
+        return slotIndex;
     }
 
     #endregion

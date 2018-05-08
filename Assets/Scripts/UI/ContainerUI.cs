@@ -127,8 +127,9 @@ public class ContainerUI : MonoBehaviour
 
         if (value)
         {
-            FillInfoWindow(currentSelectedSlot.slotItem.inventorySprite, currentSelectedSlot.slotItem.name,
-                currentSelectedSlot.slotItem.description);
+            FillInfoWindow(slots[GetCurrentSlotIndex()].slotItem.inventorySprite,
+                slots[GetCurrentSlotIndex()].slotItem.name,
+                slots[GetCurrentSlotIndex()].slotItem.description);
         }
         else
         {
@@ -152,18 +153,12 @@ public class ContainerUI : MonoBehaviour
 
     private void ClearActiveSlot()
     {
-        foreach (ContainerSlot slot in slots)
-        {
-            if (currentSelectedSlot.slotItem == slot.slotItem)
-            {
-                slot.ClearSlot();
-            }
-        }
+        slots[GetCurrentSlotIndex()].ClearSlot();
 
         MakeAllSlotsInactive();
     }
 
-    public void TakeItemClick()
+    private int GetCurrentSlotIndex()
     {
         int slotIndex = 0;
         for (int i = 0; i < slots.Length; i++)
@@ -174,7 +169,12 @@ public class ContainerUI : MonoBehaviour
             }
         }
 
-        currentContainer.MoveItemToInventory(slotIndex);
+        return slotIndex;
+    }
+
+    public void TakeItemClick()
+    {
+        currentContainer.MoveItemToInventory(GetCurrentSlotIndex());
     }
 
     public void TakeAllItemsClick()
