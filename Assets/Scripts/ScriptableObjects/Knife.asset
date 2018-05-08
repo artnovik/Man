@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Name: Knife
   m_EditorClassIdentifier: 
   name: Knife
-  description: Little, yet sharp piece of steel.
   inventorySprite: {fileID: 21300000, guid: 76529888fb586f541876bdc029c135d3, type: 3}
-  gamePrefab: {fileID: 1288697540270052, guid: bb5df6b26248c7d4fbb3ad829d674ff8, type: 2}
-  minDamage: 24
-  maxDamage: 29
-  staminaConsume: 10
+  description: Little, yet sharp piece of steel.
   buyValue: 5
   sellValue: 1
-  Speed: 0
-  Range: 0
+  ItemType: 0
+  weaponPrefab: {fileID: 1779079416229024, guid: deeea3d3e86513344acfa6a0d2f29b22,
+    type: 2}
   DamageType: 0
+  maxDamage: 29
+  minDamage: 24
+  Range: 0
+  Speed: 0
+  staminaConsume: 10

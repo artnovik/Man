@@ -141,9 +141,20 @@ public class UIGamePlay : MonoBehaviour
 
     public void SwitchWeapon()
     {
+        int prevIndex = PlayerData.Instance.curIndexWeapon;
         PlayerData.Instance.NextWeapon();
         AudioManager.Instance.WeaponChangeSound();
-        numberWeapon.text = (PlayerData.Instance.curIndexWeapon + 1).ToString();
+
+        // ToDo Temp, but not bad
+        /*if (PlayerData.Instance.curIndexWeapon != prevIndex)
+        {
+            numberWeapon.text = (PlayerData.Instance.curIndexWeapon + 1).ToString();
+        }*/
+    }
+
+    public void SetWeaponNumberText(int index)
+    {
+        numberWeapon.text = index.ToString();
     }
 
     public void PickUp()

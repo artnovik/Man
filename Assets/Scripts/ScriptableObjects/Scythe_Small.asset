@@ -11,15 +11,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b5f569208e99db4ba9af20395badb6b, type: 3}
   m_Name: Scythe_Small
   m_EditorClassIdentifier: 
-  buyValue: 5
-  DamageType: 0
-  description: Little scythe.
-  gamePrefab: {fileID: 0}
+  name: Small Scythe
   inventorySprite: {fileID: 21300000, guid: f510e922ac39657449d5369dc33f7d26, type: 3}
+  description: Little scythe.
+  buyValue: 5
+  sellValue: 1
+  ItemType: 0
+  weaponPrefab: {fileID: 1869397247307740, guid: 04e4e28be470484468b536fe8ac06263,
+    type: 2}
+  DamageType: 0
   maxDamage: 29
   minDamage: 24
-  name: Small Scythe
   Range: 0
-  sellValue: 1
   Speed: 0
   staminaConsume: 10

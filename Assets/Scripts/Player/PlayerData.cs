@@ -5,14 +5,10 @@ using UnityEngine;
 public class PlayerData : MonoBehaviourSingleton<PlayerData>
 {
     [Header("Data")] public CameraControl cameraControl;
-
-    public Transform dropItemsPoint;
     public bool inBattle;
 
     public bool isPaused;
     public Locomotion locomotion;
-
-    public float pickUpRadius = 2f;
 
     [HideInInspector] public Collider playerCollider;
 
@@ -34,13 +30,13 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         locomotion.animator.transform.SetParent(null);
         localTransform = transform;
 
-        foreach (GameObject weapon in listWeapons)
+        /*foreach (GameObject weapon in listWeapons)
         foreach (Collider weaponCollider in weapon.GetComponentsInChildren<Collider>())
             weaponCollider.enabled = false;
 
         GetCurrentWeaponColliders();
 
-        SwitchWeapon(curIndexWeapon);
+        SwitchWeapon(curIndexWeapon);*/
     }
 
     private void Update()
@@ -175,28 +171,50 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
 
     [Header("Weapons")] public int curIndexWeapon;
 
+    [SerializeField] private Transform weaponParent;
     public List<GameObject> listWeapons = new List<GameObject>();
-    private WeaponObject currentWeapon;
+    [SerializeField] private WeaponObject currentWeapon;
+    [SerializeField] private GameObject currentWeaponModel;
 
     [HideInInspector] public Collider[] currentWeaponColliders;
 
+    public void EquipWeapon(GameObject weaponGO, int slotIndex)
+    {
+        if (slotIndex <= 1)
+        {
+            curIndexWeapon = slotIndex;
+
+            currentWeaponModel = listWeapons[curIndexWeapon] = Instantiate(weaponGO, weaponParent);
+            UIGamePlay.Instance.SetWeaponNumberText(curIndexWeapon + 1);
+            DisableCurrentWeaponColliders();
+            currentWeapon = listWeapons[curIndexWeapon]?.GetComponent<WeaponObject>();
+        }
+        else
+        {
+            Debug.Log("Check slotIndex value");
+        }
+    }
+
     public void NextWeapon()
     {
+        int prevIndex = curIndexWeapon;
         curIndexWeapon++;
 
         if (curIndexWeapon >= listWeapons.Count)
         {
-            curIndexWeapon = 0;
+            curIndexWeapon = prevIndex;
         }
 
-        SwitchWeapon(curIndexWeapon);
+        if (prevIndex != curIndexWeapon)
+        {
+            Destroy(currentWeaponModel);
+            SwitchWeapon(curIndexWeapon);
+        }
     }
 
     private void SwitchWeapon(int index)
     {
-        for (var i = 0; i < listWeapons.Count; i++) listWeapons[i].SetActive(i == index);
-
-        GetCurrentWeaponColliders();
+        Instantiate(listWeapons[index], weaponParent);
     }
 
     public WeaponObject GetCurrentWeapon()
@@ -207,6 +225,14 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
     private Collider[] GetCurrentWeaponColliders()
     {
         return currentWeaponColliders = listWeapons[curIndexWeapon].GetComponentsInChildren<Collider>();
+    }
+
+    public void DisableCurrentWeaponColliders()
+    {
+        foreach (var collider in GetCurrentWeaponColliders())
+        {
+            collider.enabled = false;
+        }
     }
 
     public void SwitchWeaponColliders()

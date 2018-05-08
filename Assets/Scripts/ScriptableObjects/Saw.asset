@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Name: Saw
   m_EditorClassIdentifier: 
   name: Saw
-  description: Sharp saw, even for your bones.
   inventorySprite: {fileID: 21300000, guid: 8c2eeb529be46d949bc83da4c0b4a4e9, type: 3}
-  gamePrefab: {fileID: 1504315475700426, guid: 929c7d88b83cac7409849fc0f1e63346, type: 2}
-  minDamage: 31
-  maxDamage: 36
-  staminaConsume: 13
+  description: Sharp saw, even for your bones.
   buyValue: 7
   sellValue: 2
-  Speed: 0
-  Range: 0
+  ItemType: 0
+  weaponPrefab: {fileID: 1741675144258840, guid: 1bb0c3f83a6ea49408ce24dafea5ec7d,
+    type: 2}
   DamageType: 0
+  maxDamage: 36
+  minDamage: 31
+  Range: 0
+  Speed: 0
+  staminaConsume: 13

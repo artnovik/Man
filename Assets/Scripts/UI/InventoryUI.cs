@@ -157,7 +157,8 @@ public class InventoryUI : MonoBehaviour
         {
             clickedButtonGO.transform.GetChild(0).GetComponent<Image>().sprite = cachedWeaponToEquip.inventorySprite;
             clickedButtonGO.transform.GetChild(0).GetComponent<Image>().color = Colors.playerDefaultUI;
-            Inventory.Instance.EquipWeapon(GetCurrentSlotIndex());
+            Inventory.Instance.EquipWeapon(GetCurrentSlotIndex(),
+                clickedButtonGO.GetComponent<EquipSlot>().equipSlotIndex);
             StopWeaponEquipment();
         }
         else

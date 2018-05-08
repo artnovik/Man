@@ -3,6 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New weapon", menuName = "Weapon")]
 public class Weapon : Item
 {
+    public GameObject weaponPrefab;
+
     public enum DamageTypeEnum
     {
         Normal = 0,
@@ -39,7 +41,7 @@ public class Weapon : Item
 
     public int GetDamage()
     {
-        return (int) Random.Range(minDamage, maxDamage+1);
+        return (int) Random.Range(minDamage, maxDamage + 1);
     }
 
     public string GetName()

@@ -90,14 +90,16 @@ public class Inventory : MonoBehaviour
     private List<Weapon> equippedWeapons = new List<Weapon>(2);
     public bool equipMode;
 
-    public void EquipWeapon(int weaponSlotIndex)
+    public void EquipWeapon(int weaponSlotIndex, int equipSlotIndex)
     {
-        // ToDo For each equip slot by index
-        if (equippedWeapons.Count < 2)
+        var weaponToEquip = items[weaponSlotIndex] as Weapon;
+        equippedWeapons.Add(weaponToEquip);
+        DestroyItem(weaponSlotIndex);
+        onInventoryChangeCallback.Invoke();
+
+        if (weaponToEquip != null)
         {
-            equippedWeapons.Add(items[weaponSlotIndex] as Weapon);
-            DestroyItem(weaponSlotIndex);
-            onInventoryChangeCallback.Invoke();
+            PlayerData.Instance.EquipWeapon(weaponToEquip.weaponPrefab, equipSlotIndex);
         }
     }
 
