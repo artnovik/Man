@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
@@ -12,23 +13,13 @@ public class InventoryUI : MonoBehaviour
         Instance = this;
 
         inventory = Inventory.Instance;
-        inventory.onItemChangedCallback += UpdateInventoryUI;
+        inventory.onInventoryChangeCallback += UpdateInventoryUI;
         slots = itemsContainer.GetComponentsInChildren<InventorySlot>();
     }
 
     #endregion
 
-    [SerializeField] private Text infoItemDamage;
-    [SerializeField] private Text infoItemDescription;
-    [SerializeField] private Text infoItemName;
-    [SerializeField] private Image infoItemSprite;
-    [SerializeField] private Text infoItemTypes;
-
-    [SerializeField] private Text goldCount;
-
-    [SerializeField] private Button useButton;
-    [SerializeField] private Button dropButton;
-    [SerializeField] private Button destroyButton;
+    [SerializeField] private Text goldCountText;
 
     private Inventory inventory;
     public Transform itemsContainer;
@@ -36,9 +27,11 @@ public class InventoryUI : MonoBehaviour
 
     public InventorySlot currentSelectedSlot;
 
+    #region UI_Update_Logic
+
     private void UpdateInventoryUI()
     {
-        goldCount.text = Inventory.Instance.GetGoldCount().ToString();
+        goldCountText.text = Inventory.Instance.GetGoldCount().ToString();
 
         for (var i = 0; i < slots.Length; i++)
         {
@@ -51,29 +44,13 @@ public class InventoryUI : MonoBehaviour
                 slots[i].ClearSlot();
             }
         }
+    }
 
+    public void InitializeUI()
+    {
+        UpdateInventoryUI();
         SelectFirstSlot();
-    }
-
-    public void SelectItem(InventorySlot slot)
-    {
-        slot.Select();
-    }
-
-    public void UseItem()
-    {
-        UIGamePlay.Instance.DisplayMessage("Coming soon...", Colors.greenMessage, 2f, false);
-    }
-
-    public void DropItem()
-    {
-        Inventory.Instance.AddToDropList(currentSelectedSlot.slotItem);
-    }
-
-    public void DestroyItem()
-    {
-        // TODO Make by index
-        Inventory.Instance.DestroyItem(currentSelectedSlot.slotItem);
+        StopWeaponEquipment();
     }
 
     private void SelectFirstSlot()
@@ -133,6 +110,66 @@ public class InventoryUI : MonoBehaviour
         ActivateItemInfo(false);
     }
 
+    #endregion
+
+    #region EquipZone
+
+    [Header("Control Area")] [SerializeField]
+    private Button useButton;
+
+    [SerializeField] private Button dropButton;
+    [SerializeField] private Button destroyButton;
+
+    [Header("Equip Area")] [SerializeField]
+    private Animator equipAnimator;
+
+    [SerializeField] private Text hintSelectEquipText;
+    [SerializeField] private Image backgroundOnEquipImage;
+    [SerializeField] private Button weaponOneButton;
+    [SerializeField] private Button weaponTwoButton;
+
+    private Weapon cachedWeaponToEquip;
+
+    private void StartWeaponEquipment()
+    {
+        hintSelectEquipText.gameObject.SetActive(true);
+        backgroundOnEquipImage.gameObject.SetActive(true);
+        cachedWeaponToEquip = currentSelectedSlot.slotItem as Weapon;
+        inventory.equipMode = true;
+        inventory.EquipWeapon(cachedWeaponToEquip);
+        equipAnimator.Play("Glow");
+    }
+
+    public void StopWeaponEquipment()
+    {
+        hintSelectEquipText.gameObject.SetActive(false);
+        backgroundOnEquipImage.gameObject.SetActive(false);
+        inventory.equipMode = false;
+        equipAnimator.Play("Default");
+    }
+
+    public void EquipSlotClick()
+    {
+        var clickedButtonGO = EventSystem.current.currentSelectedGameObject;
+
+        if (inventory.equipMode)
+        {
+            clickedButtonGO.transform.GetChild(0).GetComponent<Image>().sprite = cachedWeaponToEquip.inventorySprite;
+            clickedButtonGO.transform.GetChild(0).GetComponent<Image>().color = Colors.playerDefaultUI;
+            StopWeaponEquipment();
+        }
+    }
+
+    #endregion
+
+    #region InfoWindow
+
+    [Header("Info Area")] [SerializeField] private Text infoItemDamage;
+    [SerializeField] private Text infoItemDescription;
+    [SerializeField] private Text infoItemName;
+    [SerializeField] private Image infoItemSprite;
+    [SerializeField] private Text infoItemTypes;
+
     private void ActivateItemInfo(bool value)
     {
         useButton.gameObject.SetActive(value);
@@ -168,7 +205,7 @@ public class InventoryUI : MonoBehaviour
         useButton.GetComponentInChildren<Text>().text = "Equip";
     }
 
-    public void ClearInfoWindow()
+    private void ClearInfoWindow()
     {
         infoItemSprite.sprite = null;
         infoItemName.text = string.Empty;
@@ -179,9 +216,52 @@ public class InventoryUI : MonoBehaviour
         useButton.GetComponentInChildren<Text>().text = "Use";
     }
 
+    #endregion
+
+    #region ButtonClicks
+
+    public void SelectItem(InventorySlot slot)
+    {
+        slot.Select();
+    }
+
+    public void UseItem()
+    {
+        if (currentSelectedSlot != null)
+        {
+            if (currentSelectedSlot.slotItem is Weapon)
+            {
+                StartWeaponEquipment();
+            }
+            else if (currentSelectedSlot.slotItem is Consumable)
+            {
+                // ToDo Potion Equip mode
+            }
+        }
+    }
+
+    public void DropItem()
+    {
+        if (currentSelectedSlot != null)
+        {
+            Inventory.Instance.AddToDropList(currentSelectedSlot.slotItem);
+        }
+    }
+
+    public void DestroyItem()
+    {
+        // TODO Make by index
+        if (currentSelectedSlot != null)
+        {
+            Inventory.Instance.DestroyItem(currentSelectedSlot.slotItem);
+        }
+    }
+
     public void InventoryCloseClick()
     {
         inventory.GenerateIfDrop();
         UIGamePlay.Instance.InventoryClose();
     }
+
+    #endregion
 }

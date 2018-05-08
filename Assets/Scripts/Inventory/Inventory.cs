@@ -14,20 +14,24 @@ public class Inventory : MonoBehaviour
 
     #endregion
 
-    public delegate void OnItemChanged();
+    public delegate void OnInventoryChange();
 
     public int inventoryCapacity = 27;
 
-    public OnItemChanged onItemChangedCallback;
+    public OnInventoryChange onInventoryChangeCallback;
     public List<Item> items = new List<Item>();
 
     private int gold;
+
+    public bool equipMode;
+
+    private List<Weapon> equippedWeapons = new List<Weapon>(2);
 
     public void AddGold(int count)
     {
         gold += count;
 
-        onItemChangedCallback?.Invoke();
+        onInventoryChangeCallback?.Invoke();
     }
 
     public void RemoveGold(int count)
@@ -41,7 +45,7 @@ public class Inventory : MonoBehaviour
         else
         {
             gold = goldValueAfterRemove;
-            onItemChangedCallback?.Invoke();
+            onInventoryChangeCallback?.Invoke();
         }
     }
 
@@ -54,10 +58,10 @@ public class Inventory : MonoBehaviour
     {
         items.Add(item);
 
-        onItemChangedCallback?.Invoke();
+        onInventoryChangeCallback?.Invoke();
     }
 
-    public void Equip(Weapon weaponToEquip)
+    public void EquipWeapon(Weapon weaponToEquip)
     {
         
     }
@@ -79,7 +83,7 @@ public class Inventory : MonoBehaviour
 
         // ToDo TEMP CONVINIENCE
         InventoryUI.Instance.SelectNextSlot(true);
-        onItemChangedCallback?.Invoke();
+        onInventoryChangeCallback?.Invoke();
     }
 
     public void GenerateIfDrop()
@@ -96,7 +100,7 @@ public class Inventory : MonoBehaviour
     {
         items.Remove(item);
 
-        onItemChangedCallback?.Invoke();
+        onInventoryChangeCallback?.Invoke();
     }
 
     public bool IsFull()
