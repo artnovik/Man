@@ -11870,7 +11870,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &767310510
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25628,6 +25628,9 @@ MonoBehaviour:
   inventoryCapacity: 27
   items:
   - {fileID: 11400000, guid: 08e931f4d3fb40741b1691b9c1be5386, type: 2}
+  equippedWeapons:
+  - {fileID: 0}
+  - {fileID: 0}
   equipMode: 0
   droppedItems: []
 --- !u!114 &1499738130

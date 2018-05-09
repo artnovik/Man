@@ -87,7 +87,7 @@ public class Inventory : MonoBehaviour
 
     #region Equipment
 
-    private List<Weapon> equippedWeapons = new List<Weapon>(2);
+    [SerializeField] private List<Weapon> equippedWeapons = new List<Weapon>();
     public bool equipMode;
 
     public void EquipWeapon(int weaponSlotIndex, int equipSlotIndex)
@@ -98,6 +98,8 @@ public class Inventory : MonoBehaviour
         {
             equippedWeapons.Add(weaponToEquip);
             DestroyItem(weaponSlotIndex);
+            
+            // If we want to swap - SwapSlots()
 
             onInventoryChangeCallback.Invoke();
 
