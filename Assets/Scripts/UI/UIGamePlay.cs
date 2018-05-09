@@ -62,7 +62,7 @@ public class UIGamePlay : MonoBehaviour
 
     private void Start()
     {
-        numberWeapon.text = (PlayerData.Instance.curIndexWeapon + 1).ToString();
+        numberWeapon.text = (PlayerData.Instance.currentWeaponIndex + 1).ToString();
         InitializeCheatsMenu();
         playerHitScreenEffectImage.gameObject.SetActive(false);
         screenEffectsGO.SetActive(false);
@@ -139,17 +139,9 @@ public class UIGamePlay : MonoBehaviour
             PlayerData.Instance.stateLockTarget ? Colors.playerActiveUI : Colors.playerDefaultUI;
     }
 
-    public void SwitchWeapon()
+    public void SwitchWeaponClick()
     {
-        int prevIndex = PlayerData.Instance.curIndexWeapon;
-        PlayerData.Instance.NextWeapon();
-        AudioManager.Instance.WeaponChangeSound();
-
-        // ToDo Temp, but not bad
-        /*if (PlayerData.Instance.curIndexWeapon != prevIndex)
-        {
-            numberWeapon.text = (PlayerData.Instance.curIndexWeapon + 1).ToString();
-        }*/
+        PlayerData.Instance.SwitchWeapon();
     }
 
     public void SetWeaponNumberText(int index)

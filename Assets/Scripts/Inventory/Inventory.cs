@@ -93,13 +93,16 @@ public class Inventory : MonoBehaviour
     public void EquipWeapon(int weaponSlotIndex, int equipSlotIndex)
     {
         var weaponToEquip = items[weaponSlotIndex] as Weapon;
-        equippedWeapons.Add(weaponToEquip);
-        DestroyItem(weaponSlotIndex);
-        onInventoryChangeCallback.Invoke();
 
         if (weaponToEquip != null)
         {
-            PlayerData.Instance.EquipWeapon(weaponToEquip.weaponPrefab, equipSlotIndex);
+            equippedWeapons.Add(weaponToEquip);
+            DestroyItem(weaponSlotIndex);
+
+            onInventoryChangeCallback.Invoke();
+
+            PlayerData.Instance.AddToEquipSlot(weaponToEquip.weaponPrefab, equipSlotIndex);
+            AudioManager.Instance.WeaponChangeSound();
         }
     }
 

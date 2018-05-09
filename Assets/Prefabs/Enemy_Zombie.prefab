@@ -3308,7 +3308,7 @@ MonoBehaviour:
   locomotion: {fileID: 114488230682809896}
   maxHealth: 100
   minHealth: 0
-  weaponObject: {fileID: 114091146308696338}
+  weaponData: {fileID: 114091146308696338}
   containerPlaceTransform: {fileID: 4081421246173280}
   enemyType: 5
 --- !u!114 &114091146308696338

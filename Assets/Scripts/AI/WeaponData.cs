@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class WeaponObject : MonoBehaviour
+public class WeaponData : MonoBehaviour
 {
     public Weapon weaponData;
 }

@@ -169,75 +169,103 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
 
     #region Weapon
 
-    [Header("Weapons")] public int curIndexWeapon;
+    [Header("Weapons")] public int currentWeaponIndex;
 
     [SerializeField] private Transform weaponParent;
-    public List<GameObject> listWeapons = new List<GameObject>();
-    [SerializeField] private WeaponObject currentWeapon;
-    [SerializeField] private GameObject currentWeaponModel;
+    public List<GameObject> weaponsList = new List<GameObject>(2);
+    [SerializeField] private WeaponData currentWeaponData;
+    [SerializeField] private GameObject currentWeaponGO;
 
     [HideInInspector] public Collider[] currentWeaponColliders;
 
-    public void EquipWeapon(GameObject weaponGO, int slotIndex)
+    public void AddToEquipSlot(GameObject weaponGO, int slotIndex)
     {
-        if (slotIndex <= 1)
-        {
-            curIndexWeapon = slotIndex;
+        // Add copy of Weapon into weaponsList
+        weaponsList[slotIndex] = Instantiate(weaponGO, weaponParent);
 
-            currentWeaponModel = listWeapons[curIndexWeapon] = Instantiate(weaponGO, weaponParent);
-            UIGamePlay.Instance.SetWeaponNumberText(curIndexWeapon + 1);
-            DisableCurrentWeaponColliders();
-            currentWeapon = listWeapons[curIndexWeapon]?.GetComponent<WeaponObject>();
-        }
-        else
+        // Disable it instantly
+        weaponsList[slotIndex].SetActive(false);
+
+        // If hands are empty, equipping this Weapon
+        if (currentWeaponGO == null)
         {
-            Debug.Log("Check slotIndex value");
+            EquipWeapon(slotIndex);
         }
     }
 
-    public void NextWeapon()
-    {
-        int prevIndex = curIndexWeapon;
-        curIndexWeapon++;
+    /*private void UnEquipWeapon(){}*/
 
-        if (curIndexWeapon >= listWeapons.Count)
+    public void SwitchWeapon()
+    {
+        int prevIndex = currentWeaponIndex;
+        
+        currentWeaponIndex++;
+
+        if (currentWeaponIndex >= weaponsList.Count)
         {
-            curIndexWeapon = prevIndex;
+            currentWeaponIndex = 0;
         }
 
-        if (prevIndex != curIndexWeapon)
+        if (prevIndex != currentWeaponIndex)
         {
-            Destroy(currentWeaponModel);
-            SwitchWeapon(curIndexWeapon);
+            EquipWeapon(currentWeaponIndex);
         }
     }
 
-    private void SwitchWeapon(int index)
+    private void EquipWeapon(int index)
     {
-        Instantiate(listWeapons[index], weaponParent);
-    }
+        // Disabling "Previous", if it was, and Enabling "New"
+        if (currentWeaponGO != null)
+        {
+            currentWeaponGO.SetActive(false);
+        }
 
-    public WeaponObject GetCurrentWeapon()
-    {
-        return currentWeapon = listWeapons[curIndexWeapon].GetComponent<WeaponObject>();
+        // Assign new currentWeapon Index
+        currentWeaponIndex = index;
+
+        // Assign current weaponGameObject to selected one
+        currentWeaponGO = weaponsList[currentWeaponIndex];
+        // Doing the same with WeaponData
+        currentWeaponData = currentWeaponGO.GetComponent<WeaponData>();
+
+        // Instantly enabling Weapon object
+        currentWeaponGO.SetActive(true);
+
+        // Disabling it's colliders, to prevent alwaysDamage on Enemies
+        DisableCurrentWeaponColliders();
+
+        // Setting number to current index in UI and Play short sound
+        UIGamePlay.Instance.SetWeaponNumberText(currentWeaponIndex + 1);
+        AudioManager.Instance.WeaponChangeSound();
     }
 
     private Collider[] GetCurrentWeaponColliders()
     {
-        return currentWeaponColliders = listWeapons[curIndexWeapon].GetComponentsInChildren<Collider>();
+        return currentWeaponColliders = currentWeaponGO.GetComponentsInChildren<Collider>();
     }
 
-    public void DisableCurrentWeaponColliders()
+    private void DisableCurrentWeaponColliders()
     {
-        foreach (var collider in GetCurrentWeaponColliders())
+        foreach (var coll in GetCurrentWeaponColliders())
         {
-            collider.enabled = false;
+            coll.enabled = false;
         }
     }
 
     public void SwitchWeaponColliders()
     {
-        foreach (Collider weaponCollider in currentWeaponColliders) weaponCollider.enabled = !weaponCollider.enabled;
+        foreach (Collider weaponCollider in GetCurrentWeaponColliders())
+            weaponCollider.enabled = !weaponCollider.enabled;
+    }
+
+    public GameObject GetCurrentWeaponGO()
+    {
+        return currentWeaponGO;
+    }
+
+    public int GetCurrentWeaponDamage()
+    {
+        return currentWeaponData.weaponData.GetDamage();
     }
 
     #endregion

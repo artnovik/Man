@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class HealthEnemy : Health
 {
-    public WeaponObject weaponObject;
+    public WeaponData weaponData;
     public Transform containerPlaceTransform;
     private Collider playerCollider;
 
@@ -42,14 +42,13 @@ public class HealthEnemy : Health
 
     private void OnTriggerEnter(Collider collider)
     {
-        foreach (GameObject weapon in PlayerData.Instance.listWeapons)
-            if (collider.gameObject == weapon && !isDead)
-            {
-                var takenDamage = PlayerData.Instance.GetCurrentWeapon().weaponData.GetDamage();
-                Damage(takenDamage);
+        if (collider.gameObject == PlayerData.Instance.GetCurrentWeaponGO() && !isDead)
+        {
+            var takenDamage = PlayerData.Instance.GetCurrentWeaponDamage();
+            Damage(takenDamage);
 
-                EffectsManager.Instance.ActivateBloodEffect(collider.transform);
-            }
+            EffectsManager.Instance.ActivateBloodEffect(collider.transform);
+        }
     }
 
     protected override void Death()
@@ -62,9 +61,9 @@ public class HealthEnemy : Health
         DestroyComponents();
 
         // ToDo Make this better
-        weaponObject.gameObject.transform.SetParent(null);
-        weaponObject.gameObject.AddComponent<Rigidbody>();
-        weaponObject.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+        weaponData.gameObject.transform.SetParent(null);
+        weaponData.gameObject.AddComponent<Rigidbody>();
+        weaponData.gameObject.GetComponent<BoxCollider>().isTrigger = false;
         // ToDo end
 
         GetComponent<EnemyUI>().DestroyEnemyUI(SpawnManager.Instance.GetDeadBodyDeleteDuration());
@@ -108,13 +107,13 @@ public class HealthEnemy : Health
         // ToDo nice corpse disappearing animation, with blood puddle for X seconds
 
         // ToDo Temp
-        Destroy(weaponObject.gameObject);
+        Destroy(weaponData.gameObject);
         ContainerGenerator.Instance.GenerateAndFillContainer(ContainerGenerator.Instance.containerCorpsePrefab,
             containerPlaceTransform, enemyType);
         Destroy(gameObject);
     }
 
-    // ToDO For For Debug purposes
+    // ToDO For Debug purposes
     private void OnMouseDown()
     {
         if (CheatManager.Instance.FAST_TESTING)
