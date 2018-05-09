@@ -130,13 +130,10 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Button weaponOneButton;
     [SerializeField] private Button weaponTwoButton;
 
-    private Weapon cachedWeaponToEquip;
-
     private void StartWeaponEquipment()
     {
         hintSelectEquipText.gameObject.SetActive(true);
         backgroundOnEquipImage.gameObject.SetActive(true);
-        cachedWeaponToEquip = slots[GetCurrentSlotIndex()].slotItem as Weapon;
         inventory.equipMode = true;
         equipAnimator.Play("Glow");
     }
@@ -149,18 +146,18 @@ public class InventoryUI : MonoBehaviour
         equipAnimator.Play("Default");
     }
 
-    public void EquipSlotClick()
+    public void EquipSlotOnClick(GameObject clickedButtonGO, int equipButtonIndex)
     {
-        var clickedButtonGO = EventSystem.current.currentSelectedGameObject;
-
+        // Behaviour - If we are equipping weapon
         if (inventory.equipMode)
         {
-            clickedButtonGO.transform.GetChild(0).GetComponent<Image>().sprite = cachedWeaponToEquip.inventorySprite;
+            clickedButtonGO.transform.GetChild(0).GetComponent<Image>().sprite =
+                slots[GetCurrentSlotIndex()].slotItem.inventorySprite;
             clickedButtonGO.transform.GetChild(0).GetComponent<Image>().color = Colors.playerDefaultUI;
-            Inventory.Instance.EquipWeapon(GetCurrentSlotIndex(),
-                clickedButtonGO.GetComponent<EquipSlot>().equipSlotIndex);
+            Inventory.Instance.EquipWeapon(GetCurrentSlotIndex(), equipButtonIndex);
             StopWeaponEquipment();
         }
+        // Behaviour - If we are just want to select equipped weapon
         else
         {
             // ToDo Fill for general usage

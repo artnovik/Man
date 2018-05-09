@@ -172,7 +172,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
     [Header("Weapons")] public int currentWeaponIndex;
 
     [SerializeField] private Transform weaponParent;
-    public List<GameObject> weaponsList = new List<GameObject>(2);
+    [SerializeField] private List<GameObject> weaponsList = new List<GameObject>();
     [SerializeField] private WeaponData currentWeaponData;
     [SerializeField] private GameObject currentWeaponGO;
 
@@ -189,7 +189,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         // If hands are empty, equipping this Weapon
         if (currentWeaponGO == null)
         {
-            EquipWeapon(slotIndex);
+            DrawWeapon(slotIndex);
         }
     }
 
@@ -197,8 +197,24 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
 
     public void SwitchWeapon()
     {
+        #region If Player have only 1 weapon equipped, method won't execute
+
+        int listCount = 0;
+        foreach (var element in weaponsList)
+        {
+            if (element != null)
+            {
+                listCount++;
+            }
+        }
+
+        if (listCount < 2)
+            return;
+
+        #endregion
+
         int prevIndex = currentWeaponIndex;
-        
+
         currentWeaponIndex++;
 
         if (currentWeaponIndex >= weaponsList.Count)
@@ -208,11 +224,11 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
 
         if (prevIndex != currentWeaponIndex)
         {
-            EquipWeapon(currentWeaponIndex);
+            DrawWeapon(currentWeaponIndex);
         }
     }
 
-    private void EquipWeapon(int index)
+    private void DrawWeapon(int index)
     {
         // Disabling "Previous", if it was, and Enabling "New"
         if (currentWeaponGO != null)
