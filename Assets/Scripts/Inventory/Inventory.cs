@@ -98,7 +98,7 @@ public class Inventory : MonoBehaviour
         {
             equippedWeapons.Insert(equipSlotIndex, weaponToEquip);
 
-            InventoryUI.Instance.equipSlots[equipSlotIndex].associatedWeapon = weaponToEquip;
+            InventoryUI.Instance.equipWeaponSlots[equipSlotIndex].associatedWeapon = weaponToEquip;
 
             DestroyItem(weaponSlotIndex);
 
@@ -119,7 +119,7 @@ public class Inventory : MonoBehaviour
     {
         var weaponToUnEquip = equippedWeapons[slotIndex];
         equippedWeapons.RemoveAt(slotIndex);
-        InventoryUI.Instance.equipSlots[slotIndex].associatedWeapon = null;
+        InventoryUI.Instance.equipWeaponSlots[slotIndex].associatedWeapon = null;
         PlayerData.Instance.RemoveFromEquipSlot(slotIndex);
         AddItem(weaponToUnEquip);
     }

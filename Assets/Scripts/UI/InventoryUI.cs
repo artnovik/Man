@@ -15,7 +15,7 @@ public class InventoryUI : MonoBehaviour
         inventory = Inventory.Instance;
         inventory.onInventoryChangeCallback += UpdateInventoryUI;
         inventorySlots = itemsContainer.GetComponentsInChildren<InventorySlot>();
-        equipSlots = gameObject.GetComponentsInChildren<EquipSlot>();
+        equipWeaponSlots = gameObject.GetComponentsInChildren<EquipWeaponSlot>();
     }
 
     #endregion
@@ -25,10 +25,10 @@ public class InventoryUI : MonoBehaviour
     private Inventory inventory;
     public Transform itemsContainer;
     private InventorySlot[] inventorySlots;
-    [HideInInspector] public EquipSlot[] equipSlots;
+    [HideInInspector] public EquipWeaponSlot[] equipWeaponSlots;
 
     public InventorySlot currentInventorySlot;
-    public EquipSlot currentEquipSlot;
+    public EquipWeaponSlot currentEquipWeaponSlot;
 
     #region UI_Update_Logic
 
@@ -104,12 +104,12 @@ public class InventoryUI : MonoBehaviour
         ActivateItemInfo(true);
     }
 
-    public void MakeSlotActive(EquipSlot clickedSlot)
+    public void MakeSlotActive(EquipWeaponSlot clickedWeaponSlot)
     {
         MakeAllSlotsInactive();
-        clickedSlot.GetComponent<Image>().color = Colors.playerActiveUI;
+        clickedWeaponSlot.GetComponent<Image>().color = Colors.playerActiveUI;
 
-        ActivateItemInfo(true, clickedSlot.associatedWeapon);
+        ActivateItemInfo(true, clickedWeaponSlot.associatedWeapon);
     }
 
     public void MakeAllSlotsInactive()
@@ -120,7 +120,7 @@ public class InventoryUI : MonoBehaviour
             inventorySlot.countText.color = Color.black;
         }
 
-        foreach (var equipSlot in equipSlots)
+        foreach (var equipSlot in equipWeaponSlots)
         {
             equipSlot.GetComponent<Image>().color = Colors.playerDefaultUI;
         }
@@ -174,20 +174,20 @@ public class InventoryUI : MonoBehaviour
 
             StopWeaponEquipment();
             currentInventorySlot = null;
-            MakeSlotActive(equipSlots[equipButtonIndex]);
+            MakeSlotActive(equipWeaponSlots[equipButtonIndex]);
         }
         // Behaviour - If we are just want to select equipped weapon
         else
         {
             // ToDo Fill for general usage
-            if (equipSlots[equipButtonIndex].associatedWeapon == null)
+            if (equipWeaponSlots[equipButtonIndex].associatedWeapon == null)
             {
                 MakeAllSlotsInactive();
                 return;
             }
 
-            MakeSlotActive(equipSlots[equipButtonIndex]);
-            currentEquipSlot = equipSlots[equipButtonIndex];
+            MakeSlotActive(equipWeaponSlots[equipButtonIndex]);
+            currentEquipWeaponSlot = equipWeaponSlots[equipButtonIndex];
         }
     }
 
@@ -296,10 +296,10 @@ public class InventoryUI : MonoBehaviour
             }
         }
         // If we clicking on EquipSlot
-        else if (currentEquipSlot != null)
+        else if (currentEquipWeaponSlot != null)
         {
-            Inventory.Instance.UnEquipWeapon(currentEquipSlot.equipSlotIndex);
-            currentEquipSlot.ClearSlot();
+            Inventory.Instance.UnEquipWeapon(currentEquipWeaponSlot.equipSlotIndex);
+            currentEquipWeaponSlot.ClearSlot();
         }
     }
 

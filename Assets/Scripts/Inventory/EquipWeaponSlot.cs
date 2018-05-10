@@ -4,24 +4,22 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class EquipSlot : MonoBehaviour
+public class EquipWeaponSlot : EquipSlot
 {
     public int equipSlotIndex;
     public Weapon associatedWeapon;
-
-    public Image icon;
 
     public void EquipSlotClick()
     {
         InventoryUI.Instance.EquipSlotOnClick(gameObject, equipSlotIndex);
 
-        InventoryUI.Instance.currentEquipSlot = this;
+        InventoryUI.Instance.currentEquipWeaponSlot = this;
     }
 
     public void ClearSlot()
     {
         associatedWeapon = null;
 
-        icon.sprite = null;
+        slotIcon.sprite = null;
     }
 }

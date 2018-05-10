@@ -1,14 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ContainerSlot : MonoBehaviour
+public class ContainerSlot : GeneralSlot
 {
-    public Item slotItem;
-
-    public Image icon;
-    public Button slotButton;
-    public Text countText;
-
     public void FillSlot(Item newItem)
     {
         slotItem = newItem;
@@ -18,8 +12,8 @@ public class ContainerSlot : MonoBehaviour
             countText.text = newItem.GetCount().ToString();
         }
 
-        icon.sprite = slotItem.inventorySprite;
-        icon.enabled = true;
+        slotIcon.sprite = slotItem.inventorySprite;
+        slotIcon.enabled = true;
     }
 
     public void ClearSlot()
@@ -27,8 +21,8 @@ public class ContainerSlot : MonoBehaviour
         slotItem = null;
         countText.text = null;
 
-        icon.sprite = null;
-        icon.enabled = false;
+        slotIcon.sprite = null;
+        slotIcon.enabled = false;
     }
 
     public void Select()
