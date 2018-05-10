@@ -157,7 +157,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         {
             UIGamePlay.Instance.DisplayMessage(Messages.messageBlockTrue, Colors.greenMessage, 100f, false);
 
-            // ToDO Add animation
+            // ToDO: Add Block animation. The Weapon will be used to block the attack. Spark animation if player and enemy weapons are both metal.
         }
         else
         {

@@ -118,7 +118,7 @@ public class LootGenerator : MonoBehaviour
         return weapon = ItemsCollection.Instance.GetWeapon(weapon);
     }
 
-    // ToDo Improve
+    // ToDo: Improve.
     private List<Item> RandomizeItems(uint minCount, uint maxCount)
     {
         var generatedItems = new List<Item>();

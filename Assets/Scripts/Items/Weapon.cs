@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New weapon", menuName = "Weapon")]
-public class Weapon : Item
+public class Weapon : ItemSingle
 {
     public GameObject weaponPrefab;
 

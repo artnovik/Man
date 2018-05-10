@@ -62,7 +62,7 @@ public class AIBattle : MonoBehaviour
     {
         if (!target)
         {
-            // ToDo patrolling fix related to this
+            // ToDo: Patrolling fix related to this.
             locomotion.Movement(Vector3.zero);
             return;
         }

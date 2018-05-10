@@ -179,7 +179,6 @@ public class InventoryUI : MonoBehaviour
         // Behaviour - If we are just want to select equipped weapon
         else
         {
-            // ToDo Fill for general usage
             if (equipWeaponSlots[equipButtonIndex].associatedWeapon == null)
             {
                 MakeAllSlotsInactive();
@@ -291,7 +290,7 @@ public class InventoryUI : MonoBehaviour
             }
             else if (inventorySlots[GetCurrentSlotIndex()].slotItem is Consumable)
             {
-                // ToDo Potion Equip mode
+                // ToDo: Potion Equip mode.
                 return;
             }
         }

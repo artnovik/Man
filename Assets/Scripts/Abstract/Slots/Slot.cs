@@ -10,8 +10,13 @@ public abstract class Slot : MonoBehaviour
     
     public Image slotIcon;
     public Button slotButton;
+
+    public void FillSlot(Item newItem)
+    {
+        slotItem = newItem;
+        
+    }
     
-    // Modify for all selectable Items
     public virtual void Select()
     {
         if (slotItem != null)

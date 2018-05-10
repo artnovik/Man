@@ -10,7 +10,7 @@ public class LocomotionPlayer : Locomotion
         PlayerData.Instance.SwitchWeaponColliders();
     }
 
-    // ToDo Squad menu
+    // ToDo: Squad Menu.
     /*private void OnMouseDown()
     {
         if (gameObject.CompareTag("Player"))

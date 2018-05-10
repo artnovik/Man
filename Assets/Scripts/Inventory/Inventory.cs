@@ -140,7 +140,7 @@ public class Inventory : MonoBehaviour
 
         droppedItems.Add(items[itemSlotIndex]);
         items.RemoveAt(itemSlotIndex);
-        InventoryUI.Instance.SelectNextSlot(true); // ToDo TEMP CONVINIENCE
+        InventoryUI.Instance.SelectNextSlot(true);
 
 
         onInventoryChangeCallback?.Invoke();

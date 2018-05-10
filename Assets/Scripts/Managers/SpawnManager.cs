@@ -7,7 +7,7 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private bool autoSpawner;
 
-    private uint deadBodyDeleteDuration = 0; // ToDO For For Debug purposes. Standard value: 5
+    private uint deadBodyDeleteDuration;
 
     public GameObject enemyZombie;
     public Transform[] spawnPointsTransforms;
