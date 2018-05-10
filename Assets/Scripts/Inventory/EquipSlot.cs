@@ -7,9 +7,21 @@ using UnityEngine.UI;
 public class EquipSlot : MonoBehaviour
 {
     public int equipSlotIndex;
+    public Weapon associatedWeapon;
+
+    public Image icon;
 
     public void EquipSlotClick()
     {
-        InventoryUI.Instance.EquipSlotOnClick(EventSystem.current.currentSelectedGameObject, equipSlotIndex);
+        InventoryUI.Instance.EquipSlotOnClick(gameObject, equipSlotIndex);
+
+        InventoryUI.Instance.currentEquipSlot = this;
+    }
+
+    public void ClearSlot()
+    {
+        associatedWeapon = null;
+
+        icon.sprite = null;
     }
 }

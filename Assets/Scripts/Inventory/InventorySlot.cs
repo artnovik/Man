@@ -29,7 +29,7 @@ public class InventorySlot : MonoBehaviour
     {
         if (slotItem != null)
         {
-            InventoryUI.Instance.currentSelectedSlot = this;
+            InventoryUI.Instance.currentInventorySlot = this;
             InventoryUI.Instance.MakeSlotActive(this);
         }
         else

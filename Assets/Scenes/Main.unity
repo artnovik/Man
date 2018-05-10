@@ -7686,6 +7686,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipSlotIndex: 0
+  associatedWeapon: {fileID: 0}
+  icon: {fileID: 339590264}
 --- !u!1 &572077585
 GameObject:
   m_ObjectHideFlags: 0
@@ -13845,7 +13847,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goldCountText: {fileID: 645878732}
   itemsContainer: {fileID: 1923416704}
-  currentSelectedSlot: {fileID: 0}
+  equipSlots: []
+  currentInventorySlot: {fileID: 0}
+  currentEquipSlot: {fileID: 0}
   useButton: {fileID: 1878734141}
   dropButton: {fileID: 646337778}
   destroyButton: {fileID: 1416508339}
@@ -28400,6 +28404,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipSlotIndex: 1
+  associatedWeapon: {fileID: 0}
+  icon: {fileID: 191533270}
 --- !u!1001 &1763633122
 Prefab:
   m_ObjectHideFlags: 0

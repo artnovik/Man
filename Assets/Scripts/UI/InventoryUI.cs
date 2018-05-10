@@ -14,7 +14,8 @@ public class InventoryUI : MonoBehaviour
 
         inventory = Inventory.Instance;
         inventory.onInventoryChangeCallback += UpdateInventoryUI;
-        slots = itemsContainer.GetComponentsInChildren<InventorySlot>();
+        inventorySlots = itemsContainer.GetComponentsInChildren<InventorySlot>();
+        equipSlots = gameObject.GetComponentsInChildren<EquipSlot>();
     }
 
     #endregion
@@ -23,9 +24,11 @@ public class InventoryUI : MonoBehaviour
 
     private Inventory inventory;
     public Transform itemsContainer;
-    private InventorySlot[] slots;
+    private InventorySlot[] inventorySlots;
+    [HideInInspector] public EquipSlot[] equipSlots;
 
-    public InventorySlot currentSelectedSlot;
+    public InventorySlot currentInventorySlot;
+    public EquipSlot currentEquipSlot;
 
     #region UI_Update_Logic
 
@@ -34,15 +37,15 @@ public class InventoryUI : MonoBehaviour
         goldCountText.text = Inventory.Instance.GetGoldCount().ToString();
         SelectNextSlot(false);
 
-        for (var i = 0; i < slots.Length; i++)
+        for (var i = 0; i < inventorySlots.Length; i++)
         {
             if (i < inventory.items.Count)
             {
-                slots[i].AddItem(inventory.items[i]);
+                inventorySlots[i].AddItem(inventory.items[i]);
             }
             else
             {
-                slots[i].ClearSlot();
+                inventorySlots[i].ClearSlot();
             }
         }
 
@@ -57,14 +60,14 @@ public class InventoryUI : MonoBehaviour
 
     private void SelectFirstSlot()
     {
-        slots[0].Select();
+        inventorySlots[0].Select();
     }
 
     public void SelectNextSlot(bool isFirstSlotActive)
     {
         if (isFirstSlotActive)
         {
-            foreach (InventorySlot slot in slots)
+            foreach (InventorySlot slot in inventorySlots)
             {
                 if (slot.slotButton.GetComponent<Image>().color == Colors.playerActiveUI)
                 {
@@ -76,16 +79,16 @@ public class InventoryUI : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < slots.Length; i++)
+            for (int i = 0; i < inventorySlots.Length; i++)
             {
-                if (slots[i] == currentSelectedSlot)
+                if (inventorySlots[i] == currentInventorySlot)
                 {
-                    slots[i].ClearSlot();
+                    inventorySlots[i].ClearSlot();
                     MakeAllSlotsInactive();
 
                     if (i > 0)
                     {
-                        slots[i - 1].Select();
+                        inventorySlots[i - 1].Select();
                     }
                 }
             }
@@ -101,12 +104,25 @@ public class InventoryUI : MonoBehaviour
         ActivateItemInfo(true);
     }
 
+    public void MakeSlotActive(EquipSlot clickedSlot)
+    {
+        MakeAllSlotsInactive();
+        clickedSlot.GetComponent<Image>().color = Colors.playerActiveUI;
+
+        ActivateItemInfo(true, clickedSlot.associatedWeapon);
+    }
+
     public void MakeAllSlotsInactive()
     {
-        foreach (InventorySlot slot in slots)
+        foreach (InventorySlot inventorySlot in inventorySlots)
         {
-            slot.slotButton.GetComponent<Image>().color = Colors.playerDefaultUI;
-            slot.countText.color = Color.black;
+            inventorySlot.slotButton.GetComponent<Image>().color = Colors.playerDefaultUI;
+            inventorySlot.countText.color = Color.black;
+        }
+
+        foreach (var equipSlot in equipSlots)
+        {
+            equipSlot.GetComponent<Image>().color = Colors.playerDefaultUI;
         }
 
         ActivateItemInfo(false);
@@ -152,15 +168,26 @@ public class InventoryUI : MonoBehaviour
         if (inventory.equipMode)
         {
             clickedButtonGO.transform.GetChild(0).GetComponent<Image>().sprite =
-                slots[GetCurrentSlotIndex()].slotItem.inventorySprite;
+                inventorySlots[GetCurrentSlotIndex()].slotItem.inventorySprite;
             clickedButtonGO.transform.GetChild(0).GetComponent<Image>().color = Colors.playerDefaultUI;
             Inventory.Instance.EquipWeapon(GetCurrentSlotIndex(), equipButtonIndex);
+
             StopWeaponEquipment();
+            currentInventorySlot = null;
+            MakeSlotActive(equipSlots[equipButtonIndex]);
         }
         // Behaviour - If we are just want to select equipped weapon
         else
         {
             // ToDo Fill for general usage
+            if (equipSlots[equipButtonIndex].associatedWeapon == null)
+            {
+                MakeAllSlotsInactive();
+                return;
+            }
+
+            MakeSlotActive(equipSlots[equipButtonIndex]);
+            currentEquipSlot = equipSlots[equipButtonIndex];
         }
     }
 
@@ -182,10 +209,10 @@ public class InventoryUI : MonoBehaviour
 
         if (value)
         {
-            var weapon = slots[GetCurrentSlotIndex()].slotItem as Weapon;
+            var weapon = inventorySlots[GetCurrentSlotIndex()].slotItem as Weapon;
             if (weapon != null)
             {
-                FillInfoWindowWithWEapon(weapon.inventorySprite, weapon.name, weapon.minDamage,
+                FillInfoWindowWithWeapon(weapon.inventorySprite, weapon.name, weapon.minDamage,
                     weapon.maxDamage, weapon.DamageType, weapon.Speed, weapon.Range,
                     weapon.description);
             }
@@ -196,7 +223,31 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    private void FillInfoWindowWithWEapon(Sprite sprite, string name, uint minDamage, uint maxDamage,
+    private void ActivateItemInfo(bool value, Weapon weapon)
+    {
+        useButton.gameObject.SetActive(value);
+
+        dropButton.gameObject.SetActive(value);
+        destroyButton.gameObject.SetActive(value);
+
+        if (value)
+        {
+            if (weapon != null)
+            {
+                FillInfoWindowWithWeapon(weapon.inventorySprite, weapon.name, weapon.minDamage,
+                    weapon.maxDamage, weapon.DamageType, weapon.Speed, weapon.Range,
+                    weapon.description);
+
+                useButton.GetComponentInChildren<Text>().text = "UnEquip";
+            }
+        }
+        else
+        {
+            ClearInfoWindow();
+        }
+    }
+
+    private void FillInfoWindowWithWeapon(Sprite sprite, string name, uint minDamage, uint maxDamage,
         Weapon.DamageTypeEnum damageType, Weapon.SpeedEnum speed, Weapon.RangeEnum range,
         string description)
     {
@@ -231,22 +282,30 @@ public class InventoryUI : MonoBehaviour
 
     public void UseItem()
     {
-        if (currentSelectedSlot != null)
+        if (currentInventorySlot != null)
         {
-            if (slots[GetCurrentSlotIndex()].slotItem is Weapon)
+            if (inventorySlots[GetCurrentSlotIndex()].slotItem is Weapon)
             {
                 StartWeaponEquipment();
+                return;
             }
-            else if (slots[GetCurrentSlotIndex()].slotItem is Consumable)
+            else if (inventorySlots[GetCurrentSlotIndex()].slotItem is Consumable)
             {
                 // ToDo Potion Equip mode
+                return;
             }
+        }
+        // If we clicking on EquipSlot
+        else if (currentEquipSlot != null)
+        {
+            Inventory.Instance.UnEquipWeapon(currentEquipSlot.equipSlotIndex);
+            currentEquipSlot.ClearSlot();
         }
     }
 
     public void DropItem()
     {
-        if (currentSelectedSlot != null)
+        if (currentInventorySlot != null)
         {
             Inventory.Instance.AddToDropList(GetCurrentSlotIndex());
         }
@@ -254,7 +313,7 @@ public class InventoryUI : MonoBehaviour
 
     public void DestroyItem()
     {
-        if (currentSelectedSlot != null)
+        if (currentInventorySlot != null)
         {
             Inventory.Instance.DestroyItem(GetCurrentSlotIndex());
         }
@@ -269,9 +328,9 @@ public class InventoryUI : MonoBehaviour
     private int GetCurrentSlotIndex()
     {
         int slotIndex = 0;
-        for (int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < inventorySlots.Length; i++)
         {
-            if (currentSelectedSlot == slots[i])
+            if (currentInventorySlot == inventorySlots[i])
             {
                 slotIndex = i;
             }

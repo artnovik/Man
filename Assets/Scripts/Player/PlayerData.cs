@@ -193,7 +193,13 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         }
     }
 
-    /*private void UnEquipWeapon(){}*/
+    public void RemoveFromEquipSlot(int slotIndex)
+    {
+        weaponsList[slotIndex] = null;
+        Destroy(currentWeaponGO);
+        currentWeaponData = null;
+        SwitchWeapon();
+    }
 
     public void SwitchWeapon()
     {

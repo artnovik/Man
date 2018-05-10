@@ -59,7 +59,7 @@ public class Inventory : MonoBehaviour
     public void AddItem(Item item)
     {
         items.Add(item);
-
+        
         onInventoryChangeCallback?.Invoke();
     }
 
@@ -96,10 +96,13 @@ public class Inventory : MonoBehaviour
 
         if (weaponToEquip != null)
         {
-            equippedWeapons.Add(weaponToEquip);
+            equippedWeapons.Insert(equipSlotIndex, weaponToEquip);
+
+            InventoryUI.Instance.equipSlots[equipSlotIndex].associatedWeapon = weaponToEquip;
+
             DestroyItem(weaponSlotIndex);
-            
-            // If we want to swap - SwapSlots()
+
+            // If we need to swap - SwapSlots()
 
             onInventoryChangeCallback.Invoke();
 
@@ -108,8 +111,17 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void UnEquipWeapon()
+    public void SwapSlots( /*WeaponSlot, InventorySlot*/)
     {
+    }
+
+    public void UnEquipWeapon(int slotIndex)
+    {
+        var weaponToUnEquip = equippedWeapons[slotIndex];
+        equippedWeapons.RemoveAt(slotIndex);
+        InventoryUI.Instance.equipSlots[slotIndex].associatedWeapon = null;
+        PlayerData.Instance.RemoveFromEquipSlot(slotIndex);
+        AddItem(weaponToUnEquip);
     }
 
     #endregion
