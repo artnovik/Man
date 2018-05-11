@@ -14,7 +14,7 @@ public abstract class Slot : MonoBehaviour
     public virtual void FillSlot(Item newItem)
     {
         slotItem = newItem;
-        slotIcon.sprite = newItem.inventorySprite;
+        slotIcon.sprite = newItem.itemSprite;
         slotIcon.enabled = true;
     }
 

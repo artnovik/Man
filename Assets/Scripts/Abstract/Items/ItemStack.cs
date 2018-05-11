@@ -4,24 +4,24 @@ using UnityEngine;
 
 public abstract class ItemStack : Item
 {
-    private int amount;
+    protected int amount;
 
     public int GetAmount()
     {
         return amount;
     }
 
-    public void Add(int value)
+    public virtual void Add(int value)
     {
         amount += value;
     }
 
-    public void SetRandomAmount(int minValue, int maxValue)
+    public virtual void SetRandomAmount(int minValue, int maxValue)
     {
         amount = Random.Range(minValue, maxValue + 1);
     }
 
-    public void SetAmount(int specifiсValue)
+    public virtual void SetAmount(int specifiсValue)
     {
         amount = specifiсValue;
     }

@@ -7,7 +7,7 @@ public class InventorySlot : GeneralSlot
     {
         slotItem = newItem;
 
-        slotIcon.sprite = slotItem.inventorySprite;
+        slotIcon.sprite = slotItem.itemSprite;
         slotIcon.enabled = true;
     }
 }

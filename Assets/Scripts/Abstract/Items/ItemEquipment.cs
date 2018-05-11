@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class ItemEquipment : ItemSingle
 {
-    
+    public GameObject itemPrefab;
 }

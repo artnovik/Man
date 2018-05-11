@@ -127,9 +127,9 @@ public class ContainerUI : MonoBehaviour
 
         if (value)
         {
-            FillInfoWindow(slots[GetCurrentSlotIndex()].slotItem.inventorySprite,
-                slots[GetCurrentSlotIndex()].slotItem.name,
-                slots[GetCurrentSlotIndex()].slotItem.description);
+            FillInfoWindow(slots[GetCurrentSlotIndex()].slotItem.itemSprite,
+                slots[GetCurrentSlotIndex()].slotItem.itemName,
+                slots[GetCurrentSlotIndex()].slotItem.itemDescription);
         }
         else
         {

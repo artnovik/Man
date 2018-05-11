@@ -28,7 +28,7 @@ public abstract class Container : Interactable
     {
         if (containerItems[itemIndex] is Gold)
         {
-            Inventory.Instance.AddGold(containerItems[itemIndex].GetCount());
+            Inventory.Instance.AddGold(((Gold) containerItems[itemIndex]).GetAmount());
         }
         else
         {

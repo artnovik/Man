@@ -7,12 +7,13 @@ public class ContainerSlot : GeneralSlot
     {
         slotItem = newItem;
 
-        if (newItem.GetCount() > 1) // Not bad, but need to be done better.
+        var stackItem = newItem as ItemStack;
+        if (stackItem != null)
         {
-            countText.text = newItem.GetCount().ToString();
+            countText.text = stackItem.GetAmount().ToString();
         }
 
-        slotIcon.sprite = slotItem.inventorySprite;
+        slotIcon.sprite = slotItem.itemSprite;
         slotIcon.enabled = true;
     }
 

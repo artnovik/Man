@@ -168,7 +168,7 @@ public class InventoryUI : MonoBehaviour
         if (inventory.equipMode)
         {
             clickedButtonGO.transform.GetChild(0).GetComponent<Image>().sprite =
-                inventorySlots[GetCurrentSlotIndex()].slotItem.inventorySprite;
+                inventorySlots[GetCurrentSlotIndex()].slotItem.itemSprite;
             clickedButtonGO.transform.GetChild(0).GetComponent<Image>().color = Colors.playerDefaultUI;
             Inventory.Instance.EquipWeapon(GetCurrentSlotIndex(), equipButtonIndex);
 
@@ -211,9 +211,9 @@ public class InventoryUI : MonoBehaviour
             var weapon = inventorySlots[GetCurrentSlotIndex()].slotItem as Weapon;
             if (weapon != null)
             {
-                FillInfoWindowWithWeapon(weapon.inventorySprite, weapon.name, weapon.minDamage,
+                FillInfoWindowWithWeapon(weapon.itemSprite, weapon.itemName, weapon.minDamage,
                     weapon.maxDamage, weapon.DamageType, weapon.Speed, weapon.Range,
-                    weapon.description);
+                    weapon.itemDescription);
             }
         }
         else
@@ -233,9 +233,9 @@ public class InventoryUI : MonoBehaviour
         {
             if (weapon != null)
             {
-                FillInfoWindowWithWeapon(weapon.inventorySprite, weapon.name, weapon.minDamage,
+                FillInfoWindowWithWeapon(weapon.itemSprite, weapon.itemName, weapon.minDamage,
                     weapon.maxDamage, weapon.DamageType, weapon.Speed, weapon.Range,
-                    weapon.description);
+                    weapon.itemDescription);
 
                 useButton.GetComponentInChildren<Text>().text = "UnEquip";
             }

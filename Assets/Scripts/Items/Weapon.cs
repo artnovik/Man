@@ -3,8 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New weapon", menuName = "Weapon")]
 public class Weapon : ItemEquipment
 {
-    public GameObject weaponPrefab;
-
     public enum DamageTypeEnum
     {
         Normal = 0,
@@ -46,6 +44,6 @@ public class Weapon : ItemEquipment
 
     public string GetName()
     {
-        return name;
+        return itemName;
     }
 }
