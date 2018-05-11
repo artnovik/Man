@@ -1083,10 +1083,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4477943911285594}
   - component: {fileID: 114201748951139448}
-  - component: {fileID: 114386747600935810}
   - component: {fileID: 114488230682809896}
   - component: {fileID: 114044743799235528}
-  - component: {fileID: 114939547921820984}
   - component: {fileID: 114469354785925220}
   - component: {fileID: 114661968140573600}
   - component: {fileID: 95022380503117368}
@@ -3303,7 +3301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9152f771a5bcc1f4fb77e3a3b989973c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterStats: {fileID: 114939547921820984}
+  characterStats: {fileID: 0}
   isDead: 0
   locomotion: {fileID: 114488230682809896}
   maxHealth: 100
@@ -3429,23 +3427,6 @@ MonoBehaviour:
   listTag:
   - Player
   listObject: []
---- !u!114 &114386747600935810
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1708815765540170}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 192b78b405be3344cab53ecc3eae0c95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolPointsTransforms:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &114469354785925220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3505,24 +3486,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstepsAudioClip: {fileID: 8300000, guid: f19a5e02168225844bd1c4f8e5496766, type: 3}
   footstepsAudioSource: {fileID: 82737994693660622}
---- !u!114 &114939547921820984
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1708815765540170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12e69e613d9ca74eb9ee9fc3bc41d11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agility: {fileID: 0}
-  arcane: {fileID: 0}
-  endurance: {fileID: 0}
-  fire: {fileID: 0}
-  stamina: {fileID: 0}
-  strength: {fileID: 0}
-  water: {fileID: 0}
 --- !u!135 &135476421251083016
 SphereCollider:
   m_ObjectHideFlags: 1
