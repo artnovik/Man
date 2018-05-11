@@ -7,16 +7,25 @@ using UnityEngine.UI;
 public abstract class Slot : MonoBehaviour
 {
     public Item slotItem;
-    
+
     public Image slotIcon;
     public Button slotButton;
 
-    public void FillSlot(Item newItem)
+    public virtual void FillSlot(Item newItem)
     {
         slotItem = newItem;
-        
+        slotIcon.sprite = newItem.inventorySprite;
+        slotIcon.enabled = true;
     }
-    
+
+    public virtual void ClearSlot()
+    {
+        slotItem = null;
+
+        slotIcon.sprite = null;
+        slotIcon.enabled = false;
+    }
+
     public virtual void Select()
     {
         if (slotItem != null)
@@ -28,12 +37,5 @@ public abstract class Slot : MonoBehaviour
         {
             //InventoryUI.Instance.MakeAllSlotsInactive();
         }
-    }
-    
-    public virtual void ClearSlot()
-    {
-        slotItem = null;
-
-        slotIcon.sprite = null;
     }
 }

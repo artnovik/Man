@@ -38,7 +38,7 @@ public class Inventory : MonoBehaviour
 
         if (goldValueAfterRemove < 0)
         {
-            UIGamePlay.Instance.DisplayMessage("Not enough gold", Colors.redMessage, 2f, false);
+            GameplayUI.Instance.DisplayMessage("Not enough gold", Colors.redMessage, 2f, false);
         }
         else
         {
@@ -74,7 +74,7 @@ public class Inventory : MonoBehaviour
     {
         if (items.Count >= inventoryCapacity)
         {
-            UIGamePlay.Instance.DisplayMessage("Inventory is full.", Colors.redMessage, 2f, false);
+            GameplayUI.Instance.DisplayMessage("Inventory is full.", Colors.redMessage, 2f, false);
             return true;
         }
         else
@@ -134,7 +134,7 @@ public class Inventory : MonoBehaviour
     {
         if (droppedItems.Count == 10)
         {
-            UIGamePlay.Instance.DisplayMessage("You can drop only 10 items at once", Colors.redMessage, 2f, false);
+            GameplayUI.Instance.DisplayMessage("You can drop only 10 items at once", Colors.redMessage, 2f, false);
             return;
         }
 

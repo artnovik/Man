@@ -18,7 +18,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
     public Transform playerTransform;
 
     [Tooltip("User Interface reference")] [SerializeField]
-    private UIGamePlay playerUI;
+    private GameplayUI _playerGameplayUI;
 
     public PlayerView playerView;
 
@@ -97,12 +97,12 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         if (inBattle)
         {
             AudioManager.Instance.BattleMusicControl(true);
-            playerUI.SetPlayerBarsStatus(true);
+            _playerGameplayUI.SetPlayerBarsStatus(true);
         }
         else
         {
             AudioManager.Instance.BattleMusicControl(false);
-            playerUI.SetPlayerBarsStatus(false);
+            _playerGameplayUI.SetPlayerBarsStatus(false);
         }
     }
 
@@ -155,13 +155,13 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
 
         if (isBlock)
         {
-            UIGamePlay.Instance.DisplayMessage(Messages.messageBlockTrue, Colors.greenMessage, 100f, false);
+            GameplayUI.Instance.DisplayMessage(Messages.messageBlockTrue, Colors.greenMessage, 100f, false);
 
             // ToDO: Add Block animation. The Weapon will be used to block the attack. Spark animation if player and enemy weapons are both metal.
         }
         else
         {
-            UIGamePlay.Instance.DisplayMessage(Messages.messageBlockFalse, Colors.redMessage, 1f, false);
+            GameplayUI.Instance.DisplayMessage(Messages.messageBlockFalse, Colors.redMessage, 1f, false);
         }
     }
 
@@ -257,7 +257,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         DisableCurrentWeaponColliders();
 
         // Setting number to current index in UI and Play short sound
-        UIGamePlay.Instance.SetWeaponNumberText(currentWeaponIndex + 1);
+        GameplayUI.Instance.SetWeaponNumberText(currentWeaponIndex + 1);
         AudioManager.Instance.WeaponChangeSound();
     }
 

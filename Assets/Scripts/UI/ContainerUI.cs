@@ -184,7 +184,7 @@ public class ContainerUI : MonoBehaviour
 
     public void CloseContainerClick()
     {
-        UIGamePlay.Instance.ContainerClose();
+        GameplayUI.Instance.ContainerClose();
 
         var chest = currentContainer as ContainerChest;
         if (chest != null)

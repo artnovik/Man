@@ -14,7 +14,7 @@ public class HealthPlayer : Health
         base.Heal(healValue);
 
         // Custom implementation
-        UIGamePlay.Instance.HealthBarValueChange(currentHealth);
+        GameplayUI.Instance.HealthBarValueChange(currentHealth);
     }
 
     public override void Damage(int damageValue)
@@ -24,8 +24,8 @@ public class HealthPlayer : Health
             base.Damage(damageValue);
 
             // Custom implementation
-            UIGamePlay.Instance.HealthBarValueChange(currentHealth);
-            UIGamePlay.Instance.ActivatePlayerHitScreenEffect();
+            GameplayUI.Instance.HealthBarValueChange(currentHealth);
+            GameplayUI.Instance.ActivatePlayerHitScreenEffect();
 
             EffectsManager.Instance.ActivateBloodEffect(hitTransform);
         }
@@ -36,6 +36,6 @@ public class HealthPlayer : Health
         base.Death();
 
         // Custom implementation
-        UIGamePlay.Instance.ShowDeathScreen();
+        GameplayUI.Instance.ShowDeathScreen();
     }
 }

@@ -68,14 +68,14 @@ public class LootGenerator : MonoBehaviour
         {
             // Enemies
             case ContainerTypeEnum.Enum.Zombie:
-                gold.SetCount(3, 6);
+                gold.SetRandomAmount(3, 6);
                 return gold;
             case ContainerTypeEnum.Enum.Chester:
                 return gold;
 
             // Chests
             case ContainerTypeEnum.Enum.Common_Chest:
-                gold.SetCount(7, 18);
+                gold.SetRandomAmount(7, 18);
                 return gold;
             case ContainerTypeEnum.Enum.Uncommon_Chest:
                 return gold;
@@ -94,7 +94,7 @@ public class LootGenerator : MonoBehaviour
     private Item GenerateRandomWeapon()
     {
         int minSeed = 1;
-        int maxSeed = 3;
+        int maxSeed = 4;
         int randSeed = Random.Range(minSeed, maxSeed+1);
 
         switch (randSeed)
@@ -107,6 +107,9 @@ public class LootGenerator : MonoBehaviour
                 return weapon;
             case 3:
                 weapon = ItemsCollection.Instance.scythe_big;
+                return weapon;
+            case 4:
+                weapon = ItemsCollection.Instance.scythe_small;
                 return weapon;
             default:
                 return null;

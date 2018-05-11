@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ItemSingle : Item
+public abstract class ItemEquipment : ItemSingle
 {
     
 }

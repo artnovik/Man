@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GeneralSlot : Slot
+public abstract class GeneralSlot : Slot
 {
     public Text countText;
 }

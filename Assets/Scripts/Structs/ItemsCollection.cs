@@ -19,7 +19,8 @@ public class ItemsCollection : MonoBehaviour
     public Weapon knife;
     public Weapon saw;
     public Weapon scythe_big;
-    public Consumable potion;
+    public Weapon scythe_small;
+    public ItemConsumable potion;
 
     public Weapon GetWeapon(Weapon weapon)
     {

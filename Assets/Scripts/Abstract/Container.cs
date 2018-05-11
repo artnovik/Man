@@ -12,7 +12,7 @@ public abstract class Container : Interactable
 
     protected void OpenContainer()
     {
-        UIGamePlay.Instance.ContainerOpen();
+        GameplayUI.Instance.ContainerOpen();
         ContainerUI.Instance.InitializeContainerUI(this);
     }
 
@@ -49,6 +49,6 @@ public abstract class Container : Interactable
 
     protected virtual void IfContainerEmpty()
     {
-        UIGamePlay.Instance.ContainerClose();
+        GameplayUI.Instance.ContainerClose();
     }
 }

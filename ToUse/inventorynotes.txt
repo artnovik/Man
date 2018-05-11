@@ -1,0 +1,44 @@
+In Trello tasks you mentioned:
+1. Chest with items (So, not the weapons only, the game should contain other items, please describe them) which can be dropped and collected by player
+
+**Yeah there will be many other items, but I don't know what they are yet :) good example is health potion (which I think there is asset for)
+Stuff like ammo, contaminated blood, brain slime
+
+
+Asumming this: you want stats system for weapons, right?
+
+**Yeah stats for weapons should be like speed, damage, range etc 
+Like scythe:
+Speed: Slow
+Range: Mid
+Damage: High
+(type Arcane/water/fire etc)
+
+
+Ritual Blade:
+Speed: Fast
+Range: small
+Damage: mid
+(type Arcane/water/fire etc)
+
+And you also want inventory for player (or player just collects and switches weapons?)
+**Yeah we need inventory system, don't worry about the UI for now
+
+Also, should characters (enemies, player) also have their stats (you mentioned "armor" for Chester), 
+or they should just have different hp values (for example, we can reduce it maxValue for Chester)? 
+
+***Everyone will have stats from a base class and the class should be extended to each character:
+Health
+Stamina
+Speed
+Strength/Damage (this kind of depends on the weapon)
+Arcane (if they have arcane they can do magic, but are also more resistant to magic)
+Fire Resistance (water characters are weak to fire damage/strong to water damage)
+Water Resistance (fire characters are weak to water damage/strong to fire damage)
+
+Also, should their attack completely depend on weapon they're using or, again, there's some sort of stats for characters?
+**Yeah mostly but affected by their strength and weapon weight
+
+Also, if we're switching on Vanessa, should she have her own stats(if I'll create this system), hp, weapons, and inventory(if I'll create this system), or all playable characters sharing this stuff among them?
+
+**Yeah they have their own stats, weapons and inventory

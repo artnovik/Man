@@ -52,7 +52,7 @@ public class SpawnManager : MonoBehaviour
 
         if (message)
         {
-            UIGamePlay.Instance.DisplayMessage(Messages.messageNoEnemies, Colors.yellowMessage, 3f, false);
+            GameplayUI.Instance.DisplayMessage(Messages.messageNoEnemies, Colors.yellowMessage, 3f, false);
             yield return new WaitForSeconds(3f);
         }
 

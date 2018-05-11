@@ -1,21 +1,10 @@
 ﻿using UnityEngine;
 
-public class Item : ScriptableObject
+public abstract class Item : ScriptableObject
 {
     public new string name;
     public Sprite inventorySprite;
     public string description;
-    public int buyValue;
-    public int sellValue;
-
-    public enum ItemTypeEnum
-    {
-        Weapon = 0,
-        Consumable = 1,
-        Gold = 2
-    }
-
-    public ItemTypeEnum ItemType;
 
     public virtual int GetCount()
     {

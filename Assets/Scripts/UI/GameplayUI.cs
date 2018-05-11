@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIGamePlay : MonoBehaviour
+public class GameplayUI : MonoBehaviour
 {
     [SerializeField] private Button attackButton;
 
@@ -20,9 +20,7 @@ public class UIGamePlay : MonoBehaviour
     private Vector3 localLocomotionDir;
 
     [Header("MessageForPlayer")] [SerializeField]
-    private GameObject messageGO;
-
-    [SerializeField] private Text messageText;
+    private Text messageText;
 
     [Header("Weapons")] public Text numberWeapon;
 
@@ -49,7 +47,7 @@ public class UIGamePlay : MonoBehaviour
 
     #region Singleton
 
-    public static UIGamePlay Instance;
+    public static GameplayUI Instance;
 
     private void Awake()
     {
@@ -205,7 +203,7 @@ public class UIGamePlay : MonoBehaviour
     {
         messageText.text = text;
         messageText.color = color;
-        messageGO.SetActive(true);
+        messageText.gameObject.SetActive(true);
         if (blinking)
         {
             blinkMessageCoroutine = StartCoroutine(Blink(messageText, false));
@@ -217,7 +215,7 @@ public class UIGamePlay : MonoBehaviour
             StopCoroutine(blinkMessageCoroutine);
         }
 
-        messageGO.SetActive(false);
+        messageText.gameObject.SetActive(false);
         messageText.text = string.Empty;
     }
 

@@ -288,7 +288,7 @@ public class InventoryUI : MonoBehaviour
                 StartWeaponEquipment();
                 return;
             }
-            else if (inventorySlots[GetCurrentSlotIndex()].slotItem is Consumable)
+            else if (inventorySlots[GetCurrentSlotIndex()].slotItem is ItemConsumable)
             {
                 // ToDo: Potion Equip mode.
                 return;
@@ -321,7 +321,7 @@ public class InventoryUI : MonoBehaviour
     public void InventoryCloseClick()
     {
         inventory.GenerateIfDrop();
-        UIGamePlay.Instance.InventoryClose();
+        GameplayUI.Instance.InventoryClose();
     }
 
     private int GetCurrentSlotIndex()
