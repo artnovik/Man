@@ -28,14 +28,6 @@ public abstract class Slot : MonoBehaviour
 
     public virtual void Select()
     {
-        if (slotItem != null)
-        {
-            //InventoryUI.Instance.currentInventorySlot = this;
-            //InventoryUI.Instance.MakeSlotActive(this);
-        }
-        else
-        {
-            //InventoryUI.Instance.MakeAllSlotsInactive();
-        }
+        
     }
 }

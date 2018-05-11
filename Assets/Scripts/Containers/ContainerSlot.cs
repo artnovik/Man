@@ -10,7 +10,12 @@ public class ContainerSlot : GeneralSlot
         var stackItem = newItem as ItemStack;
         if (stackItem != null)
         {
-            countText.text = stackItem.GetAmount().ToString();
+            int amount = stackItem.GetAmount();
+
+            if (amount > 1) // To display only multiple Items count
+            {
+                countText.text = amount.ToString();
+            }
         }
 
         slotIcon.sprite = slotItem.itemSprite;

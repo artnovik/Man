@@ -11,10 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18a4d6d67ae0b8b41aa6ab7570ae59d2, type: 3}
   m_Name: Gold
   m_EditorClassIdentifier: 
-  name: Gold
-  inventorySprite: {fileID: 21300000, guid: a4b0604c66023b74dbc8deeb71c97f22, type: 3}
-  description: Most powerful thing in the world.
-  buyValue: 1
-  sellValue: 1
-  ItemType: 2
-  count: 1
+  itemName: Gold
+  itemSprite: {fileID: 21300000, guid: a4b0604c66023b74dbc8deeb71c97f22, type: 3}
+  itemDescription: Most powerful thing in the world.
+  amount: 0

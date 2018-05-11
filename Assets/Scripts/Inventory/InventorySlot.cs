@@ -3,11 +3,17 @@ using UnityEngine.UI;
 
 public class InventorySlot : GeneralSlot
 {
-    public void AddItem(Item newItem)
+    // Modify for all selectable Items
+    public override void Select()
     {
-        slotItem = newItem;
-
-        slotIcon.sprite = slotItem.itemSprite;
-        slotIcon.enabled = true;
+        if (slotItem != null)
+        {
+            InventoryUI.Instance.currentInventorySlot = this;
+            InventoryUI.Instance.MakeSlotActive(this);
+        }
+        else
+        {
+            InventoryUI.Instance.MakeAllSlotsInactive();
+        }
     }
 }

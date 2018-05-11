@@ -11,17 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b5f569208e99db4ba9af20395badb6b, type: 3}
   m_Name: Saw
   m_EditorClassIdentifier: 
-  name: Saw
-  inventorySprite: {fileID: 21300000, guid: 8c2eeb529be46d949bc83da4c0b4a4e9, type: 3}
-  description: Sharp saw, even for your bones.
-  buyValue: 7
-  sellValue: 2
-  ItemType: 0
-  weaponPrefab: {fileID: 1741675144258840, guid: 1bb0c3f83a6ea49408ce24dafea5ec7d,
-    type: 2}
+  itemName: Saw
+  itemSprite: {fileID: 21300000, guid: 8c2eeb529be46d949bc83da4c0b4a4e9, type: 3}
+  itemDescription: Sharp, versatile saw. (Bones included)
+  itemPrefab: {fileID: 1741675144258840, guid: 1bb0c3f83a6ea49408ce24dafea5ec7d, type: 2}
   DamageType: 0
-  maxDamage: 36
   minDamage: 31
+  maxDamage: 36
   Range: 0
   Speed: 0
   staminaConsume: 13

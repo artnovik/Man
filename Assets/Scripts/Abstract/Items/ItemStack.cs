@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class ItemStack : Item
 {
-    protected int amount;
+    [SerializeField] protected int amount;
 
     public int GetAmount()
     {
@@ -21,7 +21,7 @@ public abstract class ItemStack : Item
         amount = Random.Range(minValue, maxValue + 1);
     }
 
-    public virtual void SetAmount(int specifiсValue)
+    public virtual void SetSpecificAmount(int specifiсValue)
     {
         amount = specifiсValue;
     }

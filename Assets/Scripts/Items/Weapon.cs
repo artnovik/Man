@@ -27,9 +27,8 @@ public class Weapon : ItemEquipment
 
     public DamageTypeEnum DamageType;
 
-    public uint maxDamage;
-
     public uint minDamage;
+    public uint maxDamage;
 
     public RangeEnum Range;
 

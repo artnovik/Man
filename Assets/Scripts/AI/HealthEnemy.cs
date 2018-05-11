@@ -61,7 +61,7 @@ public class HealthEnemy : Health
         DestroyComponents();
 
         #region Weapon Drop Physics
-        // ToDo: Improve.
+        // ToDo: Improve. Swap between Active/Passive Prefabs.
         
         weaponData.gameObject.transform.SetParent(null);
         weaponData.gameObject.AddComponent<Rigidbody>();
