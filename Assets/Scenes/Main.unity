@@ -13832,7 +13832,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1809053811}
         m_MethodName: InventoryOpen
         m_Mode: 1
         m_Arguments:
@@ -25967,8 +25967,8 @@ MonoBehaviour:
   playerCollider: {fileID: 1111614339}
   playerHealth: {fileID: 0}
   playerTransform: {fileID: 1111614333}
-  _playerGameplayUI: {fileID: 0}
-  playerView: {fileID: 0}
+  _playerGameplayUI: {fileID: 1809053811}
+  playerView: {fileID: 858239173}
   movementSpeed: 1.2
   stateLockTarget: 0
   target: {fileID: 0}
@@ -29307,7 +29307,15 @@ MonoBehaviour:
   attackButton: {fileID: 2128751542}
   blockImage: {fileID: 990971098}
   pickUpButton: {fileID: 767310511}
-  controlGroup: []
+  controlGroup:
+  - {fileID: 300741615}
+  - {fileID: 815761950}
+  - {fileID: 2128751539}
+  - {fileID: 650146310}
+  - {fileID: 1867515446}
+  - {fileID: 1477624874}
+  - {fileID: 898448065}
+  - {fileID: 111287669}
   eyeLockTargetImage: {fileID: 1860736135}
   messageText: {fileID: 979263724}
   numberWeapon: {fileID: 1793181949}
@@ -29321,23 +29329,37 @@ MonoBehaviour:
   playerStaminaBarCurrent: {fileID: 1665334715}
   playerStaminaBarEmpty: {fileID: 1227099311}
   switchWeaponButton: {fileID: 1477624877}
-  targetCamera: {fileID: 0}
-  targetInvisibleCamera: {fileID: 0}
-  targetLocomotion: {fileID: 0}
-  inventoryMenu: {fileID: 0}
-  inventoryButton: {fileID: 0}
-  pauseMenu: {fileID: 0}
-  pauseText: {fileID: 0}
-  GOD_MODE_Toggle: {fileID: 0}
-  FPS_SHOW_Toggle: {fileID: 0}
-  LIFESTEAL_Toggle: {fileID: 0}
-  FAST_TESTING_Toggle: {fileID: 0}
-  FPS_Text_GO: {fileID: 0}
-  screenEffectsGO: {fileID: 0}
-  playerHitScreenEffectImage: {fileID: 0}
-  containerGO: {fileID: 0}
-  deathScreen: {fileID: 0}
-  hideOnDeathObjects: []
+  targetCamera: {fileID: 2023379042}
+  targetInvisibleCamera: {fileID: 882500503}
+  targetLocomotion: {fileID: 390742899}
+  inventoryMenu: {fileID: 915422386}
+  inventoryButton: {fileID: 898448068}
+  pauseMenu: {fileID: 1691834172}
+  pauseText: {fileID: 1169959294}
+  GOD_MODE_Toggle: {fileID: 2024354563}
+  FPS_SHOW_Toggle: {fileID: 125916935}
+  LIFESTEAL_Toggle: {fileID: 1065908500}
+  FAST_TESTING_Toggle: {fileID: 1216097834}
+  FPS_Text_GO: {fileID: 580110958}
+  screenEffectsGO: {fileID: 1015421058}
+  playerHitScreenEffectImage: {fileID: 252636749}
+  containerGO: {fileID: 1909205527}
+  deathScreen: {fileID: 1149420262}
+  hideOnDeathObjects:
+  - {fileID: 2077586357}
+  - {fileID: 337269515}
+  - {fileID: 300741615}
+  - {fileID: 815761950}
+  - {fileID: 2128751539}
+  - {fileID: 650146310}
+  - {fileID: 1867515446}
+  - {fileID: 1477624874}
+  - {fileID: 898448065}
+  - {fileID: 111287669}
+  - {fileID: 1909205527}
+  - {fileID: 1691834172}
+  - {fileID: 915422386}
+  - {fileID: 979263722}
 --- !u!1001 &1815668705
 Prefab:
   m_ObjectHideFlags: 0
@@ -34411,7 +34433,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1809053811}
         m_MethodName: Attack
         m_Mode: 1
         m_Arguments:
