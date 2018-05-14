@@ -6,6 +6,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
 {
     [Header("Data")] public CameraControl cameraControl;
     public bool inBattle;
+    public bool weaponEquipped;
 
     public bool isPaused;
     public Locomotion locomotion;
@@ -24,19 +25,19 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
 
     #region Unity
 
+    private void Awake()
+    {
+        Inventory.Instance.onEquipmentChangeCallback += CheckForEmptyHands;
+    }
+
     private void Start()
     {
         playerHealth = locomotion.health;
-        locomotion.animator.transform.SetParent(null);
+        locomotion.transform.SetParent(null);
         localTransform = transform;
 
-        /*foreach (GameObject weapon in listWeapons)
-        foreach (Collider weaponCollider in weapon.GetComponentsInChildren<Collider>())
-            weaponCollider.enabled = false;
-
-        GetCurrentWeaponColliders();
-
-        SwitchWeapon(curIndexWeapon);*/
+        GameplayUI.Instance.InitializeInventoryPositions();
+        CheckForEmptyHands();
     }
 
     private void Update()
@@ -198,6 +199,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         weaponsList[slotIndex] = null;
         Destroy(currentWeaponGO);
         currentWeaponData = null;
+        currentWeaponGO = null;
         SwitchWeapon();
     }
 
@@ -259,6 +261,20 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         // Setting number to current index in UI and Play short sound
         GameplayUI.Instance.SetWeaponNumberText(currentWeaponIndex + 1);
         AudioManager.Instance.WeaponChangeSound();
+    }
+
+    private void CheckForEmptyHands()
+    {
+        if (currentWeaponGO == null)
+        {
+            GameplayUI.Instance.SwitchWeaponUI(false);
+            weaponEquipped = false;
+        }
+        else
+        {
+            GameplayUI.Instance.SwitchWeaponUI(true);
+            weaponEquipped = true;
+        }
     }
 
     private Collider[] GetCurrentWeaponColliders()

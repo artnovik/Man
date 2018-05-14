@@ -5,8 +5,9 @@ public class ContainerSlot : GeneralSlot
 {
     public void FillSlot(Item newItem)
     {
-        slotItem = newItem;
+        base.FillSlot(newItem);
 
+        // Amount check. If Item is ItemStack - displays count in cell
         var stackItem = newItem as ItemStack;
         if (stackItem != null)
         {
@@ -17,18 +18,13 @@ public class ContainerSlot : GeneralSlot
                 countText.text = amount.ToString();
             }
         }
-
-        slotIcon.sprite = slotItem.itemSprite;
-        slotIcon.enabled = true;
     }
 
     public void ClearSlot()
     {
-        slotItem = null;
-        countText.text = null;
+        base.ClearSlot();
 
-        slotIcon.sprite = null;
-        slotIcon.enabled = false;
+        countText.text = null;
     }
 
     public void Select()

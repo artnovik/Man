@@ -28,6 +28,5 @@ public abstract class Slot : MonoBehaviour
 
     public virtual void Select()
     {
-        
     }
 }

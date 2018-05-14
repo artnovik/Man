@@ -16,9 +16,13 @@ public class Inventory : MonoBehaviour
 
     public delegate void OnInventoryChange();
 
-    public int inventoryCapacity = 27;
-
     public OnInventoryChange onInventoryChangeCallback;
+
+    public delegate void OnEquipmentChange();
+
+    public OnEquipmentChange onEquipmentChangeCallback;
+
+    public int inventoryCapacity = 27;
     public List<Item> items = new List<Item>();
 
     #region Gold
@@ -59,7 +63,7 @@ public class Inventory : MonoBehaviour
     public void AddItem(Item item)
     {
         items.Add(item);
-        
+
         onInventoryChangeCallback?.Invoke();
     }
 
@@ -104,9 +108,10 @@ public class Inventory : MonoBehaviour
 
             // If we need to swap - SwapSlots()
 
-            onInventoryChangeCallback.Invoke();
+            onInventoryChangeCallback?.Invoke();
 
             PlayerData.Instance.AddToEquipSlot(weaponToEquip.itemPrefab, equipSlotIndex);
+            onEquipmentChangeCallback?.Invoke();
             AudioManager.Instance.WeaponChangeSound();
         }
     }
@@ -122,6 +127,8 @@ public class Inventory : MonoBehaviour
         InventoryUI.Instance.equipWeaponSlots[slotIndex].associatedWeapon = null;
         PlayerData.Instance.RemoveFromEquipSlot(slotIndex);
         AddItem(weaponToUnEquip);
+
+        onEquipmentChangeCallback?.Invoke();
     }
 
     #endregion
