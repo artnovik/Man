@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class GameplayUI : MonoBehaviour
 {
+    #region Fields
+
     [SerializeField] private Button attackButton;
 
     [SerializeField] private Image blockImage;
@@ -47,6 +49,8 @@ public class GameplayUI : MonoBehaviour
     [Header("Locomotion")] public RectTransform targetLocomotion;
 
     private Vector3 visibleCameraDir;
+
+    #endregion
 
     #region Singleton
 

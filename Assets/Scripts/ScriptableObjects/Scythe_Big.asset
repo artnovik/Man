@@ -16,7 +16,8 @@ MonoBehaviour:
   itemDescription: Cruel, large deathbringer.
   itemActivePrefab: {fileID: 1424355609207970, guid: f0419a1dd18a8294f9f879a352e68721,
     type: 2}
-  itemPassivePrefab: {fileID: 0}
+  itemPassivePrefab: {fileID: 1859788294356692, guid: ccbea003d5d8488448c5a34dfced17d4,
+    type: 2}
   DamageType: 0
   minDamage: 36
   maxDamage: 41

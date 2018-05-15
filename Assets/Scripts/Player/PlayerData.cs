@@ -196,9 +196,14 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
     public void RemoveFromEquipSlot(int slotIndex)
     {
         weaponsList[slotIndex] = null;
-        Destroy(currentWeaponGO);
-        currentWeaponData = null;
-        currentWeaponGO = null;
+
+        if (GetWeaponsEquippedCount() < 1)
+        {
+            Destroy(currentWeaponGO);
+            currentWeaponData = null;
+            currentWeaponGO = null;
+        }
+
         SwitchWeapon();
     }
 
@@ -206,16 +211,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
     {
         #region If Player have only 1 weapon equipped, method won't execute
 
-        int listCount = 0;
-        foreach (var element in weaponsList)
-        {
-            if (element != null)
-            {
-                listCount++;
-            }
-        }
-
-        if (listCount < 2)
+        if (GetWeaponsEquippedCount() < 2)
             return;
 
         #endregion
@@ -262,15 +258,38 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         AudioManager.Instance.WeaponChangeSound();
     }
 
+    private int GetWeaponsEquippedCount()
+    {
+        int listCount = 0;
+        foreach (var element in weaponsList)
+        {
+            if (element != null)
+            {
+                listCount++;
+            }
+        }
+
+        return listCount;
+    }
+
     private void CheckForEmptyHands()
     {
-        if (currentWeaponGO == null)
+        if (GetWeaponsEquippedCount() == 0)
         {
             GameplayUI.Instance.SwitchWeaponUI(false);
             weaponEquipped = false;
         }
         else
         {
+            for (int i = 0; i < weaponsList.Count; i++)
+            {
+                if (weaponsList[i] != null)
+                {
+                    DrawWeapon(i);
+                    break;
+                }
+            }
+
             GameplayUI.Instance.SwitchWeaponUI(true);
             weaponEquipped = true;
         }

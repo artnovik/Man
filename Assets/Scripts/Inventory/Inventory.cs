@@ -91,7 +91,6 @@ public class Inventory : MonoBehaviour
 
     #region Equipment
 
-    [SerializeField] private List<Weapon> equippedWeapons = new List<Weapon>();
     public bool equipMode;
 
     public void EquipWeapon(int weaponSlotIndex, int equipSlotIndex)
@@ -100,8 +99,6 @@ public class Inventory : MonoBehaviour
 
         if (weaponToEquip != null)
         {
-            equippedWeapons.Insert(equipSlotIndex, weaponToEquip);
-
             InventoryUI.Instance.equipWeaponSlots[equipSlotIndex].associatedWeapon = weaponToEquip;
 
             DestroyItem(weaponSlotIndex);
@@ -121,15 +118,14 @@ public class Inventory : MonoBehaviour
     {
         UnEquipWeapon(oldWeaponSlot.equipWeaponSlotIndex);
         EquipWeapon(InventoryUI.Instance.GetCurrentInventorySlotIndex(), oldWeaponSlot.equipWeaponSlotIndex);
-        
+
         onInventoryChangeCallback?.Invoke();
         onEquipmentChangeCallback?.Invoke();
     }
 
     public void UnEquipWeapon(int slotIndex)
     {
-        var weaponToUnEquip = equippedWeapons[slotIndex];
-        equippedWeapons.RemoveAt(slotIndex);
+        var weaponToUnEquip = InventoryUI.Instance.equipWeaponSlots[slotIndex].associatedWeapon;
         InventoryUI.Instance.equipWeaponSlots[slotIndex].associatedWeapon = null;
         PlayerData.Instance.RemoveFromEquipSlot(slotIndex);
         AddItem(weaponToUnEquip);

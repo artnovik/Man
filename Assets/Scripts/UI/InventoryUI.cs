@@ -204,6 +204,7 @@ public class InventoryUI : MonoBehaviour
             }
 
             MakeSlotActive(equipWeaponSlots[equipButtonIndex]);
+            currentInventorySlot = null;
             currentEquipWeaponSlot = equipWeaponSlots[equipButtonIndex];
         }
     }
@@ -312,7 +313,7 @@ public class InventoryUI : MonoBehaviour
                 return;
             }
         }
-        // If we clicking on EquipSlot
+        // If we selected EquipSlot - then UnEquip
         else if (currentEquipWeaponSlot != null)
         {
             inventory.UnEquipWeapon(currentEquipWeaponSlot.equipWeaponSlotIndex);

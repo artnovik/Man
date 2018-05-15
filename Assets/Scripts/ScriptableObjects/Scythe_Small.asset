@@ -14,7 +14,10 @@ MonoBehaviour:
   itemName: Small Scythe
   itemSprite: {fileID: 21300000, guid: fd8f4573cb2bb2742ae9734ac359c1af, type: 3}
   itemDescription: Little scythe.
-  itemPrefab: {fileID: 1869397247307740, guid: 04e4e28be470484468b536fe8ac06263, type: 2}
+  itemActivePrefab: {fileID: 1869397247307740, guid: 04e4e28be470484468b536fe8ac06263,
+    type: 2}
+  itemPassivePrefab: {fileID: 1673482819529446, guid: 34defab9665dc3a44b98be98ed33d28f,
+    type: 2}
   DamageType: 0
   minDamage: 29
   maxDamage: 36
