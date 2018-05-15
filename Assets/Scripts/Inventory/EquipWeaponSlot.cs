@@ -11,13 +11,16 @@ public class EquipWeaponSlot : EquipSlot
 
     public void ClearSlot()
     {
+        base.ClearSlot();
+        
         associatedWeapon = null;
-
-        slotIcon.sprite = null;
+        slotIcon.enabled = true;
     }
 
     public override void Select()
     {
+        base.Select();
+        
         InventoryUI.Instance.EquipSlotOnClick(gameObject, equipWeaponSlotIndex);
 
         // ToDo: Proper working UnEquip and SwapWeapons in Inventory, when equipped slot selected again

@@ -174,6 +174,7 @@ public class InventoryUI : MonoBehaviour
 
             StopWeaponEquipment();
             currentInventorySlot = null;
+            currentEquipWeaponSlot = equipWeaponSlots[equipButtonIndex];
             MakeSlotActive(equipWeaponSlots[equipButtonIndex]);
         }
         // Behaviour - If we want to replace weapon by another
@@ -181,6 +182,7 @@ public class InventoryUI : MonoBehaviour
         {
             //inventory.SwapWeapons(inventorySlots[GetCurrentInventorySlotIndex()], equipWeaponSlots[equipButtonIndex]);
 
+            // ToDO: Equip item by index
             currentEquipWeaponSlot = clickedButtonGO.GetComponent<EquipWeaponSlot>();
             inventory.UnEquipWeapon(currentEquipWeaponSlot.equipWeaponSlotIndex);
             currentEquipWeaponSlot.ClearSlot();
@@ -195,7 +197,7 @@ public class InventoryUI : MonoBehaviour
             MakeSlotActive(equipWeaponSlots[equipButtonIndex]);
         }
         // Behaviour - If we are just want to select equipped weapon
-        else
+        else if (!inventory.equipMode && clickedButtonGO.GetComponent<EquipWeaponSlot>().associatedWeapon != null)
         {
             if (equipWeaponSlots[equipButtonIndex].associatedWeapon == null)
             {
