@@ -116,8 +116,14 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void SwapSlots( /*WeaponSlot, InventorySlot*/)
+    // Unused now: logic in InventoryUI
+    public void SwapWeapons(InventorySlot newWeaponSlot, EquipWeaponSlot oldWeaponSlot)
     {
+        UnEquipWeapon(oldWeaponSlot.equipWeaponSlotIndex);
+        EquipWeapon(InventoryUI.Instance.GetCurrentInventorySlotIndex(), oldWeaponSlot.equipWeaponSlotIndex);
+        
+        onInventoryChangeCallback?.Invoke();
+        onEquipmentChangeCallback?.Invoke();
     }
 
     public void UnEquipWeapon(int slotIndex)

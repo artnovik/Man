@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class EquipWeaponSlot : EquipSlot
 {
-    public int equipSlotIndex;
+    public int equipWeaponSlotIndex;
     public Weapon associatedWeapon;
 
     public void ClearSlot()
@@ -18,7 +18,7 @@ public class EquipWeaponSlot : EquipSlot
 
     public override void Select()
     {
-        InventoryUI.Instance.EquipSlotOnClick(gameObject, equipSlotIndex);
+        InventoryUI.Instance.EquipSlotOnClick(gameObject, equipWeaponSlotIndex);
 
         // ToDo: Proper working UnEquip and SwapWeapons in Inventory, when equipped slot selected again
         if (slotItem != null)

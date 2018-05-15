@@ -6645,7 +6645,7 @@ MonoBehaviour:
   slotItem: {fileID: 0}
   slotIcon: {fileID: 339590264}
   slotButton: {fileID: 571020816}
-  equipSlotIndex: 0
+  equipWeaponSlotIndex: 0
   associatedWeapon: {fileID: 0}
 --- !u!1 &573870113
 GameObject:
@@ -28219,7 +28219,7 @@ MonoBehaviour:
   slotItem: {fileID: 0}
   slotIcon: {fileID: 191533270}
   slotButton: {fileID: 1753329426}
-  equipSlotIndex: 1
+  equipWeaponSlotIndex: 1
   associatedWeapon: {fileID: 0}
 --- !u!1001 &1754613667
 Prefab:
