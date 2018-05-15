@@ -99,7 +99,7 @@ public class Inventory : MonoBehaviour
 
         if (weaponToEquip != null)
         {
-            InventoryUI.Instance.equipWeaponSlots[equipSlotIndex].associatedWeapon = weaponToEquip;
+            InventoryUI.Instance.equipWeaponSlots[equipSlotIndex].slotItem = weaponToEquip;
 
             DestroyItem(weaponSlotIndex);
 
@@ -113,11 +113,21 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    // Unused now: logic in InventoryUI
-    public void SwapWeapons(InventorySlot newWeaponSlot, EquipWeaponSlot oldWeaponSlot)
+    public void SwapWeapons(int inventorySlot_Index, int equipWeaponSlot_Index)
     {
-        UnEquipWeapon(oldWeaponSlot.equipWeaponSlotIndex);
-        EquipWeapon(InventoryUI.Instance.GetCurrentInventorySlotIndex(), oldWeaponSlot.equipWeaponSlotIndex);
+        var weaponToUnEquip =
+            InventoryUI.Instance.equipWeaponSlots[equipWeaponSlot_Index].slotItem;
+
+        var weaponToEquip = (Weapon) items[inventorySlot_Index];
+
+        InventoryUI.Instance.equipWeaponSlots[equipWeaponSlot_Index].slotItem = weaponToEquip;
+
+        items.RemoveAt(inventorySlot_Index);
+        items.Add(weaponToUnEquip);
+
+        PlayerData.Instance.AddToEquipSlot(weaponToEquip.itemActivePrefab, equipWeaponSlot_Index);
+        
+        AudioManager.Instance.WeaponChangeSound();
 
         onInventoryChangeCallback?.Invoke();
         onEquipmentChangeCallback?.Invoke();
@@ -125,8 +135,8 @@ public class Inventory : MonoBehaviour
 
     public void UnEquipWeapon(int slotIndex)
     {
-        var weaponToUnEquip = InventoryUI.Instance.equipWeaponSlots[slotIndex].associatedWeapon;
-        InventoryUI.Instance.equipWeaponSlots[slotIndex].associatedWeapon = null;
+        var weaponToUnEquip = InventoryUI.Instance.equipWeaponSlots[slotIndex].slotItem;
+        InventoryUI.Instance.equipWeaponSlots[slotIndex].slotItem = null;
         PlayerData.Instance.RemoveFromEquipSlot(slotIndex);
         AddItem(weaponToUnEquip);
 

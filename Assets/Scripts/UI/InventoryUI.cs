@@ -95,21 +95,23 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    public void MakeSlotActive(InventorySlot clickedSlot)
+    public void MakeSlotActive(Slot clickedSlot)
     {
         MakeAllSlotsInactive();
         clickedSlot.slotButton.GetComponent<Image>().color = Colors.playerActiveUI;
-        clickedSlot.countText.color = Color.white;
 
-        ActivateItemInfo(true);
-    }
+        if (clickedSlot.slotItem is ItemStack)
+        {
+            ((InventorySlot) clickedSlot).countText.color = Color.white;
+        }
 
-    public void MakeSlotActive(EquipWeaponSlot clickedWeaponSlot)
-    {
-        MakeAllSlotsInactive();
-        clickedWeaponSlot.GetComponent<Image>().color = Colors.playerActiveUI;
+        ActivateItemInfo(true, clickedSlot.slotItem);
 
-        ActivateItemInfo(true, clickedWeaponSlot.associatedWeapon);
+        // ToDo: Improve
+        if (clickedSlot is EquipWeaponSlot)
+        {
+            useButton.GetComponentInChildren<Text>().text = "UnEquip";
+        }
     }
 
     public void MakeAllSlotsInactive()
@@ -125,7 +127,7 @@ public class InventoryUI : MonoBehaviour
             equipSlot.GetComponent<Image>().color = Colors.playerDefaultUI;
         }
 
-        ActivateItemInfo(false);
+        ActivateItemInfo(false, null);
     }
 
     #endregion
@@ -162,53 +164,28 @@ public class InventoryUI : MonoBehaviour
         equipAnimator.Play("Default");
     }
 
-    public void EquipSlotOnClick(GameObject clickedButtonGO, int equipButtonIndex)
+    public void EquipSlotOnClick(EquipWeaponSlot equipWeaponSlot)
     {
         // Behaviour - If we are equipping weapon
-        if (inventory.equipMode && clickedButtonGO.GetComponent<EquipWeaponSlot>().associatedWeapon == null)
+        if (inventory.equipMode && equipWeaponSlot.slotItem == null)
         {
-            clickedButtonGO.transform.GetChild(0).GetComponent<Image>().sprite =
-                inventorySlots[GetCurrentInventorySlotIndex()].slotItem.itemSprite;
-            clickedButtonGO.transform.GetChild(0).GetComponent<Image>().color = Colors.playerDefaultUI;
-            inventory.EquipWeapon(GetCurrentInventorySlotIndex(), equipButtonIndex);
+            equipWeaponSlot.FillSlot(inventorySlots[GetCurrentInventorySlotIndex()].slotItem);
+            inventory.EquipWeapon(GetCurrentInventorySlotIndex(), equipWeaponSlot.equipWeaponSlotIndex);
 
             StopWeaponEquipment();
-            currentInventorySlot = null;
-            currentEquipWeaponSlot = equipWeaponSlots[equipButtonIndex];
-            MakeSlotActive(equipWeaponSlots[equipButtonIndex]);
         }
         // Behaviour - If we want to replace weapon by another
-        else if (inventory.equipMode && clickedButtonGO.GetComponent<EquipWeaponSlot>().associatedWeapon != null)
+        else if (inventory.equipMode && equipWeaponSlot.slotItem != null)
         {
-            //inventory.SwapWeapons(inventorySlots[GetCurrentInventorySlotIndex()], equipWeaponSlots[equipButtonIndex]);
-
-            // ToDO: Equip item by index
-            currentEquipWeaponSlot = clickedButtonGO.GetComponent<EquipWeaponSlot>();
-            inventory.UnEquipWeapon(currentEquipWeaponSlot.equipWeaponSlotIndex);
-            currentEquipWeaponSlot.ClearSlot();
-
-            clickedButtonGO.transform.GetChild(0).GetComponent<Image>().sprite =
-                inventorySlots[GetCurrentInventorySlotIndex()].slotItem.itemSprite;
-            clickedButtonGO.transform.GetChild(0).GetComponent<Image>().color = Colors.playerDefaultUI;
-            inventory.EquipWeapon(GetCurrentInventorySlotIndex(), equipButtonIndex);
+            equipWeaponSlot.ClearSlot();
+            equipWeaponSlot.FillSlot(inventorySlots[GetCurrentInventorySlotIndex()].slotItem);
+            
+            inventory.SwapWeapons(GetCurrentInventorySlotIndex(), equipWeaponSlot.equipWeaponSlotIndex);
 
             StopWeaponEquipment();
-            currentInventorySlot = null;
-            MakeSlotActive(equipWeaponSlots[equipButtonIndex]);
         }
-        // Behaviour - If we are just want to select equipped weapon
-        else if (!inventory.equipMode && clickedButtonGO.GetComponent<EquipWeaponSlot>().associatedWeapon != null)
-        {
-            if (equipWeaponSlots[equipButtonIndex].associatedWeapon == null)
-            {
-                MakeAllSlotsInactive();
-                return;
-            }
 
-            MakeSlotActive(equipWeaponSlots[equipButtonIndex]);
-            currentInventorySlot = null;
-            currentEquipWeaponSlot = equipWeaponSlots[equipButtonIndex];
-        }
+        currentInventorySlot = null;
     }
 
     #endregion
@@ -221,7 +198,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Image infoItemSprite;
     [SerializeField] private Text infoItemTypes;
 
-    private void ActivateItemInfo(bool value)
+    private void ActivateItemInfo(bool value, Item item)
     {
         useButton.gameObject.SetActive(value);
         dropButton.gameObject.SetActive(value);
@@ -229,36 +206,15 @@ public class InventoryUI : MonoBehaviour
 
         if (value)
         {
-            var weapon = inventorySlots[GetCurrentInventorySlotIndex()].slotItem as Weapon;
-            if (weapon != null)
+            if (item != null)
             {
-                FillInfoWindowWithWeapon(weapon.itemSprite, weapon.itemName, weapon.minDamage,
-                    weapon.maxDamage, weapon.DamageType, weapon.Speed, weapon.Range,
-                    weapon.itemDescription);
-            }
-        }
-        else
-        {
-            ClearInfoWindow();
-        }
-    }
-
-    private void ActivateItemInfo(bool value, Weapon weapon)
-    {
-        useButton.gameObject.SetActive(value);
-
-        dropButton.gameObject.SetActive(value);
-        destroyButton.gameObject.SetActive(value);
-
-        if (value)
-        {
-            if (weapon != null)
-            {
-                FillInfoWindowWithWeapon(weapon.itemSprite, weapon.itemName, weapon.minDamage,
-                    weapon.maxDamage, weapon.DamageType, weapon.Speed, weapon.Range,
-                    weapon.itemDescription);
-
-                useButton.GetComponentInChildren<Text>().text = "UnEquip";
+                if (item is Weapon)
+                {
+                    var weapon = (Weapon) item;
+                    FillInfoWindowWithWeapon(weapon.itemSprite, weapon.itemName, weapon.minDamage,
+                        weapon.maxDamage, weapon.DamageType, weapon.Speed, weapon.Range,
+                        weapon.itemDescription);
+                }
             }
         }
         else
