@@ -36,7 +36,6 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         locomotion.transform.SetParent(null);
         localTransform = transform;
 
-        GameplayUI.Instance.InitializeInventoryPositions();
         CheckForEmptyHands();
     }
 

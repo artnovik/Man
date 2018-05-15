@@ -29,10 +29,6 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private GameObject[] weaponUI;
     [SerializeField] private GameObject attackFistsGO;
 
-    private Vector2 playerEquippedInventoryPosition;
-    private Vector2 playerBareHandsInventoryPosition;
-    [SerializeField] private GameObject playerBareHandsInventoryPositionGO;
-
     [Header("PlayerBars")] [SerializeField]
     public Image playerHealthBarCurrent;
 
@@ -169,33 +165,14 @@ public class GameplayUI : MonoBehaviour
         pickUpButton.gameObject.SetActive(value);
     }
 
-    public void InitializeInventoryPositions()
-    {
-        playerEquippedInventoryPosition = inventoryButton.GetComponent<RectTransform>().anchoredPosition;
-        playerBareHandsInventoryPosition =
-            playerBareHandsInventoryPositionGO.GetComponent<RectTransform>().anchoredPosition;
-
-        Destroy(playerBareHandsInventoryPositionGO);
-        playerBareHandsInventoryPositionGO = null;
-    }
-
     public void SwitchWeaponUI(bool isWeaponEquipped)
     {
-        if (isWeaponEquipped)
-        {
-            attackFistsGO.SetActive(false);
-            inventoryButton.GetComponent<RectTransform>().anchoredPosition = playerEquippedInventoryPosition;
-        }
-        else
-        {
-            attackFistsGO.SetActive(true);
-            inventoryButton.GetComponent<RectTransform>().anchoredPosition = playerBareHandsInventoryPosition;
-        }
-
         foreach (var elementUI in weaponUI)
         {
             elementUI.SetActive(isWeaponEquipped);
         }
+
+        attackFistsGO.SetActive(!isWeaponEquipped);
     }
 
     #endregion
@@ -284,7 +261,7 @@ public class GameplayUI : MonoBehaviour
             StopBlinkingPauseText();
             Time.timeScale = 1f;
             PlayerData.Instance.isPaused = false;
-            
+
             Inventory.Instance.onEquipmentChangeCallback.Invoke();
         }
     }
