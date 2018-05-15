@@ -284,6 +284,8 @@ public class GameplayUI : MonoBehaviour
             StopBlinkingPauseText();
             Time.timeScale = 1f;
             PlayerData.Instance.isPaused = false;
+            
+            Inventory.Instance.onEquipmentChangeCallback.Invoke();
         }
     }
 
@@ -453,6 +455,8 @@ public class GameplayUI : MonoBehaviour
         PlayerData.Instance.isPaused = false;
         ControlElementsVisibility(true);
         containerGO.SetActive(false);
+
+        Inventory.Instance.onEquipmentChangeCallback.Invoke();
     }
 
     #endregion

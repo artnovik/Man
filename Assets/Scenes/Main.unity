@@ -28924,6 +28924,7 @@ MonoBehaviour:
   - {fileID: 1477624874}
   - {fileID: 898448065}
   - {fileID: 111287669}
+  - {fileID: 1818282884}
   eyeLockTargetImage: {fileID: 1860736135}
   messageText: {fileID: 979263724}
   numberWeapon: {fileID: 1793181949}
@@ -28974,6 +28975,7 @@ MonoBehaviour:
   - {fileID: 1691834172}
   - {fileID: 915422386}
   - {fileID: 979263722}
+  - {fileID: 1818282884}
 --- !u!1 &1817819733
 GameObject:
   m_ObjectHideFlags: 0
