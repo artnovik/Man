@@ -14,7 +14,10 @@ MonoBehaviour:
   itemName: Saw
   itemSprite: {fileID: 21300000, guid: 8c2eeb529be46d949bc83da4c0b4a4e9, type: 3}
   itemDescription: Sharp, versatile saw. (Bones included)
-  itemPrefab: {fileID: 1741675144258840, guid: 1bb0c3f83a6ea49408ce24dafea5ec7d, type: 2}
+  itemActivePrefab: {fileID: 1741675144258840, guid: 1bb0c3f83a6ea49408ce24dafea5ec7d,
+    type: 2}
+  itemPassivePrefab: {fileID: 1504315475700426, guid: 929c7d88b83cac7409849fc0f1e63346,
+    type: 2}
   DamageType: 0
   minDamage: 31
   maxDamage: 36

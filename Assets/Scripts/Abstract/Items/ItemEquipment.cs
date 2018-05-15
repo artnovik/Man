@@ -4,5 +4,6 @@ using UnityEngine;
 
 public abstract class ItemEquipment : ItemSingle
 {
-    public GameObject itemPrefab;
+    public GameObject itemActivePrefab;
+    public GameObject itemPassivePrefab;
 }

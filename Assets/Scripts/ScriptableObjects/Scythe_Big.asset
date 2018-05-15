@@ -14,7 +14,9 @@ MonoBehaviour:
   itemName: Scythe
   itemSprite: {fileID: 21300000, guid: f510e922ac39657449d5369dc33f7d26, type: 3}
   itemDescription: Cruel, large deathbringer.
-  itemPrefab: {fileID: 1424355609207970, guid: f0419a1dd18a8294f9f879a352e68721, type: 2}
+  itemActivePrefab: {fileID: 1424355609207970, guid: f0419a1dd18a8294f9f879a352e68721,
+    type: 2}
+  itemPassivePrefab: {fileID: 0}
   DamageType: 0
   minDamage: 36
   maxDamage: 41

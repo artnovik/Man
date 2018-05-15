@@ -1,13 +1,15 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class HealthEnemy : Health
 {
-    public WeaponData weaponData;
+    public WeaponData activeEnemyWeapon;
+    private GameObject passiveEnemyWeaponGO;
     public Transform containerPlaceTransform;
     private Collider playerCollider;
 
-    [SerializeField] private ContainerTypeEnum.Enum enemyType;
+    public ContainerTypeEnum.Enum enemyType;
 
     #region HealthManager
 
@@ -61,14 +63,13 @@ public class HealthEnemy : Health
         DestroyComponents();
 
         #region Weapon Drop Physics
-        // ToDo: Improve. Swap between Active/Passive Prefabs.
-        
-        weaponData.gameObject.transform.SetParent(null);
-        weaponData.gameObject.AddComponent<Rigidbody>();
-        weaponData.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+
+        passiveEnemyWeaponGO = Instantiate(activeEnemyWeapon.weaponData.itemPassivePrefab, activeEnemyWeapon.gameObject.transform.position,
+            activeEnemyWeapon.gameObject.transform.rotation);
+
+        Destroy(activeEnemyWeapon.gameObject);
 
         #endregion
-
 
         GetComponent<EnemyUI>().DestroyEnemyUI(SpawnManager.Instance.GetDeadBodyDeleteDuration());
         DestroyBody(SpawnManager.Instance.GetDeadBodyDeleteDuration());
@@ -110,7 +111,7 @@ public class HealthEnemy : Health
 
         // ToDo: CorpseDisappearing Animation (under ground), with blood puddle for X seconds.
 
-        Destroy(weaponData.gameObject);
+        Destroy(passiveEnemyWeaponGO);
         ContainerGenerator.Instance.GenerateAndFillContainer(ContainerGenerator.Instance.containerCorpsePrefab,
             containerPlaceTransform, enemyType);
         Destroy(gameObject);

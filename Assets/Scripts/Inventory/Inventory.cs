@@ -110,7 +110,7 @@ public class Inventory : MonoBehaviour
 
             onInventoryChangeCallback?.Invoke();
 
-            PlayerData.Instance.AddToEquipSlot(weaponToEquip.itemPrefab, equipSlotIndex);
+            PlayerData.Instance.AddToEquipSlot(weaponToEquip.itemActivePrefab, equipSlotIndex);
             onEquipmentChangeCallback?.Invoke();
             AudioManager.Instance.WeaponChangeSound();
         }

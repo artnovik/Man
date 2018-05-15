@@ -9,6 +9,7 @@ public class SpawnManager : MonoBehaviour
 
     private uint deadBodyDeleteDuration;
 
+    [SerializeField] private Transform zombiesParentGO;
     public GameObject enemyZombie;
     public Transform[] spawnPointsTransforms;
 
@@ -17,7 +18,9 @@ public class SpawnManager : MonoBehaviour
         for (var i = 0; i < count; i++)
             if (spawnPointsTransforms[i] != null)
             {
-                Instantiate(enemyPrefab, spawnPointsTransforms[i].position, spawnPointsTransforms[i].rotation);
+                var enemy = Instantiate(enemyPrefab, spawnPointsTransforms[i].position,
+                    spawnPointsTransforms[i].rotation);
+                SetEnemyGOParent(enemy);
             }
     }
 
@@ -66,6 +69,21 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    private void SetEnemyGOParent(GameObject spawnedEnemyGO)
+    {
+        Transform parentGO = null;
+
+        switch (spawnedEnemyGO.GetComponent<HealthEnemy>().enemyType)
+        {
+            case ContainerTypeEnum.Enum.Zombie:
+                parentGO = zombiesParentGO;
+                break;
+        }
+
+        if (parentGO != null)
+            spawnedEnemyGO.transform.SetParent(parentGO);
+    }
+
     #region Singleton
 
     public static SpawnManager Instance;
@@ -107,7 +125,10 @@ public class SpawnManager : MonoBehaviour
     public void AutoSpawn(GameObject enemyPrefab)
     {
         for (var i = 0; i < allStartEnemies.Length; i++)
-            Instantiate(enemyPrefab, autoSpawnPositions[i], autoSpawnRotations[i]);
+        {
+            var enemy = Instantiate(enemyPrefab, autoSpawnPositions[i], autoSpawnRotations[i]);
+            SetEnemyGOParent(enemy);
+        }
     }
 
     #endregion

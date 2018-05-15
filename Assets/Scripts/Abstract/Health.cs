@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Health : MonoBehaviour
 {
-    [Tooltip("CStats reference")] public CharacterStats characterStats;
+    [Tooltip("CStats reference")] private CharacterStats characterStats;
 
     public bool isDead;
 
