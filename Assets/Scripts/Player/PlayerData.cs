@@ -283,7 +283,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         {
             for (int i = 0; i < weaponsList.Count; i++)
             {
-                if (weaponsList[i] != null)
+                if (weaponsList[i] != null && GetWeaponsEquippedCount() < 2)
                 {
                     DrawWeapon(i);
                     break;
