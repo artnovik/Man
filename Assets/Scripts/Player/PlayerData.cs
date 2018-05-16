@@ -187,7 +187,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         weaponsList[slotIndex].SetActive(false);
 
         // If hands are empty, equipping this Weapon
-        if (currentWeaponGO == null)
+        if (currentWeaponGO == null || currentWeaponIndex == slotIndex)
         {
             DrawWeapon(slotIndex);
         }

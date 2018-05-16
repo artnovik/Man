@@ -26,7 +26,6 @@ public class EquipWeaponSlot : EquipSlot
 
         InventoryUI.Instance.EquipSlotOnClick(this);
 
-        // ToDo: Proper working UnEquip and SwapWeapons in Inventory, when equipped slot selected again
         if (slotItem != null)
         {
             InventoryUI.Instance.currentEquipWeaponSlot = this;

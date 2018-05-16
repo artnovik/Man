@@ -115,22 +115,24 @@ public class Inventory : MonoBehaviour
 
     public void SwapWeapons(int inventorySlot_Index, int equipWeaponSlot_Index)
     {
+        // Caching weapon which was in slot
         var weaponToUnEquip =
             InventoryUI.Instance.equipWeaponSlots[equipWeaponSlot_Index].slotItem;
 
+        // Caching weapon which will be in slot
         var weaponToEquip = (Weapon) items[inventorySlot_Index];
-
-        InventoryUI.Instance.equipWeaponSlots[equipWeaponSlot_Index].slotItem = weaponToEquip;
-
+        
         items.RemoveAt(inventorySlot_Index);
         items.Add(weaponToUnEquip);
+        
+        InventoryUI.Instance.equipWeaponSlots[equipWeaponSlot_Index].FillSlot(weaponToEquip);
 
         PlayerData.Instance.AddToEquipSlot(weaponToEquip.itemActivePrefab, equipWeaponSlot_Index);
-        
+
         AudioManager.Instance.WeaponChangeSound();
 
-        onInventoryChangeCallback?.Invoke();
         onEquipmentChangeCallback?.Invoke();
+        onInventoryChangeCallback?.Invoke();
     }
 
     public void UnEquipWeapon(int slotIndex)

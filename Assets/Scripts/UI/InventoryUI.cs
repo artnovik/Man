@@ -177,10 +177,8 @@ public class InventoryUI : MonoBehaviour
         // Behaviour - If we want to replace weapon by another
         else if (inventory.equipMode && equipWeaponSlot.slotItem != null)
         {
-            equipWeaponSlot.ClearSlot();
-            equipWeaponSlot.FillSlot(inventorySlots[GetCurrentInventorySlotIndex()].slotItem);
-            
             inventory.SwapWeapons(GetCurrentInventorySlotIndex(), equipWeaponSlot.equipWeaponSlotIndex);
+            //equipWeaponSlot.FillSlot(inventorySlots[GetCurrentInventorySlotIndex()].slotItem);
 
             StopWeaponEquipment();
         }
