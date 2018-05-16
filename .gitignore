@@ -4,6 +4,7 @@
 /[Bb]uild/
 /[Bb]uilds/
 /[P]packages/
+/Packages/manifest.json
 /[U]unityPackageManager/
 /Assets/AssetStoreTools*
 
