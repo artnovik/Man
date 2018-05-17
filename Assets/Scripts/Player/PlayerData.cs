@@ -8,6 +8,14 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
     public bool inBattle;
     public bool bareHands;
 
+    public GameObject rightHandFist;
+    public GameObject leftHandFist;
+
+    private int bareHandsMinDamage = 14;
+    private int bareHandsMaxDamage = 19;
+
+    private int bareHandsDamage;
+
     public bool isPaused;
     public Locomotion locomotion;
 
@@ -278,6 +286,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         {
             GameplayUI.Instance.SwitchWeaponUI(false);
             bareHands = true;
+            DisableCurrentWeaponColliders();
         }
         else
         {
@@ -302,16 +311,49 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
 
     private void DisableCurrentWeaponColliders()
     {
-        foreach (var coll in GetCurrentWeaponColliders())
+        if (bareHands)
         {
-            coll.enabled = false;
+            foreach (var coll in rightHandFist.GetComponentsInChildren<Collider>())
+            {
+                coll.enabled = false;
+            }
+
+            foreach (var coll in leftHandFist.GetComponentsInChildren<Collider>())
+            {
+                coll.enabled = false;
+            }
+        }
+        else
+        {
+            foreach (var coll in GetCurrentWeaponColliders())
+            {
+                coll.enabled = false;
+            }
+        }
+    }
+
+    public void SwitchRightHandCollider()
+    {
+        foreach (var coll in rightHandFist.GetComponentsInChildren<Collider>())
+        {
+            coll.enabled = !coll.enabled;
+        }
+    }
+
+    public void SwitchLeftHandCollider()
+    {
+        foreach (var coll in leftHandFist.GetComponentsInChildren<Collider>())
+        {
+            coll.enabled = !coll.enabled;
         }
     }
 
     public void SwitchWeaponColliders()
     {
         foreach (Collider weaponCollider in GetCurrentWeaponColliders())
+        {
             weaponCollider.enabled = !weaponCollider.enabled;
+        }
     }
 
     public GameObject GetCurrentWeaponGO()
@@ -319,9 +361,14 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         return currentWeaponGO;
     }
 
+    private int GetBareHandsDamage()
+    {
+        return Random.Range(bareHandsMinDamage, bareHandsMaxDamage + 1);
+    }
+
     public int GetCurrentWeaponDamage()
     {
-        return currentWeaponData.weaponData.GetDamage();
+        return bareHands ? GetBareHandsDamage() : currentWeaponData.weaponData.GetDamage();
     }
 
     #endregion

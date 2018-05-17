@@ -44,7 +44,9 @@ public class HealthEnemy : Health
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject == PlayerData.Instance.GetCurrentWeaponGO() && !isDead)
+        if ((collider.gameObject == PlayerData.Instance.GetCurrentWeaponGO() ||
+             collider.gameObject == PlayerData.Instance.rightHandFist ||
+             collider.gameObject == PlayerData.Instance.leftHandFist) && !isDead)
         {
             var takenDamage = PlayerData.Instance.GetCurrentWeaponDamage();
             Damage(takenDamage);
@@ -64,7 +66,8 @@ public class HealthEnemy : Health
 
         #region Weapon Drop Physics
 
-        passiveEnemyWeaponGO = Instantiate(activeEnemyWeapon.weaponData.itemPassivePrefab, activeEnemyWeapon.gameObject.transform.position,
+        passiveEnemyWeaponGO = Instantiate(activeEnemyWeapon.weaponData.itemPassivePrefab,
+            activeEnemyWeapon.gameObject.transform.position,
             activeEnemyWeapon.gameObject.transform.rotation);
 
         Destroy(activeEnemyWeapon.gameObject);
@@ -120,7 +123,9 @@ public class HealthEnemy : Health
     private void OnMouseDown()
     {
         if (CheatManager.Instance.FAST_TESTING)
+        {
             Death();
+        }
     }
 
     #endregion

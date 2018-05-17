@@ -7,6 +7,7 @@ public abstract class Locomotion : MonoBehaviour
         Idle,
         Movement,
         Attack,
+        Attack_Hands,
         Dead
     }
 
@@ -34,6 +35,7 @@ public abstract class Locomotion : MonoBehaviour
     protected const string MOVEMENT_X = "MovX";
     protected const string MOVEMENT_Y = "MovY";
     protected const string ATTACK_STATE = "Attack";
+    protected const string ATACK_HANDS_STATE = "Attack_Hands";
 
     #endregion
 
@@ -89,7 +91,7 @@ public abstract class Locomotion : MonoBehaviour
 
         var lerpFactor = 0.1f;
 
-        if (typeLocomotion == TLocomotion.Attack)
+        if (typeLocomotion == TLocomotion.Attack || typeLocomotion == TLocomotion.Attack_Hands)
         {
             lerpFactor /= 2;
         }
@@ -102,9 +104,9 @@ public abstract class Locomotion : MonoBehaviour
         localTransform.rotation = fixRotation;
     }
 
-    public void AttackControl()
+    public virtual void AttackControl()
     {
-        animator.SetTrigger(ATTACK_STATE);
+        // This meant to be overridden
     }
 
     private void ControlState()
@@ -120,6 +122,10 @@ public abstract class Locomotion : MonoBehaviour
         else if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
             typeLocomotion = TLocomotion.Attack;
+        }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack_Hands"))
+        {
+            typeLocomotion = TLocomotion.Attack_Hands;
         }
         else if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Dead"))
         {
