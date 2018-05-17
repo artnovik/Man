@@ -6,7 +6,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
 {
     [Header("Data")] public CameraControl cameraControl;
     public bool inBattle;
-    public bool weaponEquipped;
+    public bool bareHands;
 
     public bool isPaused;
     public Locomotion locomotion;
@@ -277,7 +277,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         if (GetWeaponsEquippedCount() == 0)
         {
             GameplayUI.Instance.SwitchWeaponUI(false);
-            weaponEquipped = false;
+            bareHands = true;
         }
         else
         {
@@ -291,7 +291,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
             }
 
             GameplayUI.Instance.SwitchWeaponUI(true);
-            weaponEquipped = true;
+            bareHands = false;
         }
     }
 
