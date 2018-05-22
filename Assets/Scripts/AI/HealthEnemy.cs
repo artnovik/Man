@@ -5,6 +5,7 @@ using UnityEngine;
 public class HealthEnemy : Health
 {
     public WeaponData activeEnemyWeapon;
+    public Transform enemyWeaponParentTransform;
     private GameObject passiveEnemyWeaponGO;
     public Transform containerPlaceTransform;
     private Collider playerCollider;

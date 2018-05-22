@@ -91,11 +91,11 @@ public class LootGenerator : MonoBehaviour
         }
     }
 
-    private Item GenerateRandomWeapon()
+    public Item GenerateRandomWeapon()
     {
         int minSeed = 1;
         int maxSeed = 4;
-        int randSeed = Random.Range(minSeed, maxSeed+1);
+        int randSeed = Random.Range(minSeed, maxSeed + 1);
 
         switch (randSeed)
         {
@@ -118,14 +118,14 @@ public class LootGenerator : MonoBehaviour
 
     private Item GenerateWeapon(Weapon weapon)
     {
-        return weapon = ItemsCollection.Instance.GetWeapon(weapon);
+        return weapon;
     }
 
     // ToDo: Improve.
     private List<Item> RandomizeItems(uint minCount, uint maxCount)
     {
         var generatedItems = new List<Item>();
-        var count = Random.Range(minCount, maxCount+1);
+        var count = Random.Range(minCount, maxCount + 1);
 
         for (int i = 0; i < count; i++)
         {

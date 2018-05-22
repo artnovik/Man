@@ -84,6 +84,33 @@ public class SpawnManager : MonoBehaviour
             spawnedEnemyGO.transform.SetParent(parentGO);
     }
 
+    private void GiveEnemyRandomWeapon(GameObject enemy)
+    {
+        var healthEnemy = enemy.GetComponentInChildren<HealthEnemy>();
+
+        // Clearing equipped weapon
+        foreach (Transform child in healthEnemy.enemyWeaponParentTransform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Generating random weapon data and assigning it's elements to enemy
+        var newWeapon = (Weapon) LootGenerator.Instance.GenerateRandomWeapon();
+
+        GameObject newWeaponGO = Instantiate(newWeapon.itemActivePrefab, healthEnemy.enemyWeaponParentTransform);
+
+        healthEnemy.activeEnemyWeapon = newWeaponGO.GetComponent<WeaponData>();
+        healthEnemy.activeEnemyWeapon.weaponData = newWeaponGO.GetComponent<WeaponData>().weaponData;
+    }
+
+    private void GiveAllEnemiesRandomWeapons(GameObject enemyPrefab)
+    {
+        foreach (var enemyGO in GameObject.FindGameObjectsWithTag(enemyPrefab.tag))
+        {
+            GiveEnemyRandomWeapon(enemyGO);
+        }
+    }
+
     #region Singleton
 
     public static SpawnManager Instance;
@@ -102,6 +129,7 @@ public class SpawnManager : MonoBehaviour
         if (autoSpawner)
         {
             GetStartTransforms(enemyZombie);
+            GiveAllEnemiesRandomWeapons(enemyZombie);
         }
     }
 
@@ -127,6 +155,7 @@ public class SpawnManager : MonoBehaviour
         for (var i = 0; i < allStartEnemies.Length; i++)
         {
             var enemy = Instantiate(enemyPrefab, autoSpawnPositions[i], autoSpawnRotations[i]);
+            GiveAllEnemiesRandomWeapons(enemyPrefab);
             SetEnemyGOParent(enemy);
         }
     }
