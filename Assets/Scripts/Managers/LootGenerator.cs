@@ -55,7 +55,7 @@ public class LootGenerator : MonoBehaviour
     {
         var zombieItemsList = new List<Item>();
         zombieItemsList.Add(GenerateGold(ContainerTypeEnum.Enum.Zombie));
-        zombieItemsList.Add(GenerateRandomWeapon());
+        //zombieItemsList.Add(GenerateRandomWeapon());
 
         return zombieItemsList;
     }

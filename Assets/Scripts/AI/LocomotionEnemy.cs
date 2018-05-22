@@ -14,7 +14,7 @@ public class LocomotionEnemy : Locomotion
         // When Enemy attacks
         if (targetLocomotion && !targetLocomotion.health.isDead)
         {
-            targetLocomotion.health.Damage(gameObject.GetComponent<HealthEnemy>().activeEnemyWeapon.weaponData
+            targetLocomotion.health.Damage(gameObject.GetComponent<HealthEnemy>().enemyWeaponData.weaponData
                 .GetDamage());
         }
     }

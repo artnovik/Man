@@ -7,6 +7,7 @@ public abstract class Container : Interactable
     protected uint containerCapacity = 10; // Value for all containers in game (should be good)
 
     public ContainerTypeEnum.Enum containerType;
+    public GameObject associatedEnemyWeapon;
 
     public List<Item> containerItems = new List<Item>();
 
@@ -40,6 +41,12 @@ public abstract class Container : Interactable
                 return;
             }
 
+            // Check if we are taking Weapon, which is in enemy's hand
+            if (containerItems[itemIndex] == associatedEnemyWeapon.GetComponent<WeaponData>().weaponData)
+            {
+                Destroy(associatedEnemyWeapon);
+            }
+                
             Inventory.Instance.AddItem(containerItems[itemIndex]);
         }
 

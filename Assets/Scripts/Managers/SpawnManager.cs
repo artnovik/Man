@@ -99,8 +99,8 @@ public class SpawnManager : MonoBehaviour
 
         GameObject newWeaponGO = Instantiate(newWeapon.itemActivePrefab, healthEnemy.enemyWeaponParentTransform);
 
-        healthEnemy.activeEnemyWeapon = newWeaponGO.GetComponent<WeaponData>();
-        healthEnemy.activeEnemyWeapon.weaponData = newWeaponGO.GetComponent<WeaponData>().weaponData;
+        healthEnemy.enemyWeaponData = newWeaponGO.GetComponent<WeaponData>();
+        healthEnemy.enemyWeaponData.weaponData = newWeaponGO.GetComponent<WeaponData>().weaponData;
     }
 
     private void GiveAllEnemiesRandomWeapons(GameObject enemyPrefab)

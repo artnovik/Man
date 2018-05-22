@@ -38,9 +38,10 @@ GameObject:
   - component: {fileID: 4018959895139606}
   - component: {fileID: 65245173297372122}
   - component: {fileID: 54538812382975572}
+  - component: {fileID: 114194672106049832}
   m_Layer: 0
   m_Name: Knife_Passive
-  m_TagString: WeaponInPlayerHands
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,3 +142,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.45, y: 1, z: 0.04}
   m_Center: {x: 0.000024003124, y: 0.23, z: 0.0000010386952}
+--- !u!114 &114194672106049832
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1288697540270052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9a2b1e6c89af2438874408f4aada90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 08e931f4d3fb40741b1691b9c1be5386, type: 2}

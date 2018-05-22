@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class HealthEnemy : Health
 {
-    public WeaponData activeEnemyWeapon;
+    public WeaponData enemyWeaponData;
     public Transform enemyWeaponParentTransform;
-    private GameObject passiveEnemyWeaponGO;
+    [HideInInspector] public GameObject passiveEnemyWeaponGO;
     public Transform containerPlaceTransform;
     private Collider playerCollider;
 
@@ -67,11 +67,11 @@ public class HealthEnemy : Health
 
         #region Weapon Drop Physics
 
-        passiveEnemyWeaponGO = Instantiate(activeEnemyWeapon.weaponData.itemPassivePrefab,
-            activeEnemyWeapon.gameObject.transform.position,
-            activeEnemyWeapon.gameObject.transform.rotation);
+        passiveEnemyWeaponGO = Instantiate(enemyWeaponData.weaponData.itemPassivePrefab,
+            enemyWeaponData.gameObject.transform.position,
+            enemyWeaponData.gameObject.transform.rotation);
 
-        Destroy(activeEnemyWeapon.gameObject);
+        Destroy(enemyWeaponData.gameObject);
 
         #endregion
 
@@ -82,6 +82,7 @@ public class HealthEnemy : Health
     private void DestroyComponents()
     {
         Destroy(GetComponent<Locomotion>());
+        Destroy(GetComponent<CapsuleCollider>());
         Destroy(GetComponent<AIBattle>());
     }
 
@@ -105,9 +106,16 @@ public class HealthEnemy : Health
 
     private IEnumerator Destroy(float delay)
     {
+        var enemyContainer = ContainerGenerator.Instance.GenerateAndFillContainer(
+            ContainerGenerator.Instance.containerCorpsePrefab,
+            containerPlaceTransform, enemyType);
+
+        ContainerGenerator.Instance.AddToContainer(enemyContainer, enemyWeaponData.weaponData);
+        enemyContainer.associatedEnemyWeapon = passiveEnemyWeaponGO;
+
         yield return new WaitForSeconds(delay);
 
-        // Nice spawning
+        // Spawning enemies, if none left
         if (!SpawnManager.Instance.CheckForEnemies(SpawnManager.Instance.enemyZombie))
         {
             SpawnManager.Instance.SpawnEnemies(SpawnManager.Instance.enemyZombie, 0.5f, true);
@@ -115,9 +123,7 @@ public class HealthEnemy : Health
 
         // ToDo: CorpseDisappearing Animation (under ground), with blood puddle for X seconds.
 
-        Destroy(passiveEnemyWeaponGO);
-        ContainerGenerator.Instance.GenerateAndFillContainer(ContainerGenerator.Instance.containerCorpsePrefab,
-            containerPlaceTransform, enemyType);
+        //Destroy(passiveEnemyWeaponGO);
         Destroy(gameObject);
     }
 
