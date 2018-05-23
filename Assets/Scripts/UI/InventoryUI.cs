@@ -107,11 +107,28 @@ public class InventoryUI : MonoBehaviour
 
         ActivateItemInfo(true, clickedSlot.slotItem);
 
-        // ToDo: Improve
-        if (clickedSlot is EquipWeaponSlot)
+        // ToDo: Improve [Begin]
+        if (clickedSlot is EquipSlot)
         {
             useButton.GetComponentInChildren<Text>().text = "UnEquip";
+            DropButtonsVisibility(false);
         }
+
+        if (clickedSlot is InventorySlot)
+        {
+            DropButtonsVisibility(true);
+
+            if (clickedSlot.slotItem is Weapon || clickedSlot.slotItem is ItemConsumable)
+            {
+                useButton.GetComponentInChildren<Text>().text = "Equip";
+            }
+            else
+            {
+                useButton.GetComponentInChildren<Text>().text = "Use";
+            }
+        }
+
+        // ToDo Improve [End]
     }
 
     public void MakeAllSlotsInactive()
@@ -128,6 +145,12 @@ public class InventoryUI : MonoBehaviour
         }
 
         ActivateItemInfo(false, null);
+    }
+
+    private void DropButtonsVisibility(bool value)
+    {
+        dropButton.gameObject.SetActive(value);
+        destroyButton.gameObject.SetActive(value);
     }
 
     #endregion
@@ -199,8 +222,6 @@ public class InventoryUI : MonoBehaviour
     private void ActivateItemInfo(bool value, Item item)
     {
         useButton.gameObject.SetActive(value);
-        dropButton.gameObject.SetActive(value);
-        destroyButton.gameObject.SetActive(value);
 
         if (value)
         {
@@ -230,8 +251,6 @@ public class InventoryUI : MonoBehaviour
         infoItemDamage.text = "<color=#AA3232FF>" + minDamage + " - " + maxDamage + "</color> DMG (" + damageType + ")";
         infoItemTypes.text = speed + " speed, " + range + " range";
         infoItemDescription.text = description;
-
-        useButton.GetComponentInChildren<Text>().text = "Equip";
     }
 
     private void ClearInfoWindow()
@@ -241,8 +260,6 @@ public class InventoryUI : MonoBehaviour
         infoItemDamage.text = string.Empty;
         infoItemTypes.text = string.Empty;
         infoItemDescription.text = string.Empty;
-
-        useButton.GetComponentInChildren<Text>().text = "Use";
     }
 
     #endregion
@@ -273,7 +290,6 @@ public class InventoryUI : MonoBehaviour
         else if (currentEquipWeaponSlot != null)
         {
             inventory.UnEquipWeapon(currentEquipWeaponSlot.equipWeaponSlotIndex);
-            currentEquipWeaponSlot.ClearSlot();
         }
     }
 
@@ -299,7 +315,7 @@ public class InventoryUI : MonoBehaviour
         GameplayUI.Instance.InventoryClose();
     }
 
-    public int GetCurrentInventorySlotIndex()
+    private int GetCurrentInventorySlotIndex()
     {
         int slotIndex = 0;
         for (int i = 0; i < inventorySlots.Length; i++)

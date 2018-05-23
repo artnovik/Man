@@ -121,10 +121,10 @@ public class Inventory : MonoBehaviour
 
         // Caching weapon which will be in slot
         var weaponToEquip = (Weapon) items[inventorySlot_Index];
-        
+
         items.RemoveAt(inventorySlot_Index);
         items.Add(weaponToUnEquip);
-        
+
         InventoryUI.Instance.equipWeaponSlots[equipWeaponSlot_Index].FillSlot(weaponToEquip);
 
         PlayerData.Instance.AddToEquipSlot(weaponToEquip.itemActivePrefab, equipWeaponSlot_Index);
@@ -137,10 +137,16 @@ public class Inventory : MonoBehaviour
 
     public void UnEquipWeapon(int slotIndex)
     {
+        if (IsFull())
+        {
+            return;
+        }
+
         var weaponToUnEquip = InventoryUI.Instance.equipWeaponSlots[slotIndex].slotItem;
         InventoryUI.Instance.equipWeaponSlots[slotIndex].slotItem = null;
         PlayerData.Instance.RemoveFromEquipSlot(slotIndex);
         AddItem(weaponToUnEquip);
+        InventoryUI.Instance.equipWeaponSlots[slotIndex].ClearSlot();
 
         onEquipmentChangeCallback?.Invoke();
     }
