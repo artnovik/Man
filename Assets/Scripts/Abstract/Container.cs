@@ -7,7 +7,6 @@ public abstract class Container : Interactable
     protected uint containerCapacity = 10; // Value for all containers in game (should be good)
 
     public ContainerTypeEnum.Enum containerType;
-    public GameObject associatedEnemyWeapon;
 
     public List<Item> containerItems = new List<Item>();
 
@@ -25,7 +24,7 @@ public abstract class Container : Interactable
         }
     }
 
-    public void MoveItemToInventory(int itemIndex)
+    public virtual bool MoveItemToInventory(int itemIndex)
     {
         if (containerItems[itemIndex] is Gold)
         {
@@ -38,15 +37,9 @@ public abstract class Container : Interactable
         {
             if (Inventory.Instance.IsFull())
             {
-                return;
+                return false;
             }
 
-            // Check if we are taking Weapon, which is in enemy's hand
-            if (containerItems[itemIndex] == associatedEnemyWeapon.GetComponent<WeaponData>().weaponData)
-            {
-                Destroy(associatedEnemyWeapon);
-            }
-                
             Inventory.Instance.AddItem(containerItems[itemIndex]);
         }
 
@@ -55,6 +48,7 @@ public abstract class Container : Interactable
         ContainerUI.Instance.UpdateContainerSlots(this);
         ContainerUI.Instance.SelectNextSlot(true); // If first slot was active 
         IfContainerEmpty();
+        return true;
     }
 
     protected virtual void IfContainerEmpty()

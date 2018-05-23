@@ -111,7 +111,7 @@ public class HealthEnemy : Health
             containerPlaceTransform, enemyType);
 
         ContainerGenerator.Instance.AddToContainer(enemyContainer, enemyWeaponData.weaponData);
-        enemyContainer.associatedEnemyWeapon = passiveEnemyWeaponGO;
+        ((ContainerCorpse) enemyContainer).associatedEnemyWeapon = passiveEnemyWeaponGO;
 
         yield return new WaitForSeconds(delay);
 
