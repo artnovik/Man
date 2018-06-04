@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviourSingleton<PlayerData>
 {
-    [Header("Data")] public CameraControl cameraControl;
+    [Header("Data")]
+    public CameraControl cameraControl;
     public bool inBattle;
     public bool bareHands;
 
@@ -31,12 +32,9 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
 
     public PlayerView playerView;
 
-    #region Unity
+    public Inventory inventory;
 
-    private void Awake()
-    {
-        Inventory.Instance.onEquipmentChangeCallback += CheckForEmptyHands;
-    }
+    #region Unity
 
     private void Start()
     {
@@ -179,10 +177,10 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
 
     [Header("Weapons")] public int currentWeaponIndex;
 
-    [SerializeField] private Transform weaponParent;
-    [SerializeField] private List<GameObject> weaponsList = new List<GameObject>();
-    [SerializeField] private WeaponData currentWeaponData;
-    [SerializeField] private GameObject currentWeaponGO;
+    [SerializeField] public Transform weaponParent;
+    [SerializeField] public List<GameObject> weaponsList = new List<GameObject>();
+    [SerializeField] public WeaponData currentWeaponData;
+    [SerializeField] public GameObject currentWeaponGO;
 
     [HideInInspector] public Collider[] currentWeaponColliders;
 
@@ -280,7 +278,7 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         return listCount;
     }
 
-    private void CheckForEmptyHands()
+    public void CheckForEmptyHands()
     {
         if (GetWeaponsEquippedCount() == 0)
         {

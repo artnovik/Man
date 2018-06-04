@@ -28,6 +28,11 @@ public class AIBattle : MonoBehaviour
     {
         ViewControl();
 
+        if(target && !target.gameObject.activeSelf)
+        {
+            target = PlayerData.Instance.locomotion.transform;
+        }
+
         if (target && !target.gameObject.GetComponent<Health>().isDead)
         {
             PlayerData.Instance.inBattle = true;

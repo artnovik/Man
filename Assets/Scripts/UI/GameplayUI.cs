@@ -266,7 +266,7 @@ public class GameplayUI : MonoBehaviour
             Time.timeScale = 1f;
             PlayerData.Instance.isPaused = false;
 
-            Inventory.Instance.onEquipmentChangeCallback.Invoke();
+            PlayerData.Instance.inventory.onEquipmentChangeCallback.Invoke();
         }
     }
 
@@ -437,7 +437,7 @@ public class GameplayUI : MonoBehaviour
         ControlElementsVisibility(true);
         containerGO.SetActive(false);
 
-        Inventory.Instance.onEquipmentChangeCallback.Invoke();
+        PlayerData.Instance.inventory.onEquipmentChangeCallback.Invoke();
     }
 
     #endregion

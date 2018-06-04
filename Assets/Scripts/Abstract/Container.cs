@@ -31,16 +31,16 @@ public abstract class Container : Interactable
             var gold = (Gold) containerItems[itemIndex];
             int goldAmount = gold.GetGoldAmount();
 
-            Inventory.Instance.AddGold(goldAmount);
+            PlayerData.Instance.inventory.AddGold(goldAmount);
         }
         else
         {
-            if (Inventory.Instance.IsFull())
+            if (PlayerData.Instance.inventory.IsFull())
             {
                 return false;
             }
 
-            Inventory.Instance.AddItem(containerItems[itemIndex]);
+            PlayerData.Instance.inventory.AddItem(containerItems[itemIndex]);
         }
 
         ContainerUI.Instance.SelectNextSlot(false); // If any but first slot was active 
