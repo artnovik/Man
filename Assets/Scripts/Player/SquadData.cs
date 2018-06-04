@@ -22,7 +22,7 @@ public class SquadData : MonoBehaviourSingleton<SquadData>
     public List<DataCharacter> listCharacter = new List<DataCharacter>();
     public PlayerData playerData;
 
-    private int currentIndex = 0;
+    public int currentIndex = 0;
 
 	// Use this for initialization
 	void Start ()

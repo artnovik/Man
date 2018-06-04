@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -47,6 +48,8 @@ public class GameplayUI : MonoBehaviour
     public RectTransform targetInvisibleCamera;
 
     [Header("Locomotion")] public RectTransform targetLocomotion;
+
+    public List<Button> listCharacterButtons = new List<Button>();
 
     private Vector3 visibleCameraDir;
 
@@ -464,4 +467,24 @@ public class GameplayUI : MonoBehaviour
     }
 
     #endregion
+
+    public void ReCheckButtons()
+    {
+        for (int i = 0; i < listCharacterButtons.Count; i++)
+        {
+            if(i == SquadData.Instance.currentIndex)
+            {
+                listCharacterButtons[i].interactable = false;
+            }
+            else
+            {
+                listCharacterButtons[i].interactable = true;
+            }
+        }
+    }
+
+    public void SwitchCharacter(int index)
+    {
+        SquadData.Instance.SwitchCharaster(index);
+    }
 }
