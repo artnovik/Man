@@ -14,7 +14,7 @@ public abstract class Interactable : MonoBehaviour
     private void OnMouseDown()
     {
         var distanceBetweenPlayerAndObject = Vector3.Distance(gameObject.transform.position,
-            PlayerData.Instance.playerTransform.position);
+            SquadData.Instance.listCharacter[SquadData.Instance.currentIndex].locomotion.transform.position);
 
         //UIGamePlay.Instance.PickUpVisibility(distanceBetweenPlayerAndObject <= radius);
 

@@ -1,7 +1,5 @@
 fileFormatVersion: 2
 guid: 5604d4bdf493f404dbe3ac4918a389e5
-timeCreated: 1454946121
-licenseType: Store
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -328,6 +326,7 @@ ModelImporter:
     7400002: AttackB
     7400004: AttackC
     9500000: //RootNode
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -350,6 +349,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -385,54 +385,65 @@ ModelImporter:
         curve:
           serializedVersion: 2
           curve:
-          - serializedVersion: 2
+          - serializedVersion: 3
             time: 0
             value: 0
             inSlope: 1.9531151
             outSlope: -0.00012507317
             tangentMode: 21
-          - serializedVersion: 2
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
             time: 0.20815913
             value: -0.000026035123
             inSlope: -0.00012507317
             outSlope: 12.582162
             tangentMode: 21
-          - serializedVersion: 2
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
             time: 0.2880597
             value: 1.005296
             inSlope: 12.582162
             outSlope: -0.000060484246
             tangentMode: 21
-          - serializedVersion: 2
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
             time: 0.5955224
             value: 1.0052774
             inSlope: -0.000060484246
             outSlope: -12.135015
             tangentMode: 21
-          - serializedVersion: 2
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
             time: 0.6780289
             value: 0.004060073
             inSlope: -12.135015
             outSlope: -0.012610053
             tangentMode: 21
-          - serializedVersion: 2
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
             time: 1
             value: 0
             inSlope: -0.012610053
             outSlope: 0.010777553
             tangentMode: 21
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
           preInfinity: 2
           postInfinity: 2
           rotationOrder: 0
       events:
-      - time: 0.41520137
-        functionName: Attack
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.6633217
+      - time: 0.49953872
         functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -602,54 +613,65 @@ ModelImporter:
         curve:
           serializedVersion: 2
           curve:
-          - serializedVersion: 2
+          - serializedVersion: 3
             time: 0.0024875621
             value: -0.0027022304
             inSlope: 1.9531151
             outSlope: -0.04316775
             tangentMode: 21
-          - serializedVersion: 2
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
             time: 0.034666557
             value: -0.004091325
             inSlope: -0.04316775
             outSlope: 70.05452
             tangentMode: 21
-          - serializedVersion: 2
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
             time: 0.048931383
             value: 0.99522424
             inSlope: 70.05452
             outSlope: -0.0015481836
             tangentMode: 21
-          - serializedVersion: 2
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
             time: 0.7626008
             value: 0.99411935
             inSlope: -0.0015481836
             outSlope: -6.578786
             tangentMode: 21
-          - serializedVersion: 2
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
             time: 0.91355276
             value: 0.0010385811
             inSlope: -6.578786
             outSlope: -0.012014046
             tangentMode: 21
-          - serializedVersion: 2
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
             time: 1
             value: 0
             inSlope: -0.012014046
             outSlope: 0.010777553
             tangentMode: 21
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
           preInfinity: 2
           postInfinity: 2
           rotationOrder: 0
       events:
       - time: 0.055118054
-        functionName: Attack
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.26442957
         functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -819,54 +841,65 @@ ModelImporter:
         curve:
           serializedVersion: 2
           curve:
-          - serializedVersion: 2
+          - serializedVersion: 3
             time: 0
             value: 0
             inSlope: 1.9531151
             outSlope: -0.00011945126
             tangentMode: 21
-          - serializedVersion: 2
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
             time: 0.061392963
             value: -0.000007333467
             inSlope: -0.00011945126
             outSlope: 57.52895
             tangentMode: 21
-          - serializedVersion: 2
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
             time: 0.07910448
             value: 1.0189178
             inSlope: 57.52895
             outSlope: 0.0051413295
             tangentMode: 21
-          - serializedVersion: 2
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
             time: 0.5140827
             value: 1.0211542
             inSlope: 0.0051413295
             outSlope: -5.227364
             tangentMode: 21
-          - serializedVersion: 2
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
             time: 0.70995027
             value: -0.0027170363
             inSlope: -5.227364
             outSlope: 0.009367485
             tangentMode: 21
-          - serializedVersion: 2
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
             time: 1
             value: 0
             inSlope: 0.009367485
             outSlope: 0.010777553
             tangentMode: 21
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
           preInfinity: 2
           postInfinity: 2
           rotationOrder: 0
       events:
       - time: 0.39107627
-        functionName: Attack
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.6664429
         functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}

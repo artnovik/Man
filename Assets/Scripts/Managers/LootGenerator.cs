@@ -34,7 +34,7 @@ public class LootGenerator : MonoBehaviour
             case ContainerTypeEnum.Enum.Legendary_Chest:
                 return null;
             case ContainerTypeEnum.Enum.Chester:
-                return null;
+                return GenerateZombieItems();
             default:
                 Debug.Log("Check parameters");
                 return null;
@@ -46,6 +46,7 @@ public class LootGenerator : MonoBehaviour
         var chestItemsList = new List<Item>();
 
         chestItemsList.Add(GenerateGold(ContainerTypeEnum.Enum.Common_Chest));
+        chestItemsList.Add(GenerateOther());
         chestItemsList.AddRange(RandomizeItems(3, 5));
 
         return chestItemsList;
@@ -55,9 +56,14 @@ public class LootGenerator : MonoBehaviour
     {
         var zombieItemsList = new List<Item>();
         zombieItemsList.Add(GenerateGold(ContainerTypeEnum.Enum.Zombie));
-        zombieItemsList.Add(GenerateRandomWeapon());
+        //zombieItemsList.Add(GenerateRandomWeapon());
 
         return zombieItemsList;
+    }
+
+    private Other GenerateOther()
+    {
+        return Instantiate(ItemsCollection.Instance.stone);
     }
 
     private Gold GenerateGold(ContainerTypeEnum.Enum containerType)
@@ -91,11 +97,11 @@ public class LootGenerator : MonoBehaviour
         }
     }
 
-    private Item GenerateRandomWeapon()
+    public Item GenerateRandomWeapon()
     {
         int minSeed = 1;
-        int maxSeed = 4;
-        int randSeed = Random.Range(minSeed, maxSeed+1);
+        int maxSeed = 5;
+        int randSeed = Random.Range(minSeed, maxSeed + 1);
 
         switch (randSeed)
         {
@@ -111,6 +117,9 @@ public class LootGenerator : MonoBehaviour
             case 4:
                 weapon = ItemsCollection.Instance.scythe_small;
                 return weapon;
+            case 5:
+                weapon = ItemsCollection.Instance.torch;
+                return weapon;
             default:
                 return null;
         }
@@ -118,14 +127,14 @@ public class LootGenerator : MonoBehaviour
 
     private Item GenerateWeapon(Weapon weapon)
     {
-        return weapon = ItemsCollection.Instance.GetWeapon(weapon);
+        return weapon;
     }
 
     // ToDo: Improve.
     private List<Item> RandomizeItems(uint minCount, uint maxCount)
     {
         var generatedItems = new List<Item>();
-        var count = Random.Range(minCount, maxCount+1);
+        var count = Random.Range(minCount, maxCount + 1);
 
         for (int i = 0; i < count; i++)
         {

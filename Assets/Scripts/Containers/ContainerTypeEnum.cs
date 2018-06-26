@@ -13,6 +13,7 @@ public class ContainerTypeEnum
         Legendary_Chest = 4,
         Zombie = 5,
         Chester = 6,
-        Junk = 7
+        Junk = 7,
+        Parasit = 8
     }
 }

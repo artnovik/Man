@@ -15,6 +15,8 @@ public abstract class Health : MonoBehaviour
 
     public int currentHealth { get; private set; }
 
+    [Range(0f, 1f)] public float powerArmor = 0.5f;
+
     #region HealthManager
 
     public virtual void Start()
@@ -45,7 +47,22 @@ public abstract class Health : MonoBehaviour
             return;
         }
 
-        currentHealth -= damageValue;
+        if (locomotion.typeLocomotion == Locomotion.TLocomotion.Attack && locomotion.animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.4f)
+        {
+            Debug.Log("Crytical damage ->>>>>>>>>>>>>>>>>>>>>> " + (int)(damageValue * 1.5f));
+            currentHealth -= (int)(damageValue * 1.5f);
+        }
+        else
+        {
+            if (locomotion.typeLocomotion != Locomotion.TLocomotion.Block)
+            {
+                currentHealth -= damageValue;
+            }
+            else
+            {
+                currentHealth -= Mathf.CeilToInt(damageValue * (1 - powerArmor));
+            }
+        }
 
         if (currentHealth <= minHealth)
         {

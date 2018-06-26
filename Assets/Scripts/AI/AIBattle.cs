@@ -14,6 +14,12 @@ public class AIBattle : MonoBehaviour
     public Transform target;
     public CoreTrigger viewTrigger;
 
+    public float delayAttack = 1.2f;
+    private float currentTimerAttack = 0;
+
+    public float intervalBlock = 0f;
+    private float currentIntervalBlock = 0;
+
     #region Unity
 
     private void Start()
@@ -27,6 +33,11 @@ public class AIBattle : MonoBehaviour
     private void Update()
     {
         ViewControl();
+
+        if(target && !target.gameObject.activeSelf)
+        {
+            target = PlayerData.Instance.locomotion.transform;
+        }
 
         if (target && !target.gameObject.GetComponent<Health>().isDead)
         {
@@ -74,6 +85,7 @@ public class AIBattle : MonoBehaviour
             fixDirection = (agent.steeringTarget - transform.position).normalized;
             locomotion.Rotate(fixDirection);
             locomotion.targetLocomotion = null;
+            currentTimerAttack = delayAttack;
         }
         else if (target.GetComponent<Health>().currentHealth > 0)
         {

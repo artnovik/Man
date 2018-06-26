@@ -10,7 +10,7 @@ public abstract class EquipSlot : Slot
         
         if (slotItem != null)
         {
-            if (Inventory.Instance.equipMode)
+            if (PlayerData.Instance.inventory.equipMode)
             {
                 
             }

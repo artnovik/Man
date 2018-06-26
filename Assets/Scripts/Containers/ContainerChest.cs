@@ -22,6 +22,7 @@ public class ContainerChest : Container
 
         // Custom Implementation
         chestAnim.OpenChestAnimation();
+        OpenContainer();
     }
 
     public void CloseChest()

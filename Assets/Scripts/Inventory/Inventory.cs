@@ -3,17 +3,6 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    #region Singleton
-
-    public static Inventory Instance;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
-
-    #endregion
-
     public delegate void OnInventoryChange();
 
     public OnInventoryChange onInventoryChangeCallback;
@@ -24,6 +13,9 @@ public class Inventory : MonoBehaviour
 
     public int inventoryCapacity = 27;
     public List<Item> items = new List<Item>();
+
+    public Item firstIndexWeapon;
+    public Item secondIndexWeapon;
 
     #region Gold
 
@@ -93,9 +85,47 @@ public class Inventory : MonoBehaviour
 
     public bool equipMode;
 
+    public void RefreshEquip()
+    {
+        if (firstIndexWeapon)
+        {
+            InventoryUI.Instance.equipWeaponSlots[0].slotItem = firstIndexWeapon;
+
+            InventoryUI.Instance.equipWeaponSlots[0].FillSlot(firstIndexWeapon);
+
+            onEquipmentChangeCallback?.Invoke();
+        }
+        else
+        {
+            InventoryUI.Instance.equipWeaponSlots[0].ClearSlot();
+            onEquipmentChangeCallback?.Invoke();
+        }
+
+        if (secondIndexWeapon)
+        {
+            InventoryUI.Instance.equipWeaponSlots[1].slotItem = secondIndexWeapon;
+            InventoryUI.Instance.equipWeaponSlots[1].FillSlot(secondIndexWeapon);
+            onEquipmentChangeCallback?.Invoke();
+        }
+        else
+        {
+            InventoryUI.Instance.equipWeaponSlots[1].ClearSlot();
+            onEquipmentChangeCallback?.Invoke();
+        }
+    }
+
     public void EquipWeapon(int weaponSlotIndex, int equipSlotIndex)
     {
         var weaponToEquip = items[weaponSlotIndex] as Weapon;
+
+        if(equipSlotIndex == 0)
+        {
+            firstIndexWeapon = weaponToEquip;
+        }
+        else if(equipSlotIndex == 1)
+        {
+            secondIndexWeapon = weaponToEquip;
+        }
 
         if (weaponToEquip != null)
         {
@@ -121,10 +151,10 @@ public class Inventory : MonoBehaviour
 
         // Caching weapon which will be in slot
         var weaponToEquip = (Weapon) items[inventorySlot_Index];
-        
+
         items.RemoveAt(inventorySlot_Index);
         items.Add(weaponToUnEquip);
-        
+
         InventoryUI.Instance.equipWeaponSlots[equipWeaponSlot_Index].FillSlot(weaponToEquip);
 
         PlayerData.Instance.AddToEquipSlot(weaponToEquip.itemActivePrefab, equipWeaponSlot_Index);
@@ -137,10 +167,25 @@ public class Inventory : MonoBehaviour
 
     public void UnEquipWeapon(int slotIndex)
     {
+        if (IsFull())
+        {
+            return;
+        }
+
+        if (slotIndex == 0)
+        {
+            firstIndexWeapon = null;
+        }
+        else if (slotIndex == 1)
+        {
+            secondIndexWeapon = null;
+        }
+
         var weaponToUnEquip = InventoryUI.Instance.equipWeaponSlots[slotIndex].slotItem;
         InventoryUI.Instance.equipWeaponSlots[slotIndex].slotItem = null;
         PlayerData.Instance.RemoveFromEquipSlot(slotIndex);
         AddItem(weaponToUnEquip);
+        InventoryUI.Instance.equipWeaponSlots[slotIndex].ClearSlot();
 
         onEquipmentChangeCallback?.Invoke();
     }

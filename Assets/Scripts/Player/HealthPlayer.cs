@@ -19,16 +19,25 @@ public class HealthPlayer : Health
 
     public override void Damage(int damageValue)
     {
-        if (!PlayerData.Instance.isBlock && !CheatManager.Instance.GOD_MODE)
+        if (!CheatManager.Instance.GOD_MODE)
         {
-            base.Damage(damageValue);
+                base.Damage(damageValue);
 
             // Custom implementation
             GameplayUI.Instance.HealthBarValueChange(currentHealth);
             GameplayUI.Instance.ActivatePlayerHitScreenEffect();
 
-            EffectsManager.Instance.ActivateBloodEffect(hitTransform);
+            if (locomotion.typeLocomotion != Locomotion.TLocomotion.Block)
+            {
+                EffectsManager.Instance.ActivateBloodEffect(hitTransform);
+            }
+            else
+            {
+                EffectsManager.Instance.ActivateHitBlockEffect(hitTransform);
+            }
         }
+
+        SquadData.Instance.GetCurrentCharacter().locomotion.AddSpecialPower();
     }
 
     protected override void Death()

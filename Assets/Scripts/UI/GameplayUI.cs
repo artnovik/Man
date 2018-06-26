@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -31,6 +32,12 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private GameObject[] weaponUI;
     [SerializeField] private GameObject attackFistsGO;
 
+    [Header("Special Attack")]
+    public Button buttonSpecialAttack;
+    public Image iconSpecialAttack;
+    public Sprite specialAttackEnable;
+    public Sprite specialAttackDisable;
+
     [Header("PlayerBars")] [SerializeField]
     public Image playerHealthBarCurrent;
 
@@ -47,6 +54,9 @@ public class GameplayUI : MonoBehaviour
     public RectTransform targetInvisibleCamera;
 
     [Header("Locomotion")] public RectTransform targetLocomotion;
+
+    public GameObject windowSquad;
+    public List<Button> listCharacterButtons = new List<Button>();
 
     private Vector3 visibleCameraDir;
 
@@ -77,6 +87,7 @@ public class GameplayUI : MonoBehaviour
     {
         Locomotion();
         Camera();
+        SpecialAttackControl();
     }
 
     #endregion
@@ -179,6 +190,26 @@ public class GameplayUI : MonoBehaviour
         attackFistsGO.SetActive(!isWeaponEquipped);
     }
 
+    public void SpecialAttack()
+    {
+        PlayerData.Instance.locomotion.SpecialAttack();
+    }
+
+    private void SpecialAttackControl()
+    {
+        if (SquadData.Instance.GetCurrentCharacter().locomotion.specialPower >= 100)
+        {
+            iconSpecialAttack.sprite = specialAttackEnable;
+            buttonSpecialAttack.interactable = true;
+        }
+        else
+        {
+            iconSpecialAttack.sprite = specialAttackDisable;
+            buttonSpecialAttack.interactable = false;
+        }
+        
+    }
+
     #endregion
 
     #region Inventory
@@ -266,7 +297,7 @@ public class GameplayUI : MonoBehaviour
             Time.timeScale = 1f;
             PlayerData.Instance.isPaused = false;
 
-            Inventory.Instance.onEquipmentChangeCallback.Invoke();
+            PlayerData.Instance.inventory.onEquipmentChangeCallback.Invoke();
         }
     }
 
@@ -437,7 +468,7 @@ public class GameplayUI : MonoBehaviour
         ControlElementsVisibility(true);
         containerGO.SetActive(false);
 
-        Inventory.Instance.onEquipmentChangeCallback.Invoke();
+        PlayerData.Instance.inventory.onEquipmentChangeCallback.Invoke();
     }
 
     #endregion
@@ -461,6 +492,37 @@ public class GameplayUI : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    #endregion
+
+    #region Squad
+
+    public void CellWindowSquad(bool state)
+    {
+        windowSquad.SetActive(state);
+
+        ReCheckButtons();
+    }
+
+    private void ReCheckButtons()
+    {
+        for (int i = 0; i < listCharacterButtons.Count; i++)
+        {
+            if(i == SquadData.Instance.currentIndex)
+            {
+                listCharacterButtons[i].interactable = false;
+            }
+            else
+            {
+                listCharacterButtons[i].interactable = true;
+            }
+        }
+    }
+
+    public void SwitchCharacter(int index)
+    {
+        SquadData.Instance.SwitchCharaster(index);
     }
 
     #endregion

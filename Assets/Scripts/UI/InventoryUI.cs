@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TDC;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -8,23 +9,25 @@ public class InventoryUI : MonoBehaviour
 
     public static InventoryUI Instance;
 
+    public enum TCategory
+    {
+        Weapon,
+        Other
+    }
+
+    public TCategory typeCategory = TCategory.Weapon;
+
     private void Awake()
     {
         Instance = this;
-
-        inventory = Inventory.Instance;
-        inventory.onInventoryChangeCallback += UpdateInventoryUI;
-        inventorySlots = itemsContainer.GetComponentsInChildren<InventorySlot>();
-        equipWeaponSlots = gameObject.GetComponentsInChildren<EquipWeaponSlot>();
     }
 
     #endregion
 
     [SerializeField] private Text goldCountText;
 
-    private Inventory inventory;
     public Transform itemsContainer;
-    private InventorySlot[] inventorySlots;
+    public InventorySlot[] inventorySlots;
     [HideInInspector] public EquipWeaponSlot[] equipWeaponSlots;
 
     public InventorySlot currentInventorySlot;
@@ -32,16 +35,51 @@ public class InventoryUI : MonoBehaviour
 
     #region UI_Update_Logic
 
+    public void SwitchInventory(Inventory newInventory)
+    {
+        PlayerData.Instance.inventory = newInventory;
+        PlayerData.Instance.inventory.onInventoryChangeCallback = null;
+        PlayerData.Instance.inventory.onInventoryChangeCallback += UpdateInventoryUI;
+        PlayerData.Instance.inventory.onEquipmentChangeCallback += PlayerData.Instance.CheckForEmptyHands;
+        inventorySlots = itemsContainer.GetComponentsInChildren<InventorySlot>();
+        equipWeaponSlots = gameObject.GetComponentsInChildren<EquipWeaponSlot>();
+
+        PlayerData.Instance.inventory.RefreshEquip();
+    }
+
+    public void SwitchCategory(int index)
+    {
+        switch (index)
+        {
+            case 0: typeCategory = TCategory.Weapon; break;
+            case 1: typeCategory = TCategory.Other; break;
+        }
+
+
+        UpdateInventoryUI();
+    }
+
     private void UpdateInventoryUI()
     {
-        goldCountText.text = inventory.GetGoldCount().ToString();
+        goldCountText.text = PlayerData.Instance.inventory.GetGoldCount().ToString();
         SelectNextSlot(false);
+
+        int indexCounter = 0;
 
         for (var i = 0; i < inventorySlots.Length; i++)
         {
-            if (i < inventory.items.Count)
+            if (i < PlayerData.Instance.inventory.items.Count)
             {
-                inventorySlots[i].FillSlot(inventory.items[i]);
+                if (PlayerData.Instance.inventory.items[i].type == typeCategory)
+                {
+                    inventorySlots[i].ClearSlot();
+                    inventorySlots[indexCounter].FillSlot(PlayerData.Instance.inventory.items[i]);
+                    indexCounter++;
+                }
+                else
+                {
+                    inventorySlots[i].ClearSlot();
+                }
             }
             else
             {
@@ -54,6 +92,9 @@ public class InventoryUI : MonoBehaviour
 
     private void OnEnable()
     {
+        if (!PlayerData.Instance) { return; }
+        if (!PlayerData.Instance.inventory) { return; }
+
         UpdateInventoryUI();
         StopWeaponEquipment();
     }
@@ -107,11 +148,38 @@ public class InventoryUI : MonoBehaviour
 
         ActivateItemInfo(true, clickedSlot.slotItem);
 
-        // ToDo: Improve
-        if (clickedSlot is EquipWeaponSlot)
+        // ToDo: Improve [Begin]
+        if (clickedSlot is EquipSlot)
         {
-            useButton.GetComponentInChildren<Text>().text = "UnEquip";
+            //useButton.GetComponentInChildren<Text>().text = "UnEquip";
+            useButton.gameObject.SetActive(false);
+            equipButton.gameObject.SetActive(false);
+            unEquipButton.gameObject.SetActive(true);
+
+            DropButtonsVisibility(false);
         }
+
+        if (clickedSlot is InventorySlot)
+        {
+            DropButtonsVisibility(true);
+
+            if (clickedSlot.slotItem is Weapon || clickedSlot.slotItem is ItemConsumable)
+            {
+                //useButton.GetComponentInChildren<Text>().text = "Equip";
+                useButton.gameObject.SetActive(false);
+                equipButton.gameObject.SetActive(true);
+                unEquipButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                //useButton.GetComponentInChildren<Text>().text = "Use";
+                useButton.gameObject.SetActive(true);
+                equipButton.gameObject.SetActive(false);
+                unEquipButton.gameObject.SetActive(false);
+            }
+        }
+
+        // ToDo Improve [End]
     }
 
     public void MakeAllSlotsInactive()
@@ -130,12 +198,20 @@ public class InventoryUI : MonoBehaviour
         ActivateItemInfo(false, null);
     }
 
+    private void DropButtonsVisibility(bool value)
+    {
+        dropButton.gameObject.SetActive(value);
+        destroyButton.gameObject.SetActive(value);
+    }
+
     #endregion
 
     #region EquipZone
 
-    [Header("Control Area")] [SerializeField]
-    private Button useButton;
+    [Header("Control Area")]
+    [SerializeField] private Button useButton;
+    [SerializeField] private Button equipButton;
+    [SerializeField] private Button unEquipButton;
 
     [SerializeField] private Button dropButton;
     [SerializeField] private Button destroyButton;
@@ -152,7 +228,7 @@ public class InventoryUI : MonoBehaviour
     {
         hintSelectEquipText.gameObject.SetActive(true);
         backgroundOnEquipImage.gameObject.SetActive(true);
-        inventory.equipMode = true;
+        PlayerData.Instance.inventory.equipMode = true;
         equipAnimator.Play("Glow");
     }
 
@@ -160,24 +236,24 @@ public class InventoryUI : MonoBehaviour
     {
         hintSelectEquipText.gameObject.SetActive(false);
         backgroundOnEquipImage.gameObject.SetActive(false);
-        inventory.equipMode = false;
+        PlayerData.Instance.inventory.equipMode = false;
         equipAnimator.Play("Default");
     }
 
     public void EquipSlotOnClick(EquipWeaponSlot equipWeaponSlot)
     {
         // Behaviour - If we are equipping weapon
-        if (inventory.equipMode && equipWeaponSlot.slotItem == null)
+        if (PlayerData.Instance.inventory.equipMode && equipWeaponSlot.slotItem == null)
         {
             equipWeaponSlot.FillSlot(inventorySlots[GetCurrentInventorySlotIndex()].slotItem);
-            inventory.EquipWeapon(GetCurrentInventorySlotIndex(), equipWeaponSlot.equipWeaponSlotIndex);
+            PlayerData.Instance.inventory.EquipWeapon(GetCurrentInventorySlotIndex(), equipWeaponSlot.equipWeaponSlotIndex);
 
             StopWeaponEquipment();
         }
         // Behaviour - If we want to replace weapon by another
-        else if (inventory.equipMode && equipWeaponSlot.slotItem != null)
+        else if (PlayerData.Instance.inventory.equipMode && equipWeaponSlot.slotItem != null)
         {
-            inventory.SwapWeapons(GetCurrentInventorySlotIndex(), equipWeaponSlot.equipWeaponSlotIndex);
+            PlayerData.Instance.inventory.SwapWeapons(GetCurrentInventorySlotIndex(), equipWeaponSlot.equipWeaponSlotIndex);
             //equipWeaponSlot.FillSlot(inventorySlots[GetCurrentInventorySlotIndex()].slotItem);
 
             StopWeaponEquipment();
@@ -199,8 +275,6 @@ public class InventoryUI : MonoBehaviour
     private void ActivateItemInfo(bool value, Item item)
     {
         useButton.gameObject.SetActive(value);
-        dropButton.gameObject.SetActive(value);
-        destroyButton.gameObject.SetActive(value);
 
         if (value)
         {
@@ -230,8 +304,6 @@ public class InventoryUI : MonoBehaviour
         infoItemDamage.text = "<color=#AA3232FF>" + minDamage + " - " + maxDamage + "</color> DMG (" + damageType + ")";
         infoItemTypes.text = speed + " speed, " + range + " range";
         infoItemDescription.text = description;
-
-        useButton.GetComponentInChildren<Text>().text = "Equip";
     }
 
     private void ClearInfoWindow()
@@ -241,8 +313,6 @@ public class InventoryUI : MonoBehaviour
         infoItemDamage.text = string.Empty;
         infoItemTypes.text = string.Empty;
         infoItemDescription.text = string.Empty;
-
-        useButton.GetComponentInChildren<Text>().text = "Use";
     }
 
     #endregion
@@ -272,8 +342,7 @@ public class InventoryUI : MonoBehaviour
         // If we selected EquipSlot - then UnEquip
         else if (currentEquipWeaponSlot != null)
         {
-            inventory.UnEquipWeapon(currentEquipWeaponSlot.equipWeaponSlotIndex);
-            currentEquipWeaponSlot.ClearSlot();
+            PlayerData.Instance.inventory.UnEquipWeapon(currentEquipWeaponSlot.equipWeaponSlotIndex);
         }
     }
 
@@ -281,7 +350,7 @@ public class InventoryUI : MonoBehaviour
     {
         if (currentInventorySlot != null)
         {
-            inventory.AddToDropList(GetCurrentInventorySlotIndex());
+            PlayerData.Instance.inventory.AddToDropList(GetCurrentInventorySlotIndex());
         }
     }
 
@@ -289,17 +358,17 @@ public class InventoryUI : MonoBehaviour
     {
         if (currentInventorySlot != null)
         {
-            inventory.DestroyItem(GetCurrentInventorySlotIndex());
+            PlayerData.Instance.inventory.DestroyItem(GetCurrentInventorySlotIndex());
         }
     }
 
     public void InventoryCloseClick()
     {
-        inventory.GenerateIfDrop();
+        PlayerData.Instance.inventory.GenerateIfDrop();
         GameplayUI.Instance.InventoryClose();
     }
 
-    public int GetCurrentInventorySlotIndex()
+    private int GetCurrentInventorySlotIndex()
     {
         int slotIndex = 0;
         for (int i = 0; i < inventorySlots.Length; i++)
