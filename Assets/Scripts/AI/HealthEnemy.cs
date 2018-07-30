@@ -96,6 +96,7 @@ public class HealthEnemy : Health
         GetComponent<EnemyUI>().DestroyEnemyUI(SpawnManager.Instance.GetDeadBodyDeleteDuration());
         //DestroyBody(SpawnManager.Instance.GetDeadBodyDeleteDuration());
         DestroyBody(5f);
+        characterAudio.PlayDeath();
     }
 
     private void DestroyComponents()

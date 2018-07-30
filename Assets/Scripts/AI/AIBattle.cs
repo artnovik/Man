@@ -90,7 +90,31 @@ public class AIBattle : MonoBehaviour
         else if (target.GetComponent<Health>().currentHealth > 0)
         {
             locomotion.targetLocomotion = target.GetComponent<Locomotion>();
-            locomotion.AttackControl();
+
+            if(locomotion.typeLocomotion != global::Locomotion.TLocomotion.Attack)
+            {
+                if (currentIntervalBlock > 0)
+                {
+                    currentIntervalBlock -= Time.deltaTime;
+                    locomotion.animator.SetBool("Block", true);
+                }
+                else
+                {
+                    currentTimerAttack += Time.deltaTime;
+                    locomotion.animator.SetBool("Block", false);
+                }
+            }
+
+            if (currentTimerAttack >= delayAttack)
+            {
+                locomotion.AttackControl();
+                currentTimerAttack = 0;
+
+                if(Random.Range(0, 101) >= 80)
+                {
+                    currentIntervalBlock = Random.Range(3, 6);
+                }
+            }
         }
 
         locomotion.Movement(fixDirection);

@@ -100,7 +100,7 @@ public class LootGenerator : MonoBehaviour
     public Item GenerateRandomWeapon()
     {
         int minSeed = 1;
-        int maxSeed = 5;
+        int maxSeed = 6;
         int randSeed = Random.Range(minSeed, maxSeed + 1);
 
         switch (randSeed)
@@ -119,6 +119,9 @@ public class LootGenerator : MonoBehaviour
                 return weapon;
             case 5:
                 weapon = ItemsCollection.Instance.torch;
+                return weapon;
+            case 6:
+                weapon = ItemsCollection.Instance.fork;
                 return weapon;
             default:
                 return null;

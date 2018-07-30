@@ -443,7 +443,14 @@ ModelImporter:
           postInfinity: 2
           rotationOrder: 0
       events:
-      - time: 0.49953872
+      - time: 0.45489585
+        functionName: Attack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.66796875
         functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -678,6 +685,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.46874994
+        functionName: Attack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -899,7 +913,14 @@ ModelImporter:
           postInfinity: 2
           rotationOrder: 0
       events:
-      - time: 0.39107627
+      - time: 0.33750483
+        functionName: Attack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.796875
         functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
