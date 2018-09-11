@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -48,8 +47,6 @@ public class GameplayUI : MonoBehaviour
     public RectTransform targetInvisibleCamera;
 
     [Header("Locomotion")] public RectTransform targetLocomotion;
-
-    public List<Button> listCharacterButtons = new List<Button>();
 
     private Vector3 visibleCameraDir;
 
@@ -269,7 +266,7 @@ public class GameplayUI : MonoBehaviour
             Time.timeScale = 1f;
             PlayerData.Instance.isPaused = false;
 
-            PlayerData.Instance.inventory.onEquipmentChangeCallback.Invoke();
+            Inventory.Instance.onEquipmentChangeCallback.Invoke();
         }
     }
 
@@ -440,7 +437,34 @@ public class GameplayUI : MonoBehaviour
         ControlElementsVisibility(true);
         containerGO.SetActive(false);
 
-        PlayerData.Instance.inventory.onEquipmentChangeCallback.Invoke();
+        Inventory.Instance.onEquipmentChangeCallback.Invoke();
+    }
+
+    #endregion
+
+    #region SquadMenu
+
+    [Header("SquadMenuUI_Control")] [SerializeField]
+    private GameObject squadMenuGO;
+
+    public void SquadMenuOpen()
+    {
+        if (!containerGO.activeSelf)
+        {
+            ControlElementsVisibility(false);
+            squadMenuGO.SetActive(true);
+            AudioManager.Instance.WindowAppearSound();
+            Time.timeScale = 0f;
+            PlayerData.Instance.isPaused = true;
+        }
+    }
+
+    public void SquadMenuClose()
+    {
+        Time.timeScale = 1f;
+        PlayerData.Instance.isPaused = false;
+        ControlElementsVisibility(true);
+        squadMenuGO.SetActive(false);
     }
 
     #endregion
@@ -467,24 +491,4 @@ public class GameplayUI : MonoBehaviour
     }
 
     #endregion
-
-    public void ReCheckButtons()
-    {
-        for (int i = 0; i < listCharacterButtons.Count; i++)
-        {
-            if(i == SquadData.Instance.currentIndex)
-            {
-                listCharacterButtons[i].interactable = false;
-            }
-            else
-            {
-                listCharacterButtons[i].interactable = true;
-            }
-        }
-    }
-
-    public void SwitchCharacter(int index)
-    {
-        SquadData.Instance.SwitchCharaster(index);
-    }
 }

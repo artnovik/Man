@@ -1,9 +1,7 @@
 fileFormatVersion: 2
 guid: ccad39defc46ad04f97ef34173e7a703
-timeCreated: 1439650669
-licenseType: Store
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: mixamorig:Head
     100002: mixamorig:HeadTop_End
@@ -142,6 +140,7 @@ ModelImporter:
     7400000: Take 001
     7400002: RunningUnarmed
     9500000: //RootNode
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 0
@@ -182,6 +181,7 @@ ModelImporter:
       mm and maximum position error 30.3 mm at time 0:16 (94.1%) Frame 16\n"
     animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -323,6 +323,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

@@ -23,12 +23,8 @@ public class LocomotionPlayer : Locomotion
         PlayerData.Instance.SwitchLeftHandCollider();
     }
 
-    // ToDo: Squad Menu.
-    /*private void OnMouseDown()
+    private void OnMouseDown()
     {
-        if (gameObject.CompareTag("Player"))
-        {
-            Debug.Log(gameObject.name);
-        }
-    }*/
+        GameplayUI.Instance.SquadMenuOpen();
+    }
 }
