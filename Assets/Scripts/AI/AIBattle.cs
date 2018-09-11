@@ -14,6 +14,12 @@ public class AIBattle : MonoBehaviour
     public Transform target;
     public CoreTrigger viewTrigger;
 
+    public float delayAttack = 1.2f;
+    private float currentTimerAttack = 0;
+
+    public float intervalBlock = 0f;
+    private float currentIntervalBlock = 0;
+
     #region Unity
 
     private void Start()
@@ -79,11 +85,36 @@ public class AIBattle : MonoBehaviour
             fixDirection = (agent.steeringTarget - transform.position).normalized;
             locomotion.Rotate(fixDirection);
             locomotion.targetLocomotion = null;
+            currentTimerAttack = delayAttack;
         }
         else if (target.GetComponent<Health>().currentHealth > 0)
         {
             locomotion.targetLocomotion = target.GetComponent<Locomotion>();
-            locomotion.AttackControl();
+
+            if(locomotion.typeLocomotion != global::Locomotion.TLocomotion.Attack)
+            {
+                if (currentIntervalBlock > 0)
+                {
+                    currentIntervalBlock -= Time.deltaTime;
+                    locomotion.animator.SetBool("Block", true);
+                }
+                else
+                {
+                    currentTimerAttack += Time.deltaTime;
+                    locomotion.animator.SetBool("Block", false);
+                }
+            }
+
+            if (currentTimerAttack >= delayAttack)
+            {
+                locomotion.AttackControl();
+                currentTimerAttack = 0;
+
+                if(Random.Range(0, 101) >= 80)
+                {
+                    currentIntervalBlock = Random.Range(3, 6);
+                }
+            }
         }
 
         locomotion.Movement(fixDirection);

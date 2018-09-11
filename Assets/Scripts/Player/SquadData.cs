@@ -9,7 +9,8 @@ public class DataCharacter
     public GameObject leftFist;
     public GameObject rightFist;
     public Transform parentWeapon;
-    public Locomotion locomotion;
+    public LocomotionPlayer locomotion;
+    public HealthPlayer health;
     public Inventory inventory;
 
     public List<GameObject> listWeapon = new List<GameObject>();
@@ -30,6 +31,7 @@ public class SquadData : MonoBehaviourSingleton<SquadData>
         for (int i = 0; i < listCharacter.Count; i++)
         {
             listCharacter[i].locomotion.transform.SetParent(null);
+            listCharacter[i].health.Start();
         }
 
         SwitchCharaster(0);
@@ -64,6 +66,7 @@ public class SquadData : MonoBehaviourSingleton<SquadData>
         playerData.rightHandFist = listCharacter[index].rightFist;
         playerData.weaponParent = listCharacter[index].parentWeapon;
         playerData.locomotion = listCharacter[index].locomotion;
+        playerData.playerHealth = listCharacter[index].health;
 
         for (int i = 0; i < listCharacter.Count; i++)
         {
@@ -74,9 +77,9 @@ public class SquadData : MonoBehaviourSingleton<SquadData>
                 listCharacter[i].locomotion.transform.position = savePosition;
                 listCharacter[i].locomotion.transform.rotation = saveRotation;
 
-                /*playerData.weaponsList = new List<GameObject>(listCharacter[i].listWeapon);
+                playerData.weaponsList = new List<GameObject>(listCharacter[i].listWeapon);
                 playerData.currentWeaponData = listCharacter[i].weaponData;
-                playerData.currentWeaponGO = listCharacter[i].weaponGO;*/
+                playerData.currentWeaponGO = listCharacter[i].weaponGO;
             }
             else
             {
@@ -86,6 +89,14 @@ public class SquadData : MonoBehaviourSingleton<SquadData>
 
         if (InventoryUI.Instance) { InventoryUI.Instance.SwitchInventory(listCharacter[index].inventory); }
 
+        GameplayUI.Instance.HealthBarValueChange(playerData.playerHealth.currentHealth);
+
         currentIndex = index;
+        playerData.CalculateAttackSpeedWeapon();
+    }
+
+    public DataCharacter GetCurrentCharacter()
+    {
+        return listCharacter[currentIndex];
     }
 }

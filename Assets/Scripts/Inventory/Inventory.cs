@@ -14,6 +14,9 @@ public class Inventory : MonoBehaviour
     public int inventoryCapacity = 27;
     public List<Item> items = new List<Item>();
 
+    public Item firstIndexWeapon;
+    public Item secondIndexWeapon;
+
     #region Gold
 
     private int gold;
@@ -82,9 +85,47 @@ public class Inventory : MonoBehaviour
 
     public bool equipMode;
 
+    public void RefreshEquip()
+    {
+        if (firstIndexWeapon)
+        {
+            InventoryUI.Instance.equipWeaponSlots[0].slotItem = firstIndexWeapon;
+
+            InventoryUI.Instance.equipWeaponSlots[0].FillSlot(firstIndexWeapon);
+
+            onEquipmentChangeCallback?.Invoke();
+        }
+        else
+        {
+            InventoryUI.Instance.equipWeaponSlots[0].ClearSlot();
+            onEquipmentChangeCallback?.Invoke();
+        }
+
+        if (secondIndexWeapon)
+        {
+            InventoryUI.Instance.equipWeaponSlots[1].slotItem = secondIndexWeapon;
+            InventoryUI.Instance.equipWeaponSlots[1].FillSlot(secondIndexWeapon);
+            onEquipmentChangeCallback?.Invoke();
+        }
+        else
+        {
+            InventoryUI.Instance.equipWeaponSlots[1].ClearSlot();
+            onEquipmentChangeCallback?.Invoke();
+        }
+    }
+
     public void EquipWeapon(int weaponSlotIndex, int equipSlotIndex)
     {
         var weaponToEquip = items[weaponSlotIndex] as Weapon;
+
+        if(equipSlotIndex == 0)
+        {
+            firstIndexWeapon = weaponToEquip;
+        }
+        else if(equipSlotIndex == 1)
+        {
+            secondIndexWeapon = weaponToEquip;
+        }
 
         if (weaponToEquip != null)
         {
@@ -129,6 +170,15 @@ public class Inventory : MonoBehaviour
         if (IsFull())
         {
             return;
+        }
+
+        if (slotIndex == 0)
+        {
+            firstIndexWeapon = null;
+        }
+        else if (slotIndex == 1)
+        {
+            secondIndexWeapon = null;
         }
 
         var weaponToUnEquip = InventoryUI.Instance.equipWeaponSlots[slotIndex].slotItem;

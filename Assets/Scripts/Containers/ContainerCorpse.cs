@@ -10,6 +10,7 @@ public class ContainerCorpse : Container
     {
         if (!canInteract || containerItems.Count < 1)
         {
+            print("Dont step");
             return;
         }
 
@@ -17,6 +18,7 @@ public class ContainerCorpse : Container
 
         // Custom Implementation
         OpenContainer();
+        print("Done");
     }
 
     protected override void IfContainerEmpty()

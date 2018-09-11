@@ -9,14 +9,17 @@ public class InventoryUI : MonoBehaviour
 
     public static InventoryUI Instance;
 
+    public enum TCategory
+    {
+        Weapon,
+        Other
+    }
+
+    public TCategory typeCategory = TCategory.Weapon;
+
     private void Awake()
     {
         Instance = this;
-
-        /*inventory = Inventory.Instance;
-        inventory.onInventoryChangeCallback = UpdateInventoryUI;
-        inventorySlots = itemsContainer.GetComponentsInChildren<InventorySlot>();
-        equipWeaponSlots = gameObject.GetComponentsInChildren<EquipWeaponSlot>();*/
     }
 
     #endregion
@@ -40,6 +43,20 @@ public class InventoryUI : MonoBehaviour
         PlayerData.Instance.inventory.onEquipmentChangeCallback += PlayerData.Instance.CheckForEmptyHands;
         inventorySlots = itemsContainer.GetComponentsInChildren<InventorySlot>();
         equipWeaponSlots = gameObject.GetComponentsInChildren<EquipWeaponSlot>();
+
+        PlayerData.Instance.inventory.RefreshEquip();
+    }
+
+    public void SwitchCategory(int index)
+    {
+        switch (index)
+        {
+            case 0: typeCategory = TCategory.Weapon; break;
+            case 1: typeCategory = TCategory.Other; break;
+        }
+
+
+        UpdateInventoryUI();
     }
 
     private void UpdateInventoryUI()
@@ -47,11 +64,22 @@ public class InventoryUI : MonoBehaviour
         goldCountText.text = PlayerData.Instance.inventory.GetGoldCount().ToString();
         SelectNextSlot(false);
 
+        int indexCounter = 0;
+
         for (var i = 0; i < inventorySlots.Length; i++)
         {
             if (i < PlayerData.Instance.inventory.items.Count)
             {
-                inventorySlots[i].FillSlot(PlayerData.Instance.inventory.items[i]);
+                if (PlayerData.Instance.inventory.items[i].type == typeCategory)
+                {
+                    inventorySlots[i].ClearSlot();
+                    inventorySlots[indexCounter].FillSlot(PlayerData.Instance.inventory.items[i]);
+                    indexCounter++;
+                }
+                else
+                {
+                    inventorySlots[i].ClearSlot();
+                }
             }
             else
             {
@@ -64,6 +92,9 @@ public class InventoryUI : MonoBehaviour
 
     private void OnEnable()
     {
+        if (!PlayerData.Instance) { return; }
+        if (!PlayerData.Instance.inventory) { return; }
+
         UpdateInventoryUI();
         StopWeaponEquipment();
     }
@@ -120,7 +151,11 @@ public class InventoryUI : MonoBehaviour
         // ToDo: Improve [Begin]
         if (clickedSlot is EquipSlot)
         {
-            useButton.GetComponentInChildren<Text>().text = "UnEquip";
+            //useButton.GetComponentInChildren<Text>().text = "UnEquip";
+            useButton.gameObject.SetActive(false);
+            equipButton.gameObject.SetActive(false);
+            unEquipButton.gameObject.SetActive(true);
+
             DropButtonsVisibility(false);
         }
 
@@ -130,11 +165,17 @@ public class InventoryUI : MonoBehaviour
 
             if (clickedSlot.slotItem is Weapon || clickedSlot.slotItem is ItemConsumable)
             {
-                useButton.GetComponentInChildren<Text>().text = "Equip";
+                //useButton.GetComponentInChildren<Text>().text = "Equip";
+                useButton.gameObject.SetActive(false);
+                equipButton.gameObject.SetActive(true);
+                unEquipButton.gameObject.SetActive(false);
             }
             else
             {
-                useButton.GetComponentInChildren<Text>().text = "Use";
+                //useButton.GetComponentInChildren<Text>().text = "Use";
+                useButton.gameObject.SetActive(true);
+                equipButton.gameObject.SetActive(false);
+                unEquipButton.gameObject.SetActive(false);
             }
         }
 
@@ -167,8 +208,10 @@ public class InventoryUI : MonoBehaviour
 
     #region EquipZone
 
-    [Header("Control Area")] [SerializeField]
-    private Button useButton;
+    [Header("Control Area")]
+    [SerializeField] private Button useButton;
+    [SerializeField] private Button equipButton;
+    [SerializeField] private Button unEquipButton;
 
     [SerializeField] private Button dropButton;
     [SerializeField] private Button destroyButton;

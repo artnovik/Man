@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 5604d4bdf493f404dbe3ac4918a389e5
 ModelImporter:
-  serializedVersion: 23
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: Head
     100002: HeadTop_End
@@ -443,14 +443,14 @@ ModelImporter:
           postInfinity: 2
           rotationOrder: 0
       events:
-      - time: 0.41520137
+      - time: 0.45489585
         functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.6633217
+      - time: 0.66796875
         functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -685,7 +685,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.26442957
+      - time: 0.46874994
         functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -913,14 +913,14 @@ ModelImporter:
           postInfinity: 2
           rotationOrder: 0
       events:
-      - time: 0.39107627
+      - time: 0.33750483
         functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.6664429
+      - time: 0.796875
         functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -1270,8 +1270,6 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

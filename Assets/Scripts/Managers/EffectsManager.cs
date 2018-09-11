@@ -4,6 +4,7 @@ using UnityEngine;
 public class EffectsManager : MonoBehaviour
 {
     [SerializeField] private GameObject bloodEffect;
+    [SerializeField] private GameObject hitBlockEffect;
 
     private Coroutine effectCoroutine;
 
@@ -23,6 +24,11 @@ public class EffectsManager : MonoBehaviour
     public void ActivateBloodEffect(Transform parentTransform)
     {
         ActivateEffect(bloodEffect, parentTransform.position, parentTransform.rotation, 3f);
+    }
+
+    public void ActivateHitBlockEffect(Transform parentTransform)
+    {
+        ActivateEffect(hitBlockEffect, parentTransform.position, parentTransform.rotation, 3f);
     }
 
     #region Singleton

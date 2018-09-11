@@ -88,6 +88,8 @@ public class SpawnManager : MonoBehaviour
     {
         var healthEnemy = enemy.GetComponentInChildren<HealthEnemy>();
 
+        if (!healthEnemy.randomWeapon) { return; }
+
         // Clearing equipped weapon
         foreach (Transform child in healthEnemy.enemyWeaponParentTransform)
         {

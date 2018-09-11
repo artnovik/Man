@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public abstract class Locomotion : MonoBehaviour
 {
@@ -8,7 +9,8 @@ public abstract class Locomotion : MonoBehaviour
         Movement,
         Attack,
         Attack_Hands,
-        Dead
+        Dead,
+        Block
     }
 
     public enum TSpeed
@@ -26,6 +28,8 @@ public abstract class Locomotion : MonoBehaviour
 
     public Locomotion targetLocomotion;
 
+    public List<Transform> listSupport = new List<Transform>();
+
     public TLocomotion typeLocomotion = TLocomotion.Idle;
     public TSpeed typeSpeed = TSpeed.Walk;
 
@@ -35,7 +39,9 @@ public abstract class Locomotion : MonoBehaviour
     protected const string MOVEMENT_X = "MovX";
     protected const string MOVEMENT_Y = "MovY";
     protected const string ATTACK_STATE = "Attack";
+    protected const string BLOCK_STATE = "Block";
     protected const string ATACK_HANDS_STATE = "Attack_Hands";
+    protected const string ATTACK_STATE_SPECIAL = "Attack_Special";
 
     #endregion
 
@@ -80,6 +86,8 @@ public abstract class Locomotion : MonoBehaviour
         }
 
         animator.SetBool(MOVEMENT_STATE, inversDirection.magnitude > 0);
+
+        HeightControl();
     }
 
     public void Rotate(Vector3 movDirection)
@@ -104,9 +112,57 @@ public abstract class Locomotion : MonoBehaviour
         localTransform.rotation = fixRotation;
     }
 
+    private float failTimer = 0;
+
+    private void HeightControl()
+    {
+        if (listSupport.Count == 0) { return; }
+
+        RaycastHit hit;
+        int failCounter = 0;
+
+        for (int i = 0; i < listSupport.Count; i++)
+        {
+            if(Physics.Raycast(listSupport[i].position, Vector3.down, out hit, 0.7f))
+            {
+            }
+            else
+            {
+                failCounter++;
+            }
+        }
+
+        if(failCounter >= listSupport.Count)
+        {
+            animator.applyRootMotion = false;
+            animator.SetBool("Fail", true);
+            failTimer += Time.deltaTime;
+        }
+        else if(failCounter == 0)
+        {
+            if (animator.GetBool("Fail") == true && failTimer >= 0.25f)
+            {
+                health.Damage(Mathf.CeilToInt(failTimer * 15), false);
+            }
+
+            animator.applyRootMotion = true;
+            animator.SetBool("Fail", false);
+        }
+    }
+
+    public virtual void Damage()
+    {
+        animator.SetTrigger("Damage");
+    }
+
     public virtual void AttackControl()
     {
         // This meant to be overridden
+    }
+
+    public virtual void SpecialAttack()
+    {
+
     }
 
     private void ControlState()
@@ -123,6 +179,10 @@ public abstract class Locomotion : MonoBehaviour
         {
             typeLocomotion = TLocomotion.Attack;
         }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Block"))
+        {
+            typeLocomotion = TLocomotion.Block;
+        }
         else if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack_Hands"))
         {
             typeLocomotion = TLocomotion.Attack_Hands;
@@ -130,6 +190,15 @@ public abstract class Locomotion : MonoBehaviour
         else if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Dead"))
         {
             typeLocomotion = TLocomotion.Dead;
+        }
+
+        if(targetLocomotion)
+        {
+            animator.SetBool("Dodge", true);
+        }
+        else
+        {
+            animator.SetBool("Dodge", false);
         }
     }
 

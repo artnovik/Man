@@ -15,6 +15,8 @@ public abstract class Health : MonoBehaviour
 
     public int currentHealth { get; private set; }
 
+    [Range(0f, 1f)] public float powerArmor = 0.5f;
+
     #region HealthManager
 
     public virtual void Start()
@@ -38,24 +40,74 @@ public abstract class Health : MonoBehaviour
         }
     }
 
-    public virtual void Damage(int damageValue)
+    public virtual void Damage(int damageValue, bool anim = true)
     {
         if (isDead)
         {
             return;
         }
 
-        currentHealth -= damageValue;
+        if (locomotion.typeLocomotion == Locomotion.TLocomotion.Attack && locomotion.animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.4f)
+        {
+            Debug.Log("Crytical damage ->>>>>>>>>>>>>>>>>>>>>> " + (int)(damageValue * 1.5f));
+            currentHealth -= (int)(damageValue * 1.5f);
+        }
+        else
+        {
+            if (locomotion.typeLocomotion != Locomotion.TLocomotion.Block)
+            {
+                currentHealth -= ResultDamage(damageValue);
+            }
+            else
+            {
+                currentHealth -= Mathf.CeilToInt(ResultDamage(damageValue) * (1 - powerArmor));
+            }
+        }
 
         if (currentHealth <= minHealth)
         {
             Death();
         }
+        else
+        {
+            if (anim == true)
+            {
+                locomotion.Damage();
+            }
+        }
 
-        Debug.Log($"{gameObject.name} took {damageValue} damage. Current HP: {currentHealth}");
+        Debug.Log($"{gameObject.name} took {ResultDamage(damageValue)} damage. Current HP: {currentHealth}");
         if (isDead)
         {
             Debug.Log($"{gameObject.name} died.");
+        }
+    }
+
+    protected virtual int ResultDamage(int startDamage)
+    {
+        int resultDamage = startDamage;
+
+        if(BackDamage())
+        {
+            resultDamage += startDamage * 25 / 100;
+            Debug.Log("Back damage bonus: " + startDamage * 25 / 100);
+        }
+
+        return resultDamage;
+    }
+
+    private bool BackDamage()
+    {
+        Ray ray = new Ray(transform.position, -transform.forward);
+        RaycastHit hit;
+
+        if(Physics.Raycast(ray, out hit, 3f))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

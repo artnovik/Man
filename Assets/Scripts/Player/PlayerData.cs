@@ -161,13 +161,15 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
 
         if (isBlock)
         {
-            GameplayUI.Instance.DisplayMessage(Messages.messageBlockTrue, Colors.greenMessage, 100f, false);
+            //GameplayUI.Instance.DisplayMessage(Messages.messageBlockTrue, Colors.greenMessage, 100f, false);
 
             // ToDO: Add Block animation. The Weapon will be used to block the attack. Spark animation if player and enemy weapons are both metal.
+            locomotion.animator.SetBool("Block", true);
         }
         else
         {
-            GameplayUI.Instance.DisplayMessage(Messages.messageBlockFalse, Colors.redMessage, 1f, false);
+            //GameplayUI.Instance.DisplayMessage(Messages.messageBlockFalse, Colors.redMessage, 1f, false);
+            locomotion.animator.SetBool("Block", false);
         }
     }
 
@@ -235,13 +237,15 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         {
             DrawWeapon(currentWeaponIndex);
         }
+
+        CalculateAttackSpeedWeapon();
     }
 
     private void DrawWeapon(int index)
     {
         // Disabling "Previous", if it was, and Enabling "New"
         if (currentWeaponGO != null)
-        {
+        {       
             currentWeaponGO.SetActive(false);
         }
 
@@ -262,6 +266,8 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         // Setting number to current index in UI and Play short sound
         GameplayUI.Instance.SetWeaponNumberText(currentWeaponIndex + 1);
         AudioManager.Instance.WeaponChangeSound();
+
+        CalculateAttackSpeedWeapon();
     }
 
     private int GetWeaponsEquippedCount()
@@ -276,6 +282,24 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         }
 
         return listCount;
+    }
+
+    public void CalculateAttackSpeedWeapon()
+    {
+        if (!locomotion) { return; }
+
+        if(!currentWeaponData)
+        {
+            locomotion.animator.SetFloat("Attack_Speed", 1f);
+            return;
+        }
+
+        switch(currentWeaponData.weaponData.Speed)
+        {
+            case Weapon.SpeedEnum.Fast: locomotion.animator.SetFloat("Attack_Speed", 1.2f); break;
+            case Weapon.SpeedEnum.Normal: locomotion.animator.SetFloat("Attack_Speed", 1f); break;
+            case Weapon.SpeedEnum.Slow: locomotion.animator.SetFloat("Attack_Speed", 0.8f); break;
+        }
     }
 
     public void CheckForEmptyHands()
@@ -351,6 +375,16 @@ public class PlayerData : MonoBehaviourSingleton<PlayerData>
         foreach (Collider weaponCollider in GetCurrentWeaponColliders())
         {
             weaponCollider.enabled = !weaponCollider.enabled;
+        }
+
+        currentWeaponData.PlaySound();
+    }
+
+    public void DisableWeaponColliders()
+    {
+        foreach (Collider weaponCollider in GetCurrentWeaponColliders())
+        {
+            weaponCollider.enabled = false;
         }
     }
 
